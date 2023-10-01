@@ -27,7 +27,6 @@ class Raport extends Migration
             $table->string('hp');
             $table->timestamps();
         });
-
        
 
         DB::table("identitas")->insert([
@@ -65,6 +64,7 @@ class Raport extends Migration
                 "namakelas" => $item,
             ]);
         }
+        
         Schema::create('walikelas', function (Blueprint $table) {
             $table->bigIncrements('idwalikelas');
             $table->integer("ididentitas")->unique();
@@ -90,6 +90,36 @@ class Raport extends Migration
             $table->integer("idkelas");
             $table->integer("idmapel");
             $table->integer("idjurusan");
+            $table->timestamps();
+        });
+
+        Schema::create('ujian', function (Blueprint $table) {
+            $table->bigIncrements('idujian');
+            $table->integer("idraport");
+            $table->integer("idsiswa");
+            $table->integer("idmapel");
+            $table->double("lisan")->default(0);
+            $table->double("nonlisan")->default(0);
+            $table->double("persen")->default(0);
+            $table->timestamps();
+        });
+
+        Schema::create('kehadiran', function (Blueprint $table) {
+            $table->bigIncrements('idkehadiran');
+            $table->integer("idraport");
+            $table->integer("idsiswa");
+            $table->integer("izin")->default(0);
+            $table->integer("sakit")->default(0);
+            $table->integer("tanpaketerangan")->default(0);
+            $table->timestamps();
+        });
+        
+        Schema::create('catatan', function (Blueprint $table) {
+            $table->bigIncrements('idcatatan');
+            $table->integer("iddetailraport");
+            $table->integer("idmapel");
+            $table->integer("idsiswa");
+            $table->string("catatan");
             $table->timestamps();
         });
 

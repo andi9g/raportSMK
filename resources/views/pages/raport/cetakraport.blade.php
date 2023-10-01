@@ -18,6 +18,7 @@
                         <div class="col-md-4">
                             <h3 class="m-0">RAPORT</h3>
                         </div>
+                        @if (Auth::user()->identitas->posisi == "admin")
                         <div class="col-md-2">
                             <div class="form-group m-0">
                                     <select id="jurusan" class="form-control" name="jurusan" onchange="submit()">
@@ -44,6 +45,8 @@
                                 </select>
                             </div>
                         </div>
+                        
+                        @endif
                         <div class="col-md-4">
                             <div class="input-group">
                                 <input class="form-control" type="text" name="keyword" placeholder="berdasarkan nama" aria-label="berdasarkan nama" aria-describedby="cari" value="{{ $keyword }}">
@@ -68,6 +71,7 @@
                                 <th rowspan="2" class="text-center" valign="top" width="5px">No</th>
                                 <th rowspan="2" class="text-center">Nama</th>
                                 <th rowspan="2" class="text-center">Edit</th>
+                                <th rowspan="2" class="text-center">Kehadiran</th>
                                 <th colspan="3" class="text-center">Cetak Raport</th>
                             </tr>
                             <tr class="text-uppercase">
@@ -87,6 +91,18 @@
                                         <i class="fa fa-edit"></i>
                                     </button>
                                 </td>
+                                <td>
+                                    @php
+                                        $kehadiran = DB::table("kehadiran")->where("idsiswa", $item->idsiswa)
+                                        ->where("idraport", $idraport)->count();
+                                        if($kehadiran == 0){
+                                            $warna = "btn-danger";
+                                        }else {
+                                            $warna = "btn-success";
+                                        }
+                                    @endphp
+                                    <button class="btn {{$warna}} btn-xs my-0" type="button" data-toggle="modal" data-target="#kehadiran{{ $item->idsiswa }}"><b>Kehadiran</b></button>
+                                </td>
                                 <td class="text-center">
                                     <a target="_blank" href="{{ route('cetak.cover', [$item->idsiswa]) }}" class="btn btn-xs btn-secondary">
                                         <i class="fa fa-print"></i>
@@ -101,7 +117,7 @@
                                 </td>
 
                                 <td class="text-center">
-                                    <a target="_blank" href="{{ route('cetak.nilai', [$item->idsiswa, $iddetailraport]) }}" class="btn btn-block btn-xs btn-success">
+                                    <a target="_blank" href="{{ route('cetak.nilai', [$item->idsiswa, $idraport]) }}" class="btn btn-block btn-xs btn-success">
                                         <b>
                                             <i class="fa fa-print"></i>
                                             Cetak Nilai
@@ -125,6 +141,52 @@
     </div>
 
     @foreach ($siswa as $item)
+    <div id="kehadiran{{$item->idsiswa}}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="kehadiransiswa" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="kehadiransiswa">KEHADIRAN <b>{{ $item->nama }}</b></h5>
+                    <button class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="{{ route('tambah.kehadiran', [$idraport]) }}" method="post">
+                    @csrf
+                
+                    <div class="modal-body">
+                        @php
+                            $kehadiran = DB::table("kehadiran")->where("idsiswa", $item->idsiswa)
+                            ->where("idraport", $idraport)->first();
+                        @endphp
+
+                        <input type="text" name="idsiswa" value="{{ $item->idsiswa }}" hidden>
+
+                        <div class="form-group">
+                            <label for="izin">Izin</label>
+                            <input id="izin" class="form-control" type="number" name="izin" value="{{ empty($kehadiran->izin)?'0':$kehadiran->izin }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="sakit">Sakit</label>
+                            <input id="sakit" class="form-control" type="number" name="sakit" value="{{ empty($kehadiran->sakit)?'0':$kehadiran->sakit }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="tanpaketerangan">Tanpa Keterangan</label>
+                            <input id="tanpaketerangan" class="form-control" type="number" name="tanpaketerangan" value="{{ empty($kehadiran->tanpaketerangan)?'0':$kehadiran->tanpaketerangan }}">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-success px-4">
+                            <b>
+                                UPDATE KEHADIRAN
+                            </b>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
         <div id="edit{{ $item->idsiswa }}" class="modal fade" tabindex="-99999" role="dialog" aria-labelledby="editsiswa" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">

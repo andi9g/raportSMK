@@ -18,11 +18,12 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="name">Nama Lengkap</label>
-                            <input id="name" disabled class="form-control" value="{{ Auth::user()->name }}" type="text">
+                            <input id="name" name="name" class="form-control" value="{{ Auth::user()->name }}" type="text">
                         </div>
                         <div class="form-group">
                             <label for="username">Username</label>
-                            <input id="username" disabled class="form-control" value="{{ Auth::user()->username }}" type="text">
+                            <input id="username" name="username" class="form-control" value="{{ Auth::user()->username }}" type="text">
+                            <small class="text-danger">Username sifatnya unik dan digunakan untuk login</small>
                         </div>
 
                         <div class="form-group">

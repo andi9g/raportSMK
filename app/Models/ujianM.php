@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class raportM extends Model
+class ujianM extends Model
 {
     use HasFactory;
-    protected $table = 'raport';
-    protected $primaryKey = 'idraport';
+    protected $table = 'ujian';
+    protected $primaryKey = 'idujian';
     protected $guarded = [];
-    
+
     
 }

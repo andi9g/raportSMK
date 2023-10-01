@@ -10,6 +10,9 @@ use App\Models\sekolahM;
 use App\Models\identitasM;
 use App\Models\jurusanM;
 use App\Models\kelasM;
+use App\Models\kehadiranM;
+use App\Models\catatanM;
+use App\Models\ujianM;
 use App\Models\User;
 use Auth;
 use PDF;
@@ -22,7 +25,7 @@ class cetakraportC extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, $iddetailraport)
+    public function index(Request $request, $idraport)
     {   
         $keyword = empty($request->keyword)?"":$request->keyword;
         $kelas = empty($request->kelas)?"":$request->kelas;
@@ -32,16 +35,14 @@ class cetakraportC extends Controller
         $datakelas = kelasM::get();
 
         $iduser = Auth::user()->iduser;
-        $cek = detailraportM::where("iddetailraport", $iddetailraport)
-        ->where("iduser", $iduser);
+        $cek = identitasM::where("iduser", $iduser);
 
         if($cek->count() == 0) {
             return redirect()->back()->with("error", "terjadi kesalahan")->withInput();
         }
         
-        $idkelas = $cek->first()->idkelas;
-        $idjurusan = $cek->first()->idjurusan;
-        $idraport = $cek->first()->idraport;
+        // $idkelas = $cek->first()->walikelas->idkelas;
+        // $idjurusan = $cek->first()->walikelas->idjurusan;
 
         $identitas = identitasM::where("iduser", $iduser)->first();
         $judul2 = null;
@@ -55,11 +56,15 @@ class cetakraportC extends Controller
             ->where("nama", "like", "%$keyword%")->paginate(15);
             $judul2 = strtoupper($identitas->walikelas->kelas->namakelas)." [".($identitas->walikelas->jurusan->namajurusan)."]";
         }else if($identitas->posisi == "admin") {
+            $idkelas = $kelas;
+            $idjurusan = $jurusan;
             $siswa = siswaM::where("idkelas", "like","$kelas%")->where("idjurusan", "like",$jurusan."%")
             ->where("idjurusan", $idjurusan)
             ->where("idkelas", $idkelas)
             ->orderBy("nama", "asc")
             ->where("nama", "like", "%$keyword%")->paginate(15);
+            
+            
         }
 
         $siswa->appends($request->all());
@@ -68,7 +73,7 @@ class cetakraportC extends Controller
             "kelas" => $kelas,
             "jurusan" => $jurusan,
             "identitas" => $identitas,
-            "iddetailraport" => $iddetailraport,
+            "idraport" => $idraport,
             "siswa" => $siswa,
             "judul2" => $judul2,
             "datajurusan" => $datajurusan,
@@ -82,16 +87,15 @@ class cetakraportC extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     public function nilai(Request $request, $idsiswa, $iddetailraport)
+     public function nilai(Request $request, $idsiswa, $idraport)
      {
         $iduser = Auth::user()->iduser;
-        $cek = detailraportM::where("iddetailraport", $iddetailraport)
-        ->where("iduser", $iduser);
-        if($cek->count() == 0) {
+        $identitas = identitasM::where("iduser", $iduser);
+        if($identitas->count() == 0) {
             return redirect()->back()->with("error", "terjadi kesalahan")->withInput();
         }
         
-        $detail = $cek->first();
+        $detail = raportM::where("idraport", $idraport)->first();
         $siswa = siswaM::where("idsiswa", $idsiswa)->first();
         $sekolah = sekolahM::first();
 
@@ -101,92 +105,116 @@ class cetakraportC extends Controller
         ->join("raport", "raport.idraport", "detailraport.idraport")
         ->join("mapel", "mapel.idmapel", "detailraport.idmapel")
         ->join("elemen", "elemen.idelemen", "nilairaport.idelemen")
-        ->where("detailraport.idraport", $detail->idraport)
+        ->where("detailraport.idraport", $idraport)
         ->where("nilairaport.idsiswa", $idsiswa)
         ->orderBy("mapel.ket", "asc")
         ->orderBy("mapel.namamapel", "asc")
+        ->orderBy("mapel.idmapel", "asc")
+        ->select("mapel.idmapel")
+        ->groupBy("mapel.idmapel")
         ->get();
 
+        
         // dd($nilairaport->toArray());
-        $idmapel = null; 
-        $hitung = 1; 
-        $data = [];
-        $ket = null;
-        $umum = [];
-        $kejuruan = [];
-        $n1 = 0;
-        $n2 = 0;
-        foreach ($nilairaport as $nilai) {
-            if($nilai->mapel->ket == "kejuruan") {
-                if($idmapel != $nilai->idmapel) {
-                    $hitung = 1; 
-                    $idmapel = $nilai->idmapel;
-                    
-                    $n1 = (int)$nilai->nilai;
-                    $ket ="";
-                    $catatan = "";
-                    if($n1 < 65) {
-                        $catatan = "Perlu ditingkatkan pembelajaran "."".$this->angkaRomawi($hitung)."). ".$nilai->elemen;
+        // $idmapel = null; 
+        // $hitung = 1; 
+        // $data = [];
+        // $ket = null;
+        // $umum = [];
+        // $kejuruan = [];
+        // $n1 = 0;
+        // $n2 = 0;
+        // $mapel = [];
+        // $guru = "";
+        foreach ($nilairaport as $nr) {
+            $nilai2 = nilairaportM::join("detailraport", "detailraport.iddetailraport", "nilairaport.iddetailraport")
+            ->join("mapel", "mapel.idmapel", "detailraport.idmapel")
+            ->join("elemen", "elemen.idelemen", "nilairaport.idelemen")
+            ->select("nilairaport.*", "mapel.namamapel", "elemen.elemen")
+            ->where("detailraport.idraport", $idraport)
+            ->where("mapel.idmapel", $nr->idmapel)
+            ->where("nilairaport.idsiswa", $idsiswa)
+            ->get();
+            // dd($nilai2);
+            //nilai
+            $n1 = 0;
+            $catatanBaik = "";
+            $catatanBuruk = "";
+            foreach ($nilai2 as $nilai) {
+                $n1 = $n1 + $nilai->nilai;
+                
+                if($nilai->nilai < 70) {
+                    if(empty($catatanBuruk)) {
+                        $catatanBuruk = "Perlu ditingkatkan dalam ".strtolower($nilai->elemen);
                     }else {
-                        $ket = "".$this->angkaRomawi($hitung)."). ".$nilai->elemen;
+                        $catatanBuruk = $catatanBuruk.", ".strtolower($nilai->elemen);
                     }
-    
                 }else {
-                    $n2 = (int)$nilai->nilai;
-                    $hitung++; 
-                    $n1 = (int)($n1 + $nilai->nilai);
-                    if($n2 < 65) {
-                        $catatan = (empty($catatan)?"Perlu ditingkatkan pembelajaran ":$catatan).", "."".$this->angkaRomawi($hitung)."). ".$nilai->elemen;
+                    if(empty($catatanBaik)) {
+                        $catatanBaik = "Menunjukan penguasaan yang baik dalam ".strtolower($nilai->elemen);
                     }else {
-                        $ket = (empty($ket)?"":$ket .", ")."".$this->angkaRomawi($hitung)."). ".$nilai->elemen;
+                        $catatanBaik = $catatanBaik.", ".strtolower($nilai->elemen);
                     }
                 }
-            }else if($nilai->mapel->ket == "umum") {
-                if($idmapel != $nilai->idmapel) {
-                    $hitung = 1; 
-                    $idmapel = $nilai->idmapel;
-                    
-                    $n1 = (int)$nilai->nilai;
-                    $ket ="";
-                    $catatan = "";
-                    if($n1 < 65) {
-                        $catatan = "Perlu ditingkatkan pembelajaran "."".$this->angkaRomawi($hitung)."). ".$nilai->elemen;
-                    }else {
-                        $ket = "".$this->angkaRomawi($hitung)."). ".$nilai->elemen;
-                    }
-    
-                }else {
-                    $hitung++; 
-                    
-                    $n2 = (int)$nilai->nilai;
-                    $n1 = (int)($n1 + $nilai->nilai);
-                    if($n2 < 65) {
-                        $catatan = (empty($catatan)?"Perlu ditingkatkan pembelajaran ":$catatan).", "."".$this->angkaRomawi($hitung)."). ".$nilai->elemen;
-                    }else {
-                        $ket = (empty($ket)?"":$ket .", ")."".$this->angkaRomawi($hitung)."). ".$nilai->elemen;
-                    }
-                }
+            }
+            $catatanBaik = $catatanBaik;
+            $catatanBuruk = $catatanBuruk;
+            $nilai = $n1/count($nilai2);
 
+            $catatan = catatanM::join("detailraport", "detailraport.iddetailraport", "catatan.iddetailraport")
+            ->where("detailraport.idraport", $idraport)
+            ->where("idmapel", $nr->idmapel)
+            ->where("idsiswa", $idsiswa)
+            ->select("catatan.catatan")->get();
+
+            foreach ($catatan as $cat) {
+                if(empty($catatanBuruk)) {
+                    $catatanBuruk = ucfirst(strtolower($cat->catatan));
+                }else {
+                    $catatanBuruk = $catatanBuruk.", ".strtolower($cat->catatan);
+                }
+            }
+
+            $ujian = ujianM::where("idraport", $idraport)
+            ->where("idmapel", $nr->idmapel)
+            ->where("idsiswa", $idsiswa)
+            ->orderBy("idujian", "desc");
+
+            if ($ujian->count() > 0) {
+                $ujian = $ujian->first();
+                $lisan = $ujian->lisan;
+                $nonlisan = $ujian->nonlisan;
+
+                if($lisan == 0 || $nonlisan == 0) {
+                    $nilaiujian = $lisan + $nonlisan;
+                    $nilai = ($nilai + $nilaiujian) / 2;
+                }else {
+                    $nilaiujian = ($lisan + $nonlisan) / 2;
+                    $nilai = ($nilai + $nilaiujian) / 2;
+                }
             }
 
             
-            $mapel[$nilai->mapel->idmapel] = [
-                "namamapel" => $nilai->mapel->namamapel,
-                "capaian" => $ket,
-                "nilai" => round($n1 / $hitung),
-                "ket" => $nilai->mapel->ket,
-                "catatan" => $catatan,
+            
+            $mapel[$nr->idmapel] = [
+                "namamapel" => $nr->mapel->namamapel,
+                "capaian" => $catatanBaik,
+                "nilai" => round($nilai),
+                "ket" => $nr->mapel->ket,
+                "catatan" => $catatanBuruk,
             ];
 
-            
+            // dd($mapel);
 
         }
      
+        
 
         $pdf = PDF::loadView("laporan.raport.nilai", [
             "siswa" => $siswa,
             "sekolah" => $sekolah,
             "detail" => $detail,
+            "identitas" => $identitas,
             "mapel" => $mapel,
         ]);
 
@@ -194,6 +222,164 @@ class cetakraportC extends Controller
 
 
     }
+
+
+
+    //  public function nilai(Request $request, $idsiswa, $idraport)
+    //  {
+    //     $iduser = Auth::user()->iduser;
+    //     $identitas = identitasM::where("iduser", $iduser);
+    //     if($identitas->count() == 0) {
+    //         return redirect()->back()->with("error", "terjadi kesalahan")->withInput();
+    //     }
+        
+    //     $detail = raportM::where("idraport", $idraport)->first();
+    //     $siswa = siswaM::where("idsiswa", $idsiswa)->first();
+    //     $sekolah = sekolahM::first();
+
+        
+        
+    //     $nilairaport = nilairaportM::join("detailraport", "detailraport.iddetailraport", "nilairaport.iddetailraport")
+    //     ->join("raport", "raport.idraport", "detailraport.idraport")
+    //     ->join("mapel", "mapel.idmapel", "detailraport.idmapel")
+    //     ->join("elemen", "elemen.idelemen", "nilairaport.idelemen")
+    //     ->where("detailraport.idraport", $idraport)
+    //     ->where("nilairaport.idsiswa", $idsiswa)
+    //     ->orderBy("mapel.ket", "asc")
+    //     ->orderBy("mapel.namamapel", "asc")
+    //     ->orderBy("mapel.idmapel", "asc")
+    //     ->get();
+
+    //     // dd($nilairaport->toArray());
+    //     $idmapel = null; 
+    //     $hitung = 1; 
+    //     $data = [];
+    //     $ket = null;
+    //     $umum = [];
+    //     $kejuruan = [];
+    //     $n1 = 0;
+    //     $n2 = 0;
+    //     $mapel = [];
+    //     $guru = "";
+    //     foreach ($nilairaport as $nilai) {
+    //         if($nilai->mapel->ket == "kejuruan") {
+    //             if($idmapel != $nilai->idmapel) {
+    //                 $hitung = 1; 
+    //                 $idmapel = $nilai->idmapel;
+                    
+    //                 $n1 = (int)$nilai->nilai;
+    //                 $ket ="";
+    //                 $ct = catatanM::join("detailraport", "detailraport.iddetailraport", "catatan.iddetailraport")
+    //                 ->join("mapel", "mapel.idmapel", "detailraport.idmapel")
+    //                 ->where("mapel.idmapel", $nilai->idmapel)
+    //                 ->where("catatan.idsiswa", $idsiswa)->where("detailraport.idraport", $nilai->detailraport->idraport)->get();
+                    
+    //                 if (count($ct) == 0) {
+    //                     $catatan = "";
+    //                 }else {
+    //                     $catatan = "";
+    //                     $guru = "";
+    //                     $i=1;
+    //                     foreach ($ct as $ct2) {
+                            
+    //                         if($i++ >= count($ct) && count($ct) !=1) {
+    //                             $guru = $guru.", ".$ct2->catatan;
+    //                         }else {
+    //                             $guru = $guru.$ct2->catatan;
+    //                         }
+    //                     }
+    //                 }
+                    
+    //                 if($n1 < 70) {
+    //                     $catatan = (empty($catatan)?"Perlu ditingkatkan dalam ":$catatan." ")." ".$nilai->elemen;
+    //                 }else {
+    //                     $ket = $nilai->elemen;
+    //                 }
+
+    //             }else {
+    //                 $n2 = (int)$nilai->nilai;
+    //                 $hitung++; 
+    //                 $n1 = (int)($n1 + $nilai->nilai);
+    //                 if($n2 < 70) {
+    //                     $catatan = (empty($catatan)?"Perlu ditingkatkan dalam ":$catatan.", ")." ".$nilai->elemen;
+    //                 }else {
+    //                     $ket = (empty($ket)?"":$ket .", ").$nilai->elemen;
+    //                 }
+    //             }
+    //         }else if($nilai->mapel->ket == "umum") {
+    //             if($idmapel != $nilai->idmapel) {
+    //                 $hitung = 1; 
+    //                 $idmapel = $nilai->idmapel;
+                    
+    //                 $n1 = (int)$nilai->nilai;
+    //                 $ct = catatanM::join("detailraport", "detailraport.iddetailraport", "catatan.iddetailraport")
+    //                 ->join("mapel", "mapel.idmapel", "detailraport.idmapel")
+    //                 ->where("mapel.idmapel", $nilai->idmapel)
+    //                 ->where("catatan.idsiswa", $idsiswa)->where("detailraport.idraport", $nilai->detailraport->idraport)->get();
+                    
+    //                 if (count($ct) == 0) {
+    //                     $catatan = "";
+    //                 }else {
+    //                     $catatan = "";
+    //                     $guru = "";
+    //                     $i=1;
+    //                     foreach ($ct as $ct2 ) {
+                            
+    //                         if($i++ >= count($ct) && count($ct) !=1) {
+    //                             $guru = $guru.", ".$ct2->catatan;
+    //                         }else {
+    //                             $guru = $guru.$ct2->catatan;
+    //                         }
+    //                     }
+    //                 }
+                    
+    //                 if($n1 < 70) {
+    //                     $catatan = (empty($catatan)?"Perlu ditingkatkan dalam ":$catatan." ")." ".$nilai->elemen;
+    //                 }else {
+    //                     $ket = $nilai->elemen;
+    //                 }
+    
+    //             }else {
+    //                 $hitung++; 
+                    
+    //                 $n2 = (int)$nilai->nilai;
+    //                 $n1 = (int)($n1 + $nilai->nilai);
+    //                 if($n2 < 70) {
+    //                     $catatan = (empty($catatan)?"Perlu ditingkatkan dalam ":$catatan).", ".$nilai->elemen;
+    //                 }else {
+    //                     $ket = (empty($ket)?"":$ket .", ").$nilai->elemen;
+    //                 }
+    //             }
+
+    //         }
+
+            
+    //         $mapel[$nilai->mapel->idmapel] = [
+    //             "namamapel" => $nilai->mapel->namamapel,
+    //             "capaian" => $ket,
+    //             "nilai" => round($n1 / $hitung),
+    //             "ket" => $nilai->mapel->ket,
+    //             "catatan" => ucfirst(strtolower($catatan.". ".$guru)),
+    //         ];
+
+            
+
+    //     }
+     
+        
+
+    //     $pdf = PDF::loadView("laporan.raport.nilai", [
+    //         "siswa" => $siswa,
+    //         "sekolah" => $sekolah,
+    //         "detail" => $detail,
+    //         "identitas" => $identitas,
+    //         "mapel" => $mapel,
+    //     ]);
+
+    //     return $pdf->stream("cover_".str_replace(" ", "", $siswa->nama).".pdf");
+
+
+    // }
 
     function angkaRomawi($angka)
     {

@@ -80,11 +80,33 @@
           <i class="fas fa-expand-arrows-alt"></i>
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" disabled data-widget="control-sidebar" data-controlsidebar-slide="true" href="#" role="button">
-          Logout
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
+            <i class="far fa-user-circle text-lg"></i>
         </a>
-      </li>
+        <div
+            class="dropdown-menu dropdown-menu-lg dropdown-menu-right"
+            style="left: inherit; right: 0px;">
+            <span class="dropdown-item dropdown-header">PROFILE</span>
+            <div class="dropdown-divider"></div>
+            <a href="{{ url('identitas', []) }}" class="dropdown-item">
+                <i class="fas fa-user mr-2"></i>
+                  PROFIL SAYA
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="{{ url('password', []) }}" class="dropdown-item">
+                <i class="fas fa-key mr-2"></i>
+                  UBAH PASSWORD
+            </a>
+            <div class="dropdown-divider"></div>
+            <form action="{{ route('logout') }}" method="post">
+              @csrf
+              <button type="submit" class="dropdown-item dropdown-footer bg-danger">
+                Logout
+              </button>
+            </form>
+        </div>
+    </li>
     </ul>
   </nav>
   <!-- /.navbar -->
@@ -92,8 +114,8 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
-      <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+    <a href="" class="brand-link">
+      <img src="{{ url('gambar', ['logo.png']) }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light text-bold">
         <b>
           E-RAPORT</span>
@@ -105,10 +127,10 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+          {{-- <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image"> --}}
         </div>
         <div class="info">
-          <a href="#" class="d-block">Andi Bayu</a>
+          <a href="#" class="d-block">{{ Auth::user()->name }}</a>
         </div>
       </div>
 
@@ -130,7 +152,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="{{ url('dashboard', []) }}" class="nav-link @yield('warnadashboard')">
+            <a href="{{ url('home', []) }}" class="nav-link @yield('warnahome')">
               <i class="nav-icon fas fa-home"></i>
               <p>
                 Dashboard
@@ -138,6 +160,7 @@
             </a>
           </li>
 
+          @if (Auth::user()->identitas->posisi == "admin")
           <li class="nav-item">
             <a href="{{ url('guru', []) }}" class="nav-link @yield('warnaguru')">
               <i class="nav-icon fas fa-user"></i>
@@ -163,10 +186,13 @@
               </p>
             </a>
           </li>
-          
+            
           <li class="nav-item">
             <hr class="bg-secondary">
           </li>
+          @endif
+          
+         
           <li class="nav-item">
             <a href="{{ url('raport', []) }}" class="nav-link @yield('warnaraport')">
               <i class="nav-icon fas fa-book"></i>

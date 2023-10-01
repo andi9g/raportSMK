@@ -12,9 +12,16 @@ class identitasM extends Model
     protected $primaryKey = 'ididentitas';
     protected $guarded = [];
 
+    protected $fillable = ['ididentitas', 'iduser', 'nip', 'alamat','email', 'agama', 'posisi', 'jk', 'hp'];
+
     public function walikelas()
     {
         return $this->hasOne(walikelasM::class, "ididentitas", "ididentitas");
+    }
+
+    public function user()
+    {
+        return $this->hasOne(User::class, "iduser", "iduser");
     }
 
 }

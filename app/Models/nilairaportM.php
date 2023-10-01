@@ -32,4 +32,9 @@ class nilairaportM extends Model
         return $this->hasOne(elemenM::class, "idelemen", "idelemen");
     }
 
+    public function raport()
+    {
+        return $this->hasOne(raportM::class, "idraport", "idraport");
+    }
+
 }

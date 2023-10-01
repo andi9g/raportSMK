@@ -29,6 +29,10 @@
             text-align: center;
         }
 
+        p {
+            margin: 10px auto;
+        }
+
         .judul {
             margin:auto 20%;
             font-size: 16pt;
@@ -65,14 +69,17 @@
         .tableku td {
             padding: auto 5px;
         }
+        .myfont {
+            line-height: 13px;
+        }
         
     </style>
 </head>
 <body>
     <table width="100%" class="fontku">
         <tr>
-            <td width="50%">
-                <table width="100%">
+            <td width="50%" valign="top">
+                <table width="100%" class="myfont">
                     <tr>
                         <td valign="top" nowrap>Nama Peserta Didik</td>
                         <td valign="top" width="1px">:&nbsp;&nbsp;</td>
@@ -81,7 +88,7 @@
                     <tr>
                         <td valign="top" nowrap>Nomor Induk/NISN</td>
                         <td valign="top" width="1px">:&nbsp;&nbsp;</td>
-                        <td valign="top">{{ ucwords(strtolower($siswa->nisn)) }}</td>
+                        <td valign="top">{{ empty($siswa->nis)?"":$siswa->nis." / " }}{{ ucwords(strtolower($siswa->nisn)) }}</td>
                     </tr>
 
                     <tr>
@@ -101,8 +108,8 @@
                     </tr>
                 </table>
             </td>
-            <td width="50%">
-                <table width="100%">
+            <td width="50%" valign="top">
+                <table width="100%" class="myfont">
                     <tr>
                         <td valign="top" nowrap>Kelas</td>
                         <td valign="top" width="1px">:&nbsp;&nbsp;</td>
@@ -111,14 +118,14 @@
                     <tr>
                         <td valign="top" nowrap>Fase</td>
                         <td valign="top" width="1px">:&nbsp;&nbsp;</td>
-                        <td valign="top">{{ strtoupper($detail->raport->fase) }}</td>
+                        <td valign="top">{{ strtoupper($detail->fase) }}</td>
                     </tr>
 
                     <tr>
                         <td valign="top" nowrap>Semester</td>
                         <td valign="top" width="1px">:&nbsp;&nbsp;</td>
                         <td valign="top">
-                            {{ ucwords($detail->raport->semester) }}
+                            {{ ucwords($detail->semester) }}
                         </td>
                     </tr>
 
@@ -126,7 +133,7 @@
                         <td valign="top" nowrap>Tahun Pelajaran</td>
                         <td valign="top" width="1px">:&nbsp;&nbsp;</td>
                         <td valign="top">
-                            {{ $detail->raport->tahun."/".($detail->raport->tahun+1) }}
+                            {{ $detail->tahun."/".($detail->tahun+1) }}
                         </td>
                     </tr>
                 </table>
@@ -149,19 +156,20 @@
                 </tr>
             </thead>
 
-            <tr>
-                <td colspan="4">A. Kelompok Mata Pelajaran Umum</td>
+            <tbody>
+                <tr>
+                <td colspan="4" >A. Kelompok Mata Pelajaran Umum</td>
             </tr>
             @foreach ($mapel as $item)
                 @if ($item["ket"]=="umum")
                 <tr>
-                    <td rowspan="2" align="center">{{ $loop->iteration }}</td>
-                    <td rowspan="2">{{ $item["namamapel"] }}</td>
-                    <td align="center" rowspan="2">{{ $item["nilai"] }}</td>
-                    <td class="fontku2">Target Pembelajaran: {{ $item["capaian"] }}</td>
+                    <td rowspan="2" style="page-break-before: always;" align="center">{{ $loop->iteration }}</td>
+                    <td style="page-break-before: always;" rowspan="2">{{ $item["namamapel"] }}</td>
+                    <td style="page-break-before: always;" align="center" rowspan="2">{{ $item["nilai"] }}</td>
+                    <td style="page-break-before: always;" class="fontku2">{{ $item["capaian"] }}</td>
                 </tr>
                 <tr>
-                    <td class="fontku2">{{ $item["catatan"] }}</td>
+                    <td style="page-break-before: always;" class="fontku2">{{ $item["catatan"] }}</td>
                 </tr>
                     
                 @endif
@@ -172,24 +180,168 @@
                 <td colspan="4">B. Kelompok Mata Pelajaran Kejuruan</td>
             </tr>
             @foreach ($mapel as $item)
-            @if ($item["ket"]=="kejuruan")
-            <tr>
-                <td rowspan="2" align="center">{{ $loop->iteration }}</td>
-                <td rowspan="2">{{ $item["namamapel"] }}</td>
-                <td align="center" rowspan="2">{{ $item["nilai"] }}</td>
-                <td class="fontku2">Target Pembelajaran: {{ $item["capaian"] }}</td>
-            </tr>
-            <tr>
-                <td class="fontku2">{{ $item["catatan"] }}</td>
-            </tr>
+                @if ($item["ket"]=="kejuruan")
+                <tr>
+                    <td rowspan="2" align="center">{{ $loop->iteration }}</td>
+                    <td rowspan="2">{{ $item["namamapel"] }}</td>
+                    <td align="center" rowspan="2">{{ $item["nilai"] }}</td>
+                    <td style="page-break-before: always;" class="fontku2">{{ $item["capaian"] }}</td>
+                </tr>
+                <tr>
+                    <td style="page-break-before: always;" class="fontku2">{{ $item["catatan"] }}</td>
+                </tr>
+                    
+                @endif
                 
-            @endif
-        @endforeach
+            @endforeach
+
+
+            </tbody>
+            
+
+            
 
 
 
         </table>
 
+    </div>
+    
+    <br>
+    
+    <div class="fontku">
+        <b>
+            B. Extrakulikuler
+        </b>
+
+        <table width="100%" class="tableku" border="1">
+            <thead>
+                <tr>
+                    <th width="2px" style="page-break-inside: avoid;">No</th>
+                    <th style="page-break-inside: avoid;width: 200px">Kegiatan Extrakulikuler</th>
+                    <th style="page-break-inside: avoid;">Keterangan</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td colspan="3">
+                        DATA BELUM TERSEDIA DI UTS
+                    </td>
+                </tr>
+            </tbody>
+
+        </table>
+    </div>
+
+    <br>
+
+    @php
+        $kehadiran = DB::table("kehadiran")->where("idsiswa", $siswa->idsiswa)
+        ->where("idraport", $detail->idraport)->first();
+    @endphp
+    <div class="fontku">
+        <b>
+            C. Ketidak Hadiran
+        </b>
+
+        <table width="75%" class="tableku" border="1">
+            <tbody>
+                <tr>
+                    <td style="width: 226px">
+                        Sakit
+                    </td>
+                    <td>
+                        : &nbsp;{{ empty($kehadiran->sakit)?0:$kehadiran->sakit }}&nbsp;&nbsp;Hari
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Izin
+                    </td>
+                    <td>
+                        : &nbsp;{{ empty($kehadiran->izin)?0:$kehadiran->izin }}&nbsp;&nbsp;Hari
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Tanpa Keterangan
+                    </td>
+                    <td>
+                        : &nbsp;{{ empty($kehadiran->tanpaketerangan)?0:$kehadiran->tanpaketerangan }}&nbsp;&nbsp;Hari
+                    </td>
+                </tr>
+            </tbody>
+
+        </table>
+    </div>
+
+    <br>
+
+    <div class="fontku">
+        <b>
+            B. Kenaikan Kelas
+        </b>
+
+        <table width="100%" class="tableku" border="1">
+            
+
+            <tbody>
+                <tr>
+                    <td style="padding: 8px auto"> 
+                        <center>
+                            DALAM PENILAIAN
+                        </center>
+                    </td>
+                </tr>
+            </tbody>
+
+        </table>
+    </div>
+
+    <br>
+
+    <div class="fontku">
+        <table width="100%">
+            <tr>
+                <td width="5%"></td>
+                <td width="50%">
+                        
+                        <p>Orang Tua/Wali</p>
+                        <br>
+                        <br>
+                        <br>
+                        <p>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . </p>
+                </td>
+                
+                <td width="40%">
+                        <p>Gunung Kijang, {{ \Carbon\Carbon::parse(date('Y-m-d'))->isoFormat("DD MMMM Y") }}</p>
+                        <p>Wali Kelas</p>
+                        <br>
+                        <br>
+                        <br>
+                        <p><b>{{ $identitas->first()->user->name }}</b></p>
+                        <p>NIP.{{ $identitas->first()->nip }}</p>
+
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="3">
+                    <center>
+                        <p>Mengetahui</p>
+                        <p>Kepala Sekolah</p>
+                        <br>
+                        <br>
+                        <br>
+                        <p><b>MUSTAFA KAMAL, S.Pd</b></p>
+                        <p>NIP.19800909 201001 1 018</p>
+                    </center>
+
+                </td>
+            </tr>
+
+        </table>
     </div>
         
     

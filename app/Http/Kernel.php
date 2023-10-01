@@ -58,6 +58,8 @@ class Kernel extends HttpKernel
         'auth' => \App\Http\Middleware\Authenticate::class,
         'GerbangIdentitas' => \App\Http\Middleware\GerbangIdentitas::class,
         'GerbangWalikelas' => \App\Http\Middleware\GerbangWalikelas::class,
+        'GerbangAdmin' => \App\Http\Middleware\GerbangAdmin::class,
+        'GerbangCekWaliKelas' => \App\Http\Middleware\GerbangCekWaliKelas::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,

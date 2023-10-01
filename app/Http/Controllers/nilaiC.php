@@ -8,6 +8,9 @@ use App\Models\raportM;
 use App\Models\elemenM;
 use App\Models\subelemenM;
 use App\Models\detailraportM;
+use App\Models\catatanM;
+use App\Models\ujianM;
+use App\Models\kehadiranM;
 use Illuminate\Http\Request;
 use Auth;
 
@@ -25,7 +28,7 @@ class nilaiC extends Controller
             $detailraport = detailraportM::join("raport", "raport.idraport", "detailraport.idraport")
             ->join("mapel", "mapel.idmapel", "detailraport.idmapel")
             ->where("detailraport.iddetailraport", $iddetailraport)
-            ->select("detailraport.*", "raport.namaraport", "mapel.namamapel")
+            ->select("detailraport.*", "raport.namaraport", "mapel.namamapel", "mapel.idmapel")
             ->first();
             
             $idkelas = $detailraport->idkelas;
@@ -33,6 +36,7 @@ class nilaiC extends Controller
             $idraport = $detailraport->idraport;
             $judul = "PENILAIAN". strtoupper($detailraport->namaraport);
             $mapel = ucwords($detailraport->namamapel);
+            $idmapel = ucwords($detailraport->idmapel);
 
             $elemen = elemenM::where("iddetailraport", $iddetailraport)
             ->where("iduser", $iduser)
@@ -54,6 +58,7 @@ class nilaiC extends Controller
                 "iddetailraport" => $iddetailraport,
                 "judul" => $judul,
                 "mapel" => $mapel,
+                "idmapel" => $idmapel,
                 "siswa" => $siswa,
                 "keyword" => $keyword,
                 "idraport" => $idraport,
@@ -67,6 +72,87 @@ class nilaiC extends Controller
         }
     }
 
+    public function ujian(Request $request, $idraport)
+    {
+        try {
+            $iduser = Auth::user()->iduser;
+            $detailraport = detailraportM::where("idraport", $idraport)
+            ->where("iduser", $iduser)->count();
+
+            if($detailraport == 0 ){
+                return redirect()->back()->with("error", "terjadi kesalahan");
+            }
+            
+            $data = $request->all();
+
+            $ujian = ujianM::where("idsiswa", $request->idsiswa)
+            ->where("idmapel", $request->idmapel)
+            ->where("idraport", $idraport);
+
+            if($ujian->count() == 0) {
+                $data["idraport"] = $idraport;
+                ujianM::create($data);
+            }else {
+                $ujian->first()->update($data);
+            }
+            return redirect()->back()->with("success", "Nilai Ujian Berhasil Diinput");
+
+        } catch (\Throwable $th) {
+            return redirect()->back()->with("error", "Terjadi kesalahan");
+        }
+
+
+    }
+
+
+
+
+
+    public function kehadiran(Request $request, $idraport)
+    {
+        $iduser = Auth::user()->iduser;
+        $detailraport = detailraportM::where("idraport", $idraport)
+        ->where("iduser", $iduser)->count();
+
+        if($detailraport == 0 ){
+            return redirect()->back()->with("error", "terjadi kesalahan");
+        }
+
+        $data = $request->all();
+        $cek = kehadiranM::where("idsiswa", $request->idsiswa)->where("idraport", $idraport);
+
+        if($cek->count() == 0) {
+            $data["idraport"] = $idraport;
+            kehadiranM::create($data);
+        }else {
+            $cek->first()->update($data);
+        }
+        return redirect()->back()->with("toast_success", "success");
+
+    }
+
+    public function catatan(Request $request, $iddetailraport)
+    {
+        $iduser = Auth::user()->iduser;
+        $detailraport = detailraportM::where("iddetailraport", $iddetailraport)
+        ->where("iduser", $iduser)->count();
+
+        // dd($request->idsiswa);
+        if($detailraport == 0 ){
+            return redirect()->back()->with("error", "terjadi kesalahan");
+        }
+
+        $data = $request->all();
+        $cek = catatanM::where("idsiswa", $request->idsiswa)->where("iddetailraport", $iddetailraport);
+
+        if($cek->count() == 0) {
+            $data["iddetailraport"] = $iddetailraport;
+            catatanM::create($data);
+        }else {
+            $cek->first()->update($data);
+        }
+        return redirect()->back()->with("toast_success", "Berhasil memberikan catatan");
+    }
 
     public function elemen(Request $request, $iddetailraport)
     {

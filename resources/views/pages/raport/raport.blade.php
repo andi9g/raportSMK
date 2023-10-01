@@ -51,6 +51,11 @@
                                 <option value="genap">Genap</option>
                             </select>
                         </div>
+
+                        <div class="form-group">
+                            <label for="fase">Kurikulum Merdeka Fase </label>
+                            <input id="fase" class="form-control text-uppercase" type="text" name="fase" placeholder="contoh: E, F...">
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-success">Tambah Data</button>
@@ -99,13 +104,25 @@
                             <center>
                                 <h2 class="card-title text-lg text-center"><b>{{ strtoupper($item->namaraport) }}</b></h2>
                             </center>
+                            @if (Auth::user()->identitas->posisi == "admin")
+                            <div class="float-right">
+                                <form action="{{ route('raport.destroy', [$item->idraport]) }}" method="post">
+                                    @csrf
+                                    @method("DELETE")
+                                    <button type="submit" onclick="return confirm('yakin ingin dihapus?')" class="btn">
+                                        <i class="fa fa-trash text-danger"></i>
+                                    </button>
+                                </form>
+                            </div>
+                                
+                            @endif
                         </div>
 
                         <div class="card-body text-lg">
                             <ul class="my-0">
                                 <li>SEMESTER {{ strtoupper($item->semester) }}</li>
                                 <li>{{ $item->tahun }}</li>
-                                <li>{{ ($item->ket==0)?"DIBUKA":"DITUTUP" }}</li>
+                                <li>Fase {{ $item->fase }}</li>
                             </ul>
                         </div>
                         <div class="card-footer">
@@ -141,15 +158,20 @@
                                     @php
                                         if ($item->ket == 0) {
                                             $bg= "bg-success";
-                                            $tex = "BUKA";
+                                            $tex = "TELAH DI BUKA";
                                         }else {
                                             $bg="bg-danger";
-                                            $tex = "TUTUP";
+                                            $tex = "TELAH DI TUTUP";
                                         }
                                     @endphp
-                                    <button type="submit" class="btn {{ $bg }} btn-block">
-                                        <b>{{ $tex }}</b>
-                                    </button>
+                                    @if ($user->identitas->posisi == "admin")
+                                    <form action="{{ route('open.raport', [$item->idraport]) }}" method="post">
+                                        @csrf
+                                        <button type="submit" class="btn {{ $bg }} btn-block">
+                                            <b>{{ $tex }}</b>
+                                        </button>
+                                    </form>
+                                    @endif
                                 </div>
                             </div>
                         </div>

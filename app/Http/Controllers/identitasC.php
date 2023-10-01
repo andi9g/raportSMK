@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\identitasM;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Auth;
+use Hash;
 
 class identitasC extends Controller
 {
@@ -22,6 +24,40 @@ class identitasC extends Controller
         ]);
     }
 
+    public function password()
+    {
+        return view("pages.identitas.password");
+    }
+    public function ubahpassword(Request $request)
+    {
+        $request->validate([
+            "passwordlama" => 'required',
+            "password" => 'required|min:7',
+            "password2" => 'same:password',
+        ]);
+
+        try {
+            $iduser = Auth::user()->iduser;
+            $cek = User::where("iduser", $iduser)->first();
+
+            if(Hash::check($request->passwordlama, $cek->password)) {
+                $cek->update([
+                    "password" => Hash::make($request->password),
+                ]);
+
+                
+                
+                return redirect()->back()->with("success", "Password berhasil diubah, silahkan login ulang")->withInput();
+            }
+
+            return redirect()->back()->with("toast_error", "Password lama salah")->withInput();
+
+        } catch (\Throwable $th) {
+            return redirect()->back()->with("toast_error", "terjadi kesalahan")->withInput();
+        }
+
+    }
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -55,15 +91,23 @@ class identitasC extends Controller
             $data = $request->all();
 
             if($cek > 0) {
-                identitasM::where("iduser", $iduser)->update($data);
+                identitasM::where("iduser", $iduser)->first()->update($data);
+                User::where('iduser', $iduser)->first()->update([
+                    "name" => $request->name,
+                    "username" => $request->username,
+                ]);
                 return redirect()->back()->with("success", "Identitas berhasil diupdate")->withInput();
             }else {
                 $data["iduser"] = $iduser;
                 identitasM::create($data);
+                User::where('iduser', $iduser)->first()->update([
+                    "name" => $request->name,
+                    "username" => $request->username,
+                ]);
                 return redirect('home')->with("success", "Terima kasih, Data telah lengkap");
             }
 
-            return redirect('identitas')->with("error", "terjadi kesalaan");
+            return redirect()->back()->with("success", "Data berhasil di update");
         // } catch (\Throwable $th) {
         //     return redirect('identitas')->with("error", "terjadi kesalaan");
         // }

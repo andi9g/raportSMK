@@ -27,6 +27,7 @@ class raportC extends Controller
         $keyword = empty($request->keyword)?"":$request->keyword;
         $raport = raportM::where("namaraport", "like", "%$keyword%")
         ->orWhere("semester", "like", "$keyword%")
+        ->orderBy("idraport", "desc")
         ->paginate(15);
 
         
@@ -101,6 +102,22 @@ class raportC extends Controller
 
     }
 
+    public function open(Request $request, $idraport)
+    {
+        $raport = raportM::where("idraport", $idraport)->first();
+        if($raport->ket == true) {
+            $ket = 0;
+        }else {
+            $ket = 1;
+        }
+
+        $raport->update([
+            "ket" => $ket,
+        ]);
+
+        return redirect()->back()->withInput();
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -120,7 +137,9 @@ class raportC extends Controller
     public function store(Request $request)
     {
         try {
+            
             $data = $request->all();
+            $data["fase"] = strtoupper($request->fase);
             raportM::create($data);
 
             return redirect()->back()->with("success", "success")->withInput();
@@ -170,8 +189,9 @@ class raportC extends Controller
      * @param  \App\Models\raportM  $raportM
      * @return \Illuminate\Http\Response
      */
-    public function destroy(raportM $raportM)
+    public function destroy(raportM $raportM, $idraport)
     {
-        //
+        raportM::destroy($idraport);
+        return redirect()->back()->with("warning", "success")->withInput();
     }
 }

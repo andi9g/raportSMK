@@ -51,9 +51,10 @@
                             <th width="5px">No</th>
                             <th>Nama Siswa</th>
                             <th>Rombel</th>
-                            <th>Ket</th>
+                            <th>Catatan</th>
                             <th>Nilai</th>
-                            <th>Data Nilai</th>
+                            <th>Ujian</th>
+                            <th>Catatan</th>
                         </thead>
         
                         <tbody>
@@ -62,25 +63,63 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td class="text-bold">{{ strtoupper($item->nama) }}</td>
                                 <td>{{ $item->kelas->namakelas." ".$item->jurusan->jurusan }}</td>
-                                <td>
+                                
+                                <td class="text-center">
                                     @php
-                                        $nilaisiswa = DB::table("nilairaport")->where("idsiswa", $item->idsiswa)->where("iddetailraport", $iddetailraport)->count();
-                                        
+                                        $catatan = DB::table("catatan")->where("idsiswa", $item->idsiswa)
+                                        ->where("iddetailraport", $iddetailraport)->count();
                                     @endphp
-                                    @if(count($jmlelemen) == $nilaisiswa) 
-                                        <font class="text-success text-bold">OKE</font>
-                                    @else 
+                                    @if ($catatan == null)
                                         -
+                                    @else
+                                        <font class="text-success text-bold">
+                                            <i class="fa fa-check"></i>
+                                        </font>
                                     @endif
                                 </td>
+                                @php
+                                    $nilaisiswa = DB::table("nilairaport")->join("elemen", "elemen.idelemen", "nilairaport.idelemen")->where("nilairaport.idsiswa", $item->idsiswa)->where("nilairaport.iddetailraport", $iddetailraport)->count();
+                                    
+                                    $ujian = DB::table("ujian")->where("idsiswa", $item->idsiswa)
+                                    ->where("idraport", $idraport)
+                                    ->where("idmapel", $idmapel)
+                                    ->count();
+                                @endphp
+                                @if ($ujian==0)
+                                    @php
+                                        $warnanilai2 = "bg-danger";
+                                    @endphp    
+                                @else
+                                    @php
+                                        $warnanilai2 = "bg-success";
+                                    @endphp  
+                                @endif
+
+                                @if(count($jmlelemen) == $nilaisiswa) 
+                                    @if (count($jmlelemen) == 0)
+                                    @php
+                                        $warnanilai1 = "bg-danger";
+                                    @endphp
+                                    @else 
+                                        @php
+                                            $warnanilai1 = "bg-success";
+                                        @endphp
+                                    @endif
+                                @else 
+                                @php
+                                    $warnanilai1 = "bg-danger";
+                                @endphp
+                                @endif
                                 <td>
-                                    <button class="btn btn-success btn-block btn-xs my-0" type="button" data-toggle="modal" data-target="#nilairaport{{ $item->idsiswa }}"><b>KELOLA NILAI</b></button>
+                                    <button class="btn {{ $warnanilai1 }} btn-block btn-xs my-0" type="button" data-toggle="modal" data-target="#nilairaport{{ $item->idsiswa }}"><b>PENILAIAN</b></button>
                                 </td>
                                 <td>
-                                    <a href="" class="btn btn-secondary btn-block btn-xs my-0"><b>
-                                        <i class="fa fa-print"></i> CETAK   
-                                    </b></a>
+                                    <button class="btn {{ $warnanilai2 }} btn-block btn-xs my-0" type="button" data-toggle="modal" data-target="#ujian{{ $item->idsiswa }}"><b>UJIAN</b></button>
                                 </td>
+                                <td>
+                                    <button class="btn btn-warning btn-xs my-0" type="button" data-toggle="modal" data-target="#catatan{{ $item->idsiswa }}"><b>CATATAN</b></button>
+                                </td>
+
                             </tr>
                                 
                             @endforeach
@@ -200,6 +239,62 @@
 
 
 @foreach ($siswa as $item)
+
+    <div id="ujian{{ $item->idsiswa }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="ujian{{ $item->idsiswa }}" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ujian{{ $item->idsiswa }}">Masukan Nilai Ujian</h5>
+                    <button class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="{{ route('nilai.ujian', [$idraport]) }}" method="post">
+                    @csrf
+                
+                <div class="modal-body">
+                    <p class="text-md">
+
+                        <font class="text-danger">Masukan nilai ujian <b>Lisan</b> ataupun <b>Nonlisan</b>, jika tidak ada beri nilai <b>0</b></font>
+                    </p>
+                    @php
+                        $ujian = DB::table("ujian")->where("idsiswa", $item->idsiswa)
+                        ->where("idraport", $idraport)
+                        ->where("idmapel", $idmapel)
+                        ->first();
+                    @endphp
+                    <input type="text" name="idsiswa" value="{{ $item->idsiswa }}" hidden>
+                    <input type="text" name="idmapel" value="{{ $idmapel }}" hidden>
+                    <div class="form-group">
+                        <label for="nama">Nama Lengkap</label>
+                        <input id="nama" class="form-control" type="text" disabled value="{{ $item->nama }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ujianlisan">Nilai Ujian Lisan</label>
+                        <input id="ujianlisan" class="form-control" onchange="changeHandler(this)" onkeyup="changeHandler(this)" type="number" name="lisan" value="{{ empty($ujian->lisan)?0:$ujian->lisan }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ujianlisan">Nilai Ujian Non-Lisan</label>
+                        <input id="ujianlisan" class="form-control" type="number" onchange="changeHandler(this)" onkeyup="changeHandler(this)" name="nonlisan" value="{{ empty($ujian->lisan)?0:$ujian->nonlisan }}">
+                    </div>
+                    
+                    
+                </div>
+                <div class="modal-footer text-right">
+                    <button type="submit" class="btn btn-success px-4">
+                        <b>
+                            PROSESS
+                        </b>
+                    </button>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+
     <div id="nilairaport{{ $item->idsiswa }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -226,7 +321,7 @@
 
                             <div class="form-group text-md">
                                 <label for="inputan{{ $e->idelemen }}" style="font-weight: normal"><i>{{ $e->elemen }}</i></label>
-                                <input id="inputan{{ $e->idelemen }}" class="form-control" type="number" name="elemen{{ $e->idelemen }}" placeholder="masukan nilai" value="{{$nilai}}">
+                                <input id="inputan{{ $e->idelemen }}" class="form-control" type="number" onchange="changeHandler(this)" onkeyup="changeHandler(this)" name="elemen{{ $e->idelemen }}" placeholder="masukan nilai" value="{{$nilai}}">
                             </div>
     
                             
@@ -244,6 +339,45 @@
             </div>
         </div>
     </div>
+
+
+    <div id="catatan{{ $item->idsiswa }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="my-modal-title">Catatan Untuk Siswa</h5>
+                    <button class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="{{ route('tambah.catatan', [$iddetailraport]) }}" method="post">
+                    @csrf
+                    <div class="modal-body">
+                        <input type="number" value="{{ $item->idsiswa }}" name="idsiswa" hidden>
+                        <div class="form-group">
+                            <label for="nama">Nama Siswa</label>
+                            <input id="nama" class="form-control" type="text" disabled value="{{ $item->nama }}">
+                        </div>
+
+                        @php
+                            $catatan = DB::table("catatan")->where("idsiswa", $item->idsiswa)
+                            ->where("iddetailraport", $iddetailraport)->first();
+                        @endphp
+                        <div class="form-group">
+                            <label for="catatan">Catatan</label>
+                            <textarea id="catatan" class="form-control" name="catatan" rows="3">{{ empty($catatan->catatan)?"":$catatan->catatan }}</textarea>
+                        </div>
+
+                        <p class="text-danger"><i>Catatan bagi siswa untuk meningkatkan kompetensi tertentu</i></p>
+                    </div>
+                    <div class="modal-footer text-right">
+                        <button type="submit" class="btn btn-success">INPUT CATATAN</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 @endforeach
 
 @endsection
@@ -264,5 +398,13 @@
             theme: 'bootstrap4',
             dropdownParent: $('#tambahdetailraport')
         });
+
+        function changeHandler(val)
+        {
+            if (Number(val.value) > 100)
+            {
+                val.value = 100
+            }
+        }
     </script>
 @endsection
