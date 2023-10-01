@@ -163,8 +163,8 @@ class cetakraportC extends Controller
 
             $catatan = catatanM::join("detailraport", "detailraport.iddetailraport", "catatan.iddetailraport")
             ->where("detailraport.idraport", $idraport)
-            ->where("idmapel", $nr->idmapel)
-            ->where("idsiswa", $idsiswa)
+            ->where("catatan.idmapel", $nr->idmapel)
+            ->where("catatan.idsiswa", $idsiswa)
             ->select("catatan.catatan")->get();
 
             foreach ($catatan as $cat) {
