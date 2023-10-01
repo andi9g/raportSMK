@@ -18,116 +18,7 @@
 <div class="container">
     <a href="{{ route('detailraport.view', [$idraport]) }}" class="btn btn-danger btn-sm my-0 rounded-0">Halaman Sebelumnya</a>
     <div class="row">
-        <div class="col-md-8">
-            <div class="card mt-0">
-                <div class="card-header">
-                    <div class="row">
-                        <div class="col-md-8">
-                            <button class="btn btn-primary mb-2 px-4" type="button" data-toggle="modal" data-target="#cetak">
-                                <b>Cetak Data</b>
-                            </button>
-                        </div>    
-                        <div class="col-md-4">
-                            <form action="{{ url()->current() }}">
-                                <div class="input-group">
-                                    <input class="form-control" type="text" name="keyword" placeholder="cari nama" aria-label="cari nama" aria-describedby="cari" value="{{ $keyword }}">
-                                    <div class="input-group-append">
-                                        <button type="submit" class="input-group-text" id="cari">
-                                            <i class="fa fa-search"></i> Cari
-                                        </button >
-                                    </div>
-                                </div>
-                            
-                            </form>
-                        </div>
-                    </div>        
-        
-                </div>
-        
-                
-                <div class="card-body mt-0">
-                    <table class="table table-striped table-hover table-bordered m-0 table-sm">
-                        <thead>
-                            <th width="5px">No</th>
-                            <th>Nama Siswa</th>
-                            <th>Rombel</th>
-                            <th>Catatan</th>
-                            <th>Nilai</th>
-                            <th>Ujian</th>
-                            <th>Catatan</th>
-                        </thead>
-        
-                        <tbody>
-                            @foreach ($siswa as $item)
-                            <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td class="text-bold">{{ strtoupper($item->nama) }}</td>
-                                <td>{{ $item->kelas->namakelas." ".$item->jurusan->jurusan }}</td>
-                                
-                                <td class="text-center">
-                                    @php
-                                        $catatan = DB::table("catatan")->where("idsiswa", $item->idsiswa)
-                                        ->where("iddetailraport", $iddetailraport)->count();
-                                    @endphp
-                                    @if ($catatan == null)
-                                        -
-                                    @else
-                                        <font class="text-success text-bold">
-                                            <i class="fa fa-check"></i>
-                                        </font>
-                                    @endif
-                                </td>
-                                @php
-                                    $nilaisiswa = DB::table("nilairaport")->join("elemen", "elemen.idelemen", "nilairaport.idelemen")->where("nilairaport.idsiswa", $item->idsiswa)->where("nilairaport.iddetailraport", $iddetailraport)->count();
-                                    
-                                    $ujian = DB::table("ujian")->where("idsiswa", $item->idsiswa)
-                                    ->where("idraport", $idraport)
-                                    ->where("idmapel", $idmapel)
-                                    ->count();
-                                @endphp
-                                @if ($ujian==0)
-                                    @php
-                                        $warnanilai2 = "bg-danger";
-                                    @endphp    
-                                @else
-                                    @php
-                                        $warnanilai2 = "bg-success";
-                                    @endphp  
-                                @endif
 
-                                @if(count($jmlelemen) == $nilaisiswa) 
-                                    @if (count($jmlelemen) == 0)
-                                    @php
-                                        $warnanilai1 = "bg-danger";
-                                    @endphp
-                                    @else 
-                                        @php
-                                            $warnanilai1 = "bg-success";
-                                        @endphp
-                                    @endif
-                                @else 
-                                @php
-                                    $warnanilai1 = "bg-danger";
-                                @endphp
-                                @endif
-                                <td>
-                                    <button class="btn {{ $warnanilai1 }} btn-block btn-xs my-0" type="button" data-toggle="modal" data-target="#nilairaport{{ $item->idsiswa }}"><b>PENILAIAN</b></button>
-                                </td>
-                                <td>
-                                    <button class="btn {{ $warnanilai2 }} btn-block btn-xs my-0" type="button" data-toggle="modal" data-target="#ujian{{ $item->idsiswa }}"><b>UJIAN</b></button>
-                                </td>
-                                <td>
-                                    <button class="btn btn-warning btn-xs my-0" type="button" data-toggle="modal" data-target="#catatan{{ $item->idsiswa }}"><b>CATATAN</b></button>
-                                </td>
-
-                            </tr>
-                                
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
         <div class="col-md-4">
             <div class="card">
                 <div class="card-header">
@@ -201,6 +92,119 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-8">
+            <div class="card mt-0">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <button class="btn btn-primary mb-2 px-4" type="button" data-toggle="modal" data-target="#cetak">
+                                <b>Cetak Data</b>
+                            </button>
+                        </div>    
+                        <div class="col-md-4">
+                            <form action="{{ url()->current() }}">
+                                <div class="input-group">
+                                    <input class="form-control" type="text" name="keyword" placeholder="cari nama" aria-label="cari nama" aria-describedby="cari" value="{{ $keyword }}">
+                                    <div class="input-group-append">
+                                        <button type="submit" class="input-group-text" id="cari">
+                                            <i class="fa fa-search"></i> Cari
+                                        </button >
+                                    </div>
+                                </div>
+                            
+                            </form>
+                        </div>
+                    </div>        
+        
+                </div>
+        
+                
+                <div class="card-body mt-0">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover table-bordered m-0 table-sm">
+                            <thead>
+                                <th width="5px">No</th>
+                                <th>Nama Siswa</th>
+                                <th>Rombel</th>
+                                <th>Catatan</th>
+                                <th>Nilai</th>
+                                <th>Ujian</th>
+                                <th>Catatan</th>
+                            </thead>
+            
+                            <tbody>
+                                @foreach ($siswa as $item)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td class="text-bold">{{ strtoupper($item->nama) }}</td>
+                                    <td>{{ $item->kelas->namakelas." ".$item->jurusan->jurusan }}</td>
+                                    
+                                    <td class="text-center">
+                                        @php
+                                            $catatan = DB::table("catatan")->where("idsiswa", $item->idsiswa)
+                                            ->where("iddetailraport", $iddetailraport)->count();
+                                        @endphp
+                                        @if ($catatan == null)
+                                            -
+                                        @else
+                                            <font class="text-success text-bold">
+                                                <i class="fa fa-check"></i>
+                                            </font>
+                                        @endif
+                                    </td>
+                                    @php
+                                        $nilaisiswa = DB::table("nilairaport")->join("elemen", "elemen.idelemen", "nilairaport.idelemen")->where("nilairaport.idsiswa", $item->idsiswa)->where("nilairaport.iddetailraport", $iddetailraport)->count();
+                                        
+                                        $ujian = DB::table("ujian")->where("idsiswa", $item->idsiswa)
+                                        ->where("idraport", $idraport)
+                                        ->where("idmapel", $idmapel)
+                                        ->count();
+                                    @endphp
+                                    @if ($ujian==0)
+                                        @php
+                                            $warnanilai2 = "bg-danger";
+                                        @endphp    
+                                    @else
+                                        @php
+                                            $warnanilai2 = "bg-success";
+                                        @endphp  
+                                    @endif
+    
+                                    @if(count($jmlelemen) == $nilaisiswa) 
+                                        @if (count($jmlelemen) == 0)
+                                        @php
+                                            $warnanilai1 = "bg-danger";
+                                        @endphp
+                                        @else 
+                                            @php
+                                                $warnanilai1 = "bg-success";
+                                            @endphp
+                                        @endif
+                                    @else 
+                                    @php
+                                        $warnanilai1 = "bg-danger";
+                                    @endphp
+                                    @endif
+                                    <td>
+                                        <button class="btn {{ $warnanilai1 }} btn-block btn-xs my-0" type="button" data-toggle="modal" data-target="#nilairaport{{ $item->idsiswa }}"><b>PENILAIAN</b></button>
+                                    </td>
+                                    <td>
+                                        <button class="btn {{ $warnanilai2 }} btn-block btn-xs my-0" type="button" data-toggle="modal" data-target="#ujian{{ $item->idsiswa }}"><b>UJIAN</b></button>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-warning btn-xs my-0" type="button" data-toggle="modal" data-target="#catatan{{ $item->idsiswa }}"><b>CATATAN</b></button>
+                                    </td>
+    
+                                </tr>
+                                    
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
     </div>
 
 </div>
