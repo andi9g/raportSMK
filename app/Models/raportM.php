@@ -11,6 +11,7 @@ class raportM extends Model
     protected $table = 'raport';
     protected $primaryKey = 'idraport';
     protected $guarded = [];
+    protected $connection = "mysql";
     
     
 }

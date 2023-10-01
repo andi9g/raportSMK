@@ -11,4 +11,5 @@ class kelasM extends Model
     protected $table = 'kelas';
     protected $primaryKey = 'idkelas';
     protected $guarded = [];
+    protected $connection = "mysql";
 }

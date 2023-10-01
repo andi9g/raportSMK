@@ -11,4 +11,5 @@ class subelemenM extends Model
     protected $table = 'subelemen';
     protected $primaryKey = 'idsubelemen';
     protected $guarded = [];
+    protected $connection = "mysql";
 }

@@ -11,4 +11,5 @@ class elemenM extends Model
     protected $table = 'elemen';
     protected $primaryKey = 'idelemen';
     protected $guarded = [];
+    protected $connection = "mysql";
 }

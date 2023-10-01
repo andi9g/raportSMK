@@ -11,6 +11,7 @@ class identitasM extends Model
     protected $table = 'identitas';
     protected $primaryKey = 'ididentitas';
     protected $guarded = [];
+    protected $connection = "mysql";
 
     protected $fillable = ['ididentitas', 'iduser', 'nip', 'alamat','email', 'agama', 'posisi', 'jk', 'hp'];
 

@@ -11,6 +11,7 @@ class siswaM extends Model
     protected $table = 'siswa';
     protected $primaryKey = 'idsiswa';
     protected $guarded = [];
+    protected $connection = "mysql";
 
     public function jurusan()
     {

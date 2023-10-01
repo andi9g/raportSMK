@@ -11,4 +11,5 @@ class sekolahM extends Model
     protected $table = 'sekolah';
     protected $primaryKey = 'idsekolah';
     protected $guarded = [];
+    protected $connection = "mysql";
 }

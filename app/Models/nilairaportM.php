@@ -11,6 +11,7 @@ class nilairaportM extends Model
     protected $table = 'nilairaport';
     protected $primaryKey = 'idnilairaport';
     protected $guarded = [];
+    protected $connection = "mysql";
 
     public function siswa()
     {

@@ -11,4 +11,5 @@ class catatanM extends Model
     protected $table = 'catatan';
     protected $primaryKey = 'idcatatan';
     protected $guarded = [];
+    protected $connection = "mysql";
 }

@@ -11,6 +11,7 @@ class ujianM extends Model
     protected $table = 'ujian';
     protected $primaryKey = 'idujian';
     protected $guarded = [];
+    protected $connection = "mysql";
 
     
 }

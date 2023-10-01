@@ -11,6 +11,7 @@ class detailraportM extends Model
     protected $table = 'detailraport';
     protected $primaryKey = 'iddetailraport';
     protected $guarded = [];
+    protected $connection = "mysql";
 
     public function raport()
     {

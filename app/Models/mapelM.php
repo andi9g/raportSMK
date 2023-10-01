@@ -11,4 +11,5 @@ class mapelM extends Model
     protected $table = 'mapel';
     protected $primaryKey = 'idmapel';
     protected $guarded = [];
+    protected $connection = "mysql";
 }

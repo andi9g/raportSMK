@@ -11,4 +11,5 @@ class kehadiranM extends Model
     protected $table = 'kehadiran';
     protected $primaryKey = 'idkehadiran';
     protected $guarded = [];
+    protected $connection = "mysql";
 }
