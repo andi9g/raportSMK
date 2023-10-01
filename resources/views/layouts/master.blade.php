@@ -1,3 +1,7 @@
+@php
+    $posisi = empty(Auth::user()->identitas->posisi)?"":Auth::user()->identitas->posisi; 
+
+@endphp
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -160,7 +164,7 @@
             </a>
           </li>
 
-          @if (Auth::user()->identitas->posisi == "admin")
+          @if ($posisi == "admin")
           <li class="nav-item">
             <a href="{{ url('guru', []) }}" class="nav-link @yield('warnaguru')">
               <i class="nav-icon fas fa-user"></i>
