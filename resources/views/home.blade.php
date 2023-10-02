@@ -2,7 +2,7 @@
 
 @section('warnahome', 'active')
 
-@section("judul", "Update Data WaliKelas")
+@section("judul", "Dashboard")
 @section('content')
   <div class="container">
     <div class="row">
