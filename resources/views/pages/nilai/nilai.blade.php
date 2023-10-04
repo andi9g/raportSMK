@@ -282,7 +282,7 @@
 
                     <div class="form-group">
                         <label for="ujianlisan">Nilai Ujian Non-Lisan</label>
-                        <input id="ujianlisan" class="form-control" type="number" onchange="changeHandler(this)" onkeyup="changeHandler(this)" name="nonlisan" value="{{ empty($ujian->lisan)?0:$ujian->nonlisan }}">
+                        <input id="ujianlisan" class="form-control" type="number" onchange="changeHandler(this)" onkeyup="changeHandler(this)" name="nonlisan" value="{{ empty($ujian->nonlisan)?0:$ujian->nonlisan }}">
                     </div>
                     
                     
