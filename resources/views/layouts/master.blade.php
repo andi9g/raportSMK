@@ -110,7 +110,7 @@
               </button>
             </form>
         </div>
-    </li>
+      </li>
     </ul>
   </nav>
   <!-- /.navbar -->

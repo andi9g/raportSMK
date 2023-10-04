@@ -72,10 +72,30 @@
         .myfont {
             line-height: 13px;
         }
+        .mytext {
+            margin-bottom: 3px;
+            /* text-align: center; */
+            font-weight: bold;
+        }
         
     </style>
 </head>
 <body>
+    @if ($raport->namaraport == "raport uts")
+    <div class="myfont">
+        <table width="100%">
+            <tr>
+                <td align="center" width="100%">
+                    <div class="mytext">
+                        ASESMEN TENGAH SEMESTER 
+                    </div>
+                    </td>
+                </tr>
+                
+            </table>
+    </div>
+        
+    @endif
     <table width="100%" class="fontku">
         <tr>
             <td width="50%" valign="top">

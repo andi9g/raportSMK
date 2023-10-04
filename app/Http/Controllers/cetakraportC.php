@@ -99,6 +99,7 @@ class cetakraportC extends Controller
         $siswa = siswaM::where("idsiswa", $idsiswa)->first();
         $sekolah = sekolahM::first();
 
+        $mapel = [];
         
         
         $nilairaport = nilairaportM::join("detailraport", "detailraport.iddetailraport", "nilairaport.iddetailraport")
@@ -208,10 +209,12 @@ class cetakraportC extends Controller
 
         }
      
+        $raport = raportM::where("idraport", $idraport)->first();
         
 
         $pdf = PDF::loadView("laporan.raport.nilai", [
             "siswa" => $siswa,
+            "raport" => $raport,
             "sekolah" => $sekolah,
             "detail" => $detail,
             "identitas" => $identitas,

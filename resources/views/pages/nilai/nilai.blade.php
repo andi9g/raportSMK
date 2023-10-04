@@ -345,6 +345,7 @@
     </div>
 
 
+    
     <div id="catatan{{ $item->idsiswa }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -358,6 +359,7 @@
                     @csrf
                     <div class="modal-body">
                         <input type="number" value="{{ $item->idsiswa }}" name="idsiswa" hidden>
+                        <input type="number" value="{{ $idmapel }}" name="idmapel" hidden>
                         <div class="form-group">
                             <label for="nama">Nama Siswa</label>
                             <input id="nama" class="form-control" type="text" disabled value="{{ $item->nama }}">
