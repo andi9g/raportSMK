@@ -245,9 +245,9 @@
 
             <tbody>
                 <tr>
-                    <td colspan="3">
-                        DATA BELUM TERSEDIA DI UTS
-                    </td>
+                    <td>1</td>
+                    <td>Pramuka</td>
+                    <td>-</td>
                 </tr>
             </tbody>
 
