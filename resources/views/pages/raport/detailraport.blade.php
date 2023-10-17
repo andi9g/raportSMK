@@ -112,7 +112,7 @@ KELOLA {{ strtoupper($judul) }}
                             <a href="{{ url('nilairaport', [$item->iddetailraport]) }}" class="btn btn-success btn-block"><b>KELOLA NILAI</b></a>
                         </td>
                         <td>
-                            <a href="{{ route('cetak.detailraport', [$item->iddetailraport]) }}" class="btn btn-secondary btn-block">
+                            <a target="_blank" href="{{ route('cetak.detailraport', [$item->iddetailraport]) }}" class="btn btn-secondary btn-block">
                                 <b>
                                     <i class="fa fa-print"></i>
                                     CETAK

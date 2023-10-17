@@ -97,9 +97,11 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-md-8">
-                            <button class="btn btn-primary mb-2 px-4" type="button" data-toggle="modal" data-target="#cetak">
-                                <b>Cetak Data</b>
-                            </button>
+                            <a class="btn btn-secondary mb-2 px-4" target="_blank" href="{{ route('cetak.detailraport', [$iddetailraport]) }}" >
+                                <b>
+                                    <i class="fa fa-print"></i> 
+                                    Cetak Data</b>
+                            </a>
                         </div>    
                         <div class="col-md-4">
                             <form action="{{ url()->current() }}">

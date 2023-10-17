@@ -51,8 +51,16 @@
         }
         .tableku {
             border-collapse: collapse;
+            
         }
         
+        .tableku tr th {
+            line-height: 20px;
+        
+        }
+        .tableku tr td {
+            padding: 4px;
+        }
     </style>
 </head>
 <body>
@@ -65,11 +73,11 @@
 
     <table border="1" width="100%" class="tableku">
         <tr>
-            <th rowspan="2" width="1px">No</th>
-            <th rowspan="2" width="300px">Nama Siswa</th>
-            <th colspan="{{ count($elemen) }}">Tugas</th>
-            <th colspan="2">Ujian</th>
-            <th >Rata-rata</th>
+            <th rowspan="2" width="1px">NO</th>
+            <th rowspan="2" width="300px" >NAMA SISWA</th>
+            <th colspan="{{ count($elemen) }}" style="background: rgba(34, 241, 34, 0.589)">TUGAS</th>
+            <th colspan="2" style="background: rgba(241, 227, 34, 0.589)">UJIAN</th>
+            <th style="background: rgba(241, 82, 34, 0.589)">RATA-RATA</th>
         </tr>
         <tr>
             @foreach ($elemen as $e)
