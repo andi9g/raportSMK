@@ -75,8 +75,11 @@
         .mytext {
             margin-bottom: 3px;
             /* text-align: center; */
+            line-height: 15px;
             font-weight: bold;
+            
         }
+        
         
     </style>
 </head>
@@ -87,7 +90,9 @@
             <tr>
                 <td align="center" width="100%">
                     <div class="mytext">
-                        ASESMEN TENGAH SEMESTER 
+                        LAPORAN TENGAH SEMESTER GANJIL <br>
+                        TP.{{ $raport->tahun }}/{{ $raport->tahun + 1 }} <br>
+                        SMKN 1 GUNUNG KIJANG
                     </div>
                     </td>
                 </tr>
