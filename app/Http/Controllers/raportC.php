@@ -108,8 +108,15 @@ class raportC extends Controller
     
     public function cetak(Request $request, $iddetailraport)
     {
-        // try {
+        try {
             $iduser = Auth::user()->iduser;
+
+            $detailraport = detailraportM::where("iduser", $iduser)
+            ->where("iddetailraport", $iddetailraport)
+            ->count();
+            if($detailraport == 0) {
+                return redirect()->back()->with("error", "terjadi kesalahan")->withInput();
+            }
 
             $detailraport = detailraportM::where("iduser", $iduser)
             ->where("iddetailraport", $iddetailraport)
@@ -203,9 +210,9 @@ class raportC extends Controller
             
 
             
-        // } catch (\Throwable $th) {
-        //     return redirect()->back()->withInput();
-        // }
+        } catch (\Throwable $th) {
+            return redirect()->back()->withInput();
+        }
     }
 
 
