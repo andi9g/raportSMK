@@ -90,7 +90,7 @@
             <tr>
                 <td align="center" width="100%">
                     <div class="mytext">
-                        LAPORAN TENGAH SEMESTER GANJIL <br>
+                        LAPORAN ASESMEN TENGAH SEMESTER GANJIL <br>
                         TP.{{ $raport->tahun }}/{{ $raport->tahun + 1 }} <br>
                         SMKN 1 GUNUNG KIJANG
                     </div>
