@@ -98,6 +98,7 @@ KELOLA {{ strtoupper($judul) }}
                     <th>Jurusan</th>
                     <th>Kelas</th>
                     <th>NILAI</th>
+                    <th>AKSI</th>
                 </thead>
 
                 <tbody>
@@ -109,6 +110,14 @@ KELOLA {{ strtoupper($judul) }}
                         <td>{{ $item->kelas->namakelas }}</td>
                         <td>
                             <a href="{{ url('nilairaport', [$item->iddetailraport]) }}" class="btn btn-success btn-block"><b>KELOLA NILAI</b></a>
+                        </td>
+                        <td>
+                            <a href="{{ route('cetak.detailraport', [$item->iddetailraport]) }}" class="btn btn-secondary btn-block">
+                                <b>
+                                    <i class="fa fa-print"></i>
+                                    CETAK
+                                </b>
+                            </a>
                         </td>
                     </tr>
                         

@@ -260,7 +260,7 @@
                 <div class="modal-body">
                     <p class="text-md">
 
-                        <font class="text-danger">Masukan nilai ujian <b>Lisan</b> ataupun <b>Nonlisan</b>, jika tidak ada beri nilai <b>0</b></font>
+                        <font class="text-danger">Masukan nilai ujian <b>Praktek</b> ataupun <b>Non Praktek</b>, jika tidak ada beri nilai <b>0</b></font>
                     </p>
                     @php
                         $ujian = DB::table("ujian")->where("idsiswa", $item->idsiswa)
@@ -276,12 +276,12 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="ujianlisan">Nilai Ujian Lisan</label>
+                        <label for="ujianlisan">Nilai Ujian Praktek</label>
                         <input id="ujianlisan" class="form-control" onchange="changeHandler(this)" onkeyup="changeHandler(this)" type="number" name="lisan" value="{{ empty($ujian->lisan)?0:$ujian->lisan }}">
                     </div>
 
                     <div class="form-group">
-                        <label for="ujianlisan">Nilai Ujian Non-Lisan</label>
+                        <label for="ujianlisan">Nilai Ujian Non-Praktek</label>
                         <input id="ujianlisan" class="form-control" type="number" onchange="changeHandler(this)" onkeyup="changeHandler(this)" name="nonlisan" value="{{ empty($ujian->nonlisan)?0:$ujian->nonlisan }}">
                     </div>
                     

@@ -5,13 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\raportM;
 use App\Models\identitasM;
 use App\Models\User;
+use App\Models\siswaM;
 use App\Models\kelasM;
 use App\Models\mapelM;
 use App\Models\jurusanM;
 use App\Models\nilairaportM;
+use App\Models\elemenM;
 use App\Models\detailraportM;
+use App\Models\ujianM;
 use Illuminate\Http\Request;
 use Auth;
+use PDF;
 
 class raportC extends Controller
 {
@@ -101,6 +105,109 @@ class raportC extends Controller
         ]);
 
     }
+    
+    public function cetak(Request $request, $iddetailraport)
+    {
+        // try {
+            $iduser = Auth::user()->iduser;
+
+            $detailraport = detailraportM::where("iduser", $iduser)
+            ->where("iddetailraport", $iddetailraport)
+            ->first();
+
+            $namakelas = $detailraport->kelas->namakelas;
+            $idraport = $detailraport->raport->idraport;
+            $idkelas = $detailraport->kelas->idkelas;
+            $namamapel = $detailraport->mapel->namamapel;
+            $idmapel = $detailraport->mapel->idmapel;
+            $idjurusan = $detailraport->jurusan->idjurusan;
+            
+
+            $siswa = siswaM::where('idkelas', $idkelas)
+            ->where("idjurusan", $idjurusan)->get();
+
+            foreach ($siswa as $s) {
+                
+                $idsiswa = $s->idsiswa;
+                $elemen = elemenM::where("iddetailraport", $iddetailraport)
+                ->where("iduser", $iduser)->get();
+
+                $nilaisiswa = [];
+                $totalnilaisiswa = 0;
+                foreach ($elemen as $e) {
+                    $nilai = nilairaportM::where("idsiswa", $s->idsiswa)
+                    ->where("idelemen", $e->idelemen)
+                    ->get();
+
+                    if(count($nilai)==0) {
+                        $nilaisiswa[] = [
+                            "namaelemen" => $e->elemen,
+                            "nilai" => $totalnilaisiswa = $totalnilaisiswa + 0,
+                        ];
+                        
+                    }
+
+                    foreach ($nilai as $n) {
+                        $nilaisiswa[] = [
+                            "namaelemen" => $e->elemen,
+                            "nilai" => (int)(empty($n->nilai)?0:$n->nilai),
+                        ];
+
+                        
+                        $totalnilaisiswa = $totalnilaisiswa + (empty($n->nilai)?0:$n->nilai);
+                        
+                    }
+                }
+
+                $totalnilai1 = $totalnilaisiswa / count($elemen);
+                
+
+                $ujian = ujianM::where("idraport", $idraport)
+                ->where("idsiswa", $idsiswa)
+                ->where("idmapel", $idmapel)
+                ->first();
+
+                $praktek = (int)empty($ujian->lisan)?0:$ujian->lisan;
+                $nonpraktek = (int)empty($ujian->nonlisan)?0:$ujian->nonlisan;
+                
+                if($praktek != 0 && $nonpraktek != 0) {
+                    $totalnilai2 = ($praktek + $nonpraktek) / 2;
+                }else {
+                    $totalnilai2 = $praktek + $nonpraktek;
+                }
+               
+                $hasil = ($totalnilai1 + $totalnilai2) / 2;
+
+                $data[] = [
+                    "namasiswa" => $s->nama,
+                    "tugas" => $nilaisiswa,
+                    "praktek" => $praktek,
+                    "nonpraktek" => $nonpraktek,
+                    "hasil" => $hasil,
+                ];
+  
+            }
+
+            $data = collect($data);
+            $data = $data->sortByDesc("hasil");
+
+            $pdf = PDF::loadView("laporan.raport.penilaian", [
+                "data" => $data,
+                "elemen" => $elemen,
+            ])->setPaper('a4', 'landscape');
+
+            return $pdf->stream($namamapel.".pdf");
+
+
+            
+            
+
+            
+        // } catch (\Throwable $th) {
+        //     return redirect()->back()->withInput();
+        // }
+    }
+
 
     public function open(Request $request, $idraport)
     {
