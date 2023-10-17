@@ -75,6 +75,7 @@
         .mytext {
             margin-bottom: 3px;
             /* text-align: center; */
+            font-size: 10pt;
             line-height: 15px;
             font-weight: bold;
             
@@ -254,7 +255,7 @@
 
             <tbody>
                 <tr>
-                    <td>1</td>
+                    <td align="center">1</td>
                     <td>Pramuka</td>
                     <td>-</td>
                 </tr>
