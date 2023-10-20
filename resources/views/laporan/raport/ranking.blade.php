@@ -60,10 +60,10 @@
         }
         .vertical-th {
             writing-mode: vertical-lr; /* Vertical text, from right to left */
-            transform: rotate(-15deg); /* Rotate 180 degrees to bring it up */
+            transform: rotate(-20deg); /* Rotate 180 degrees to bring it up */
             /* white-space: nowrap;  */
             line-height: 10px;
-            font-size: 7pt
+            font-size: 6pt
         }
         body {
             font-size: 9pt;
@@ -107,7 +107,7 @@
                 </tr>
                 <tr>
                     @foreach ($mapel as $m)
-                        <th style="width: 80px !important"><p class="vertical-th">{{ $m->mapel->namamapel }}</p></th>  
+                        <th><p class="vertical-th">{{ $m->mapel->namamapel }}</p></th>  
                     @endforeach
                 </tr>
 
