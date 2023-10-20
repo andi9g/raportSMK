@@ -133,7 +133,7 @@
                 @foreach ($data as $d)
                 <tr>
                     <td align="center">{{ $loop->iteration }}</td>
-                    <td nowrap>{{ $d["namasiswa"] }}</td>
+                    <td nowrap style="text-transform:capitalize ">{{ $d["namasiswa"] }}</td>
                     @foreach ($d["data"] as $item)
                         <td align="center">{{ $item["hasil"] }}</td>
                     @endforeach
