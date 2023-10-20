@@ -83,7 +83,7 @@
                 <tr>
                     <th rowspan="2" width="5px">No</th>
                     <th rowspan="2" >Nama Peserta</th>
-                    <th colspan="{{ count($mapel) }}">Mapel</th>
+                    <th colspan="{{ count($mapel) }}">Mata Pelajaran</th>
                     <th rowspan="2">Rata-Rata</th>
                     <!-- Tambahkan <th> lainnya sesuai kebutuhan -->
                 </tr>
