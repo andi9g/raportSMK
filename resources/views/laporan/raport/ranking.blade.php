@@ -70,19 +70,22 @@
         }
 
         table {
-        width: 100%;
-        border-collapse: collapse;
-        height: auto;
-    }
+            width: 100%;
+            border-collapse: collapse;
+            height: auto;
+            overflow: auto;
+        }
 
-    th, td {
-        border: 1px solid #000;
-        padding: 8px;
-    }
+        th, td {
+            border: 1px solid #000;
+            padding: 8px;
+            word-wrap: break-word;
+            max-width: 100px;
+        }
 
-    tr {
-        page-break-inside: avoid;
-    }
+        tr {
+            page-break-inside: avoid;
+        }
     </style>
 </head>
 <body>
@@ -93,7 +96,7 @@
         <br>
         <br>
 
-        <table border="1" width="100%" class="tableku">
+        <table border="1" class="tableku">
             <thead>
                 <tr>
                     <th rowspan="2" width="5px">No</th>
