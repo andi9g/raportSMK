@@ -83,6 +83,11 @@ Route::middleware(['GerbangIdentitas', 'GerbangCekWaliKelas'])->group(function (
             Route::get("cetak/{idsiswa}/nilai/{iddetailraport}", "cetakraportC@nilai")->name("cetak.nilai");
             Route::get("cetak/{idsiswa}/identitas", "cetakraportC@identitas")->name("cetak.identitas");
             Route::post("kehadiran/{idraport}", "nilaiC@kehadiran")->name("tambah.kehadiran");
+
+
+            Route::get("ranking/{idraport}/cetak", "raportC@ranking")->name("ranking.raport");
+
+
         });
         
         

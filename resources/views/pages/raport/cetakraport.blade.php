@@ -10,12 +10,33 @@
 
 @section('content')
     <div class="container">
-        <a href="{{ url('raport', []) }}" class="btn btn-danger btn-sm my-0 rounded-0">Halaman Sebelumnya</a>
+        <div class="row">
+            <div class="col-md-6">
+                <a href="{{ url('raport', []) }}" class="btn btn-danger btn-md my-0 rounded-0">
+                    <b>
+                        Halaman Sebelumnya
+                    </b>
+                </a>
+            </div>
+            <div class="col-md-6 text-right">
+               
+            </div>
+        </div>
+
         <div class="card mt-0">
             <div class="card-header">
                 <form action="{{ url()->current() }}">
                     <div class="row">
-                        <div class="col-md-4">
+                        @if (Auth::user()->identitas->posisi == "admin")
+                            @php
+                                $clas = "col-md-4";
+                            @endphp
+                        @else
+                            @php
+                                $clas = "col-md-8";
+                            @endphp
+                        @endif
+                        <div class="{{ $clas }}">
                             <h3 class="m-0">RAPORT</h3>
                         </div>
                         @if (Auth::user()->identitas->posisi == "admin")
@@ -63,7 +84,15 @@
             </div>
 
 
-            <div class="card-body">
+            <div class="card-body pt-2">
+
+                <a href="{{ route('ranking.raport', [$idraport]) }}" class="btn btn-secondary btn-md my-0 mb-2 rounded-0" target="_blank">
+                    <b>
+                        <i class="fa fa-print"></i> 
+                        CETAK DETAIL RANKING SISWA
+                    </b>
+                </a>
+
                 <div class="table-responsive">
                     <table class="table table-hover table-striped table-bordered table-sm">
                         <thead class="bg-info">
