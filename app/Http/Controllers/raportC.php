@@ -432,4 +432,25 @@ class raportC extends Controller
         raportM::destroy($idraport);
         return redirect()->back()->with("warning", "success")->withInput();
     }
+    public function hapus(raportM $raportM, $iddetailraport)
+    {
+        try {
+            $iduser = Auth::user()->iduser;
+            $cek = detailraportM::where("iduser", $iduser)
+            ->where("iddetailraport", $iddetailraport);
+
+            if($cek->count() === 0) {
+                return redirect()->back()->with("error", "terjadi kesalahan")->withInput();
+            }
+            
+            $cek->delete();
+            return redirect()->back()->with("success", "Data berhasil dihapus")->withInput();
+
+        } catch (\Throwable $th) {
+            return redirect()->back()->with("error", "terjadi kesalahan")->withInput();
+        }
+
+        raportM::destroy($idraport);
+        return redirect()->back()->with("warning", "success")->withInput();
+    }
 }

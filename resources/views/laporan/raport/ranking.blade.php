@@ -58,13 +58,23 @@
         .tableku tr td {
             padding: 4px;
         }
+        
         .vertical-th {
+            writing-mode: vertical-lr; /* Vertical text, from right to left */
+            transform: rotate(-20deg); /* Rotate 180 degrees to bring it up */
+            /* white-space: nowrap;  */
+            line-height: 10px;
+            font-size: 8pt
+        }
+
+        .vertical-th-2 {
             writing-mode: vertical-lr; /* Vertical text, from right to left */
             transform: rotate(-20deg); /* Rotate 180 degrees to bring it up */
             /* white-space: nowrap;  */
             line-height: 10px;
             font-size: 6pt
         }
+
         body {
             font-size: 9pt;
         }
@@ -80,7 +90,7 @@
             border: 1px solid #000;
             padding: 8px;
             word-wrap: break-word;
-            max-width: 100px;
+            /* max-width: 100px; */
         }
 
         tr {
@@ -106,8 +116,15 @@
                     <!-- Tambahkan <th> lainnya sesuai kebutuhan -->
                 </tr>
                 <tr>
+                    @php
+                        if(count($mapel) < 12) {
+                            $jarak = "vertical-th";
+                        }else {
+                            $jarak = "vertical-th-2";
+                        }
+                    @endphp
                     @foreach ($mapel as $m)
-                        <th><p class="vertical-th">{{ $m->mapel->namamapel }}</p></th>  
+                        <th><p class="{{$jarak}}">{{ $m->mapel->namamapel }}</p></th>  
                     @endforeach
                 </tr>
 
@@ -116,7 +133,7 @@
                 @foreach ($data as $d)
                 <tr>
                     <td align="center">{{ $loop->iteration }}</td>
-                    <td>{{ $d["namasiswa"] }}</td>
+                    <td nowrap>{{ $d["namasiswa"] }}</td>
                     @foreach ($d["data"] as $item)
                         <td align="center">{{ $item["hasil"] }}</td>
                     @endforeach

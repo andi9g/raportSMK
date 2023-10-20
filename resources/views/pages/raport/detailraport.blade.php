@@ -118,8 +118,47 @@ KELOLA {{ strtoupper($judul) }}
                                     CETAK
                                 </b>
                             </a>
+                            <button class="badge py-1 border-0 w-100 badge-danger" type="button" data-toggle="modal" data-target="#hapusdetailraport{{ $item->iddetailraport }}">
+                                <i class="fa fa-trash"></i>
+                            </button>
                         </td>
                     </tr>
+
+                    <div id="hapusdetailraport{{ $item->iddetailraport }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="hapusdetailraport{{ $item->iddetailraport }}" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header bg-danger">
+                                    <h5 class="modal-title" id="hapusdetailraport{{ $item->iddetailraport }}">WARNING</h5>
+                                    <button class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="text-danger">YAKIN INGIN MENGHAPUS DATA YANG TELAH DI BUAT?
+
+                                        <br>
+
+                                        
+                                        
+                                    </p>
+                                    <p>Jika menekan tombol setuju maka semua penilaian di dalamnya akan hilang.</p>
+                                </div>
+                                <div class="modal-footer text-right">
+                                    <button class="btn btn-secondary" data-dismiss="modal" aria-label="Close">
+                                        Batal
+                                    </button>
+
+                                    <form action="{{ route('hapus.detailraport', [$item->iddetailraport]) }}" method="post" class="d-inline">
+                                        @csrf
+                                        <button type="submit" class="btn btn-danger">
+                                            SETUJU
+                                        </button>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                         
                     @endforeach
                 </tbody>

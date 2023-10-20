@@ -64,6 +64,7 @@ Route::middleware(['GerbangIdentitas', 'GerbangCekWaliKelas'])->group(function (
         Route::post('tambah/detailraport/{idraport}', "raportC@tambahdetailraport")->name("tambah.detailraport");
         //detail raport
         Route::get("detailraport/{idraport}/kelola", "raportC@detailraport")->name("detailraport.view");
+        Route::post("detailraport/{iddetailraport}/hapus", "raportC@hapus")->name("hapus.detailraport");
         Route::get("cetak/detailraport/{iddetailraport}", "raportC@cetak")->name("cetak.detailraport");
         //penilaian
         Route::get("nilairaport/{iddetailraport}", "nilaiC@index");
