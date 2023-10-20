@@ -274,10 +274,6 @@ class raportC extends Controller
                     
                    
 
-
-                    
-
-
                     $ujian = ujianM::where("idraport", $idraport)
                     ->where("idsiswa", $idsiswa)
                     ->where("idmapel", $idmapel)
@@ -292,6 +288,7 @@ class raportC extends Controller
                         $totalnilai2 = $praktek + $nonpraktek;
                     }
                 
+                    
                     $data[] = [
                         "nilai" => $tampung2,
                         "mapel" => $m->mapel->namamapel,
@@ -300,13 +297,13 @@ class raportC extends Controller
                         "hasil" => ($general + $totalnilai2) / 2,
                     ];
                     
-                    $ratarata = ($ratarata + ($general + $totalnilai2));
+                    $ratarata = $ratarata + (($general + $totalnilai2) / 2);
 
                     // $hasil = ($rata + $totalnilai2) / 2;
 
 
                 }
-                
+                // dd($ratarata);
                 $ratarata = $ratarata / count($mapel);
                 $hasil[] = [
                     "namasiswa" => $s->nama,
