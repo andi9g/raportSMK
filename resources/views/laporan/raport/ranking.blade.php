@@ -68,6 +68,21 @@
         body {
             font-size: 9pt;
         }
+
+        table {
+        width: 100%;
+        border-collapse: collapse;
+        height: auto;
+    }
+
+    th, td {
+        border: 1px solid #000;
+        padding: 8px;
+    }
+
+    tr {
+        page-break-inside: avoid;
+    }
     </style>
 </head>
 <body>
