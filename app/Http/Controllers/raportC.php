@@ -311,7 +311,7 @@ class raportC extends Controller
                 $hasil[] = [
                     "namasiswa" => $s->nama,
                     "data" => $data,
-                    "ratarata" => round($ratarata / count($data)),
+                    "ratarata" => round($ratarata),
                 ];
 
 
