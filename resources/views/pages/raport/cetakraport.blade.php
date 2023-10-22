@@ -85,13 +85,15 @@
 
 
             <div class="card-body pt-2">
-
+                @if (Auth::user()->identitas->posisi != "admin")
                 <a href="{{ route('ranking.raport', [$idraport]) }}" class="btn btn-secondary btn-md my-0 mb-2 rounded-0" target="_blank">
                     <b>
                         <i class="fa fa-print"></i> 
                         CETAK DETAIL RANKING SISWA
                     </b>
                 </a>
+                    
+                @endif
 
                 <div class="table-responsive">
                     <table class="table table-hover table-striped table-bordered table-sm">
