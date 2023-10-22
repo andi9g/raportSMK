@@ -119,7 +119,7 @@ class Raport extends Migration
             $table->integer("iddetailraport");
             $table->integer("idmapel");
             $table->integer("idsiswa");
-            $table->string("catatan");
+            $table->string("catatan")->nullable();
             $table->timestamps();
         });
 

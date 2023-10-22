@@ -355,16 +355,27 @@ class raportC extends Controller
             }
             $namaraport = $namaraport." ".strtoupper($raport->semester);
 
+            
             $ididentitas = Auth::user()->identitas->ididentitas;
-            if($request->idjurusan == "all") {
-                $jurusan = jurusanM::get();
+            
+
+            if(Auth::user()->identitas->posisi == "walikelas") {
+                $idjurusan = Auth::user()->identitas->walikelas->idjurusan;
+                $idkelas = Auth::user()->identitas->walikelas->idkelas;
+
+                $jurusan = jurusanM::where("idjurusan", $idjurusan)->get();
             }else {
-                $jurusan = jurusanM::where("idjurusan", $request->idjurusan)->get();
+                if($request->idjurusan == "all") {
+                    $jurusan = jurusanM::get();
+                }else {
+                    $jurusan = jurusanM::where("idjurusan", $request->idjurusan)->get();
+                }
+                $idkelas = $request->idkelas;
             }
 
             $output = [];
             foreach ($jurusan as $jur) {
-                $idkelas = $request->idkelas;
+                
                 $namakelas = kelasM::where("idkelas", $idkelas)->first()->namakelas;
                 $idjurusan = $jur->idjurusan;
 
@@ -455,7 +466,7 @@ class raportC extends Controller
                             "ket" => $m->mapel->ket,
                             "praktek" => $praktek,
                             "nonpraktek" => $nonpraktek,
-                            "hasil" => ($general + $totalnilai2) / 2,
+                            "hasil" => round(($general + $totalnilai2) / 2),
                         ];
                         
                         $ratarata = $ratarata + (($general + $totalnilai2) / 2);
@@ -472,8 +483,7 @@ class raportC extends Controller
                         "nisn" => sprintf("%010s",$s->nisn),
                         "data" => $data,
                         "ratarata" => round($ratarata),
-                        
-                        "jumlahnilai" => $jumlahnilai,
+                        "jumlahnilai" => round($jumlahnilai),
                     ];
 
 
@@ -482,6 +492,8 @@ class raportC extends Controller
 
                 $output[] = [
                     "jurusan" => $jur->jurusan,
+                    "idjurusan" => $jur->idjurusan,
+                    "idkelas" => $idkelas,
                     "namajurusan" => $jur->namajurusan,
                     "kelas" => $namakelas,
                     "data" => $hasil,

@@ -55,7 +55,7 @@ Route::middleware(['GerbangIdentitas', 'GerbangCekWaliKelas'])->group(function (
             Route::post('raport', "raportC@store")->name("raport.store");
             Route::delete('raport/delete/{idraport}', "raportC@store")->name("raport.destroy");
 
-            Route::get("leger/{idraport}/cetak", "raportC@leger")->name("leger.raport");
+            
 
 
         });
@@ -91,7 +91,7 @@ Route::middleware(['GerbangIdentitas', 'GerbangCekWaliKelas'])->group(function (
 
 
             Route::get("ranking/{idraport}/cetak", "raportC@ranking")->name("ranking.raport");
-
+            Route::get("leger/{idraport}/cetak", "raportC@leger")->name("leger.raport");
 
         });
         

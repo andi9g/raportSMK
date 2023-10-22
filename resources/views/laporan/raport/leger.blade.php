@@ -94,11 +94,16 @@
             height: auto;
             overflow: auto;
         }
+        
 
         th, td {
             padding: 8px;
             word-wrap: break-word;
             /* max-width: 100px; */
+        }
+        .pku {
+            font-size: 13pt;
+            line-height: 20px;
         }
 
         tr {
@@ -227,6 +232,37 @@
             @endforeach
         </tbody>
         
+    </table>
+
+    <table width="100%">
+        <tr>
+            <td width="65%"></td>
+            <td style="">
+                <br>
+                <p class="pku">
+                    Gunung Kijang, {{ \Carbon\Carbon::parse(date('Y-m-d'))->isoFormat("DD MMMM YY") }} <br>
+                    Wali Kelas {{ $item["kelas"] }} {{ $item["jurusan"] }}
+
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    @php
+                        
+                        $walas = DB::table("walikelas")
+                        ->join("identitas", "identitas.ididentitas", "walikelas.ididentitas")
+                        ->select("identitas.iduser", "identitas.nip")
+                        ->where("walikelas.idkelas", $item["idkelas"])
+                        ->where("walikelas.idjurusan", $item["idjurusan"])->first();
+                        $user = \App\Models\User::find($walas->iduser)->first();
+                    @endphp
+                {{ $user->name }} <br>
+                NIP. {{ $user->identitas->nip }}
+                </p>
+            </td>
+        </tr>
+
     </table>
 
     <div class="page-break"></div>

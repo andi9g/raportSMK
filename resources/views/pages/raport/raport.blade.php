@@ -154,6 +154,15 @@
                                         </a>
                                     @endif
 
+                                    @if ($posisi=="walikelas")
+                                        <a href="{{ route('leger.raport', [$item->idraport]) }}" class="btn btn-block btn-danger mb-2">
+                                            <b>
+                                                <i class="fa fa-print"></i> CETAK LEGER
+                                            </b>
+                                        </a>
+                                       
+                                    @endif
+
                                     @if ($posisi=="admin")
                                         <button class="btn btn-block btn-danger mb-2" type="button" data-toggle="modal" data-target="#leger{{ $item->idraport }}">
                                             <b>

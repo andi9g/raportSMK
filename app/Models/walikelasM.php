@@ -21,4 +21,13 @@ class walikelasM extends Model
     {
         return $this->hasOne(kelasM::class, "idkelas", "idkelas");
     }
+
+    public function identitas()
+    {
+        return $this->hasOne(identitasM::class, "ididentitas", "ididentitas");
+    }
+
+    
+
+
 }
