@@ -247,8 +247,9 @@ class raportC extends Controller
                     $tampung = 0;
                     $tampung2 = [];
                     foreach ($detailraport as $dr) {
-                        $nilairaport = nilairaportM::where("iddetailraport", $dr->iddetailraport)
-                        ->where("idsiswa", $s->idsiswa)
+                        $nilairaport = nilairaportM::join("elemen", "elemen.idelemen", "nilairaport.idelemen")
+                        ->where("nilairaport.iddetailraport", $dr->iddetailraport)
+                        ->where("nilairaport.idsiswa", $s->idsiswa)
                         ->get();
                         
                         // dd($nilairaport);
