@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\siswaM;
+use App\Models\kelasM;
+use App\Models\jurusanM;
 use Excel;
 use Hash;
 use App\Imports\SiswaImport;
@@ -23,11 +25,16 @@ class siswaC extends Controller
         ->orderBy("nama", "asc")
         ->paginate(15);
 
+        $kelas = kelasM::get();
+        $jurusan = jurusanM::get();
+
         $siswa->appends($request->all());
 
         return view('pages.siswa.datasiswa', [
             "keyword" => $keyword,
             "siswa" => $siswa,
+            "kelas" => $kelas,
+            "jurusan" => $jurusan,
         ]);
     }
 
@@ -65,7 +72,14 @@ class siswaC extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // try {
+            $data = $request->all();
+            $edit = siswaM::create($data);
+            return redirect()->back()->with("success", "Data berhasil di edit")->withInput();
+
+        // } catch (\Throwable $th) {
+        //     return redirect()->back()->with("error", "Terjadi kesalahan")->withInput();
+        // }
     }
 
     /**
@@ -116,8 +130,9 @@ class siswaC extends Controller
      * @param  \App\Models\siswaM  $siswaM
      * @return \Illuminate\Http\Response
      */
-    public function destroy(siswaM $siswaM)
+    public function destroy(siswaM $siswaM, $idsiswa)
     {
-        //
+        siswaM::destroy($idsiswa);
+        return redirect()->back()->with("success", "Data berhasil di edit")->withInput();
     }
 }

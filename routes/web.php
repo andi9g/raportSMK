@@ -54,6 +54,10 @@ Route::middleware(['GerbangIdentitas', 'GerbangCekWaliKelas'])->group(function (
             Route::post("open/raport/{idraport}", "raportC@open")->name("open.raport");
             Route::post('raport', "raportC@store")->name("raport.store");
             Route::delete('raport/delete/{idraport}', "raportC@store")->name("raport.destroy");
+
+            Route::get("leger/{idraport}/cetak", "raportC@leger")->name("leger.raport");
+
+
         });
         Route::get('raport', "raportC@index");
         //siswa

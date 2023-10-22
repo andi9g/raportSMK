@@ -231,6 +231,7 @@ class raportC extends Controller
             foreach ($siswa as $s) {
                 $idsiswa = $s->idsiswa;
                 $mapel = detailraportM::where("idraport", $idraport)->select("idmapel")
+                ->where("idjurusan", $idjurusan)
                 ->where('idkelas', $idkelas)->groupBy("idmapel")->get();
                 
                 $data = [];
@@ -238,6 +239,7 @@ class raportC extends Controller
                 foreach ($mapel as $m) {
                     $idmapel = $m->idmapel;
                     $detailraport = detailraportM::where("idraport", $idraport)->where("idmapel", $m->idmapel)
+                    ->where('idjurusan', $idjurusan)
                     ->where('idkelas', $idkelas)
                     ->get();
                     // dd($detailraport->toArray());
@@ -329,6 +331,181 @@ class raportC extends Controller
                 "mapel" => $mapel,
                 // "elemen" => $elemen,
             ])->setPaper('a4', 'landscape');
+
+            return $pdf->stream("asdasd.pdf");
+
+
+            
+            
+
+            
+        // } catch (\Throwable $th) {
+        //     return redirect()->back()->withInput();
+        // }
+    }
+
+    public function leger(Request $request, $idraport)
+    {
+        // try {
+            $raport = raportM::where("idraport", $idraport)->first();
+            $tahunraport = $raport->tahun."/".($raport->tahun + 1);
+            $namaraport = $raport->namaraport;
+            if($namaraport == "raport uts") {
+                $namaraport = "ASESMEN TENGAH SEMESTER";
+            }
+            $namaraport = $namaraport." ".strtoupper($raport->semester);
+
+            $ididentitas = Auth::user()->identitas->ididentitas;
+            if($request->idjurusan == "all") {
+                $jurusan = jurusanM::get();
+            }else {
+                $jurusan = jurusanM::where("idjurusan", $request->idjurusan)->get();
+            }
+
+            $output = [];
+            foreach ($jurusan as $jur) {
+                $idkelas = $request->idkelas;
+                $namakelas = kelasM::where("idkelas", $idkelas)->first()->namakelas;
+                $idjurusan = $jur->idjurusan;
+
+                $siswa = siswaM::where('idkelas', $idkelas)
+                ->where("idjurusan", $idjurusan)->get();
+
+                
+                $mapel = detailraportM::where("idraport", $idraport)->select("idmapel")
+                ->where("idjurusan", $jur->idjurusan)
+                ->where('idkelas', $idkelas)->groupBy("idmapel")->get();
+
+                $hasil = [];
+                foreach ($siswa as $s) {
+                    $idsiswa = $s->idsiswa;
+                    
+                    
+                    
+
+                    $data = [];
+                    $ratarata = 0;
+                    $kejuruan = 0;
+                    $umum = 0;
+                    foreach ($mapel as $m) {
+                        if($m->mapel->ket == "kejuruan") {
+                            $kejuruan = $kejuruan + 1;
+                        }else {
+                            $umum = $umum + 1;
+                        }
+                       
+                        $idmapel = $m->idmapel;
+                        $detailraport = detailraportM::where("idraport", $idraport)->where("idmapel", $m->idmapel)
+                        ->where('idjurusan', $jur->idjurusan)
+                        ->where('idkelas', $idkelas)
+                        ->get();
+                        // dd($detailraport->toArray());
+                        $i = 1;
+                        
+                        $tampung = 0;
+                        $tampung2 = [];
+                        foreach ($detailraport as $dr) {
+                            $nilairaport = nilairaportM::join("elemen", "elemen.idelemen", "nilairaport.idelemen")
+                            ->select("nilairaport.*")
+                            ->where("nilairaport.iddetailraport", $dr->iddetailraport)
+                            ->where("nilairaport.idsiswa", $s->idsiswa)
+                            ->get();
+                            
+                            // dd($nilairaport);
+                            foreach ($nilairaport as $n) {
+                                $tampung = $tampung + $n->nilai;
+
+                                $tampung2[] = [
+                                    "elemen" => $n->elemen->elemen,
+                                    "nama" => $n->nilai,
+                                ];
+                                
+                            }
+
+                            
+                            
+                        }
+                        
+                        if($tampung != 0) {
+                            $general = round($tampung / count($tampung2));
+                        }else {
+                            $general = $tampung;
+                        }
+                        
+                    
+
+                        $ujian = ujianM::where("idraport", $idraport)
+                        ->where("idsiswa", $idsiswa)
+                        ->where("idmapel", $idmapel)
+                        ->first();
+
+                        $praktek = (int)empty($ujian->lisan)?0:$ujian->lisan;
+                        $nonpraktek = (int)empty($ujian->nonlisan)?0:$ujian->nonlisan;
+                        
+                        if($praktek != 0 && $nonpraktek != 0) {
+                            $totalnilai2 = ($praktek + $nonpraktek) / 2;
+                        }else {
+                            $totalnilai2 = $praktek + $nonpraktek;
+                        }
+                    
+                        
+                        $data[] = [
+                            "nilai" => $tampung2,
+                            "mapel" => $m->mapel->namamapel,
+                            "ket" => $m->mapel->ket,
+                            "praktek" => $praktek,
+                            "nonpraktek" => $nonpraktek,
+                            "hasil" => ($general + $totalnilai2) / 2,
+                        ];
+                        
+                        $ratarata = $ratarata + (($general + $totalnilai2) / 2);
+
+                        // $hasil = ($rata + $totalnilai2) / 2;
+
+
+                    }
+                    // dd($ratarata);
+                    $jumlahnilai = $ratarata;
+                    $ratarata = $ratarata / count($mapel);
+                    $hasil[] = [
+                        "namasiswa" => $s->nama,
+                        "nisn" => sprintf("%010s",$s->nisn),
+                        "data" => $data,
+                        "ratarata" => round($ratarata),
+                        
+                        "jumlahnilai" => $jumlahnilai,
+                    ];
+
+
+                }
+
+
+                $output[] = [
+                    "jurusan" => $jur->jurusan,
+                    "namajurusan" => $jur->namajurusan,
+                    "kelas" => $namakelas,
+                    "data" => $hasil,
+                    "jumlahmapel" => count($mapel),
+                    "mapel" => $mapel,
+                    "kejuruan" => $kejuruan,
+                    "umum" => $umum,
+                    "judul" => $namaraport,
+                    "tahun" => $tahunraport,
+                ];
+
+
+            }
+            
+            // dd($output);
+            $data = collect($hasil);
+            $data = $data->sortByDesc("ratarata");
+
+            $pdf = PDF::loadView("laporan.raport.leger", [
+                "data" => $output,
+                // "mapel" => $mapel,
+                // "elemen" => $elemen,
+            ]);
+            $pdf->setPaper('a4', 'landscape');
 
             return $pdf->stream("asdasd.pdf");
 

@@ -153,6 +153,14 @@
                                             </b>
                                         </a>
                                     @endif
+
+                                    @if ($posisi=="admin")
+                                        <button class="btn btn-block btn-danger mb-2" type="button" data-toggle="modal" data-target="#leger{{ $item->idraport }}">
+                                            <b>
+                                                <i class="fa fa-print"></i> CETAK LEGER
+                                            </b>
+                                        </button>
+                                    @endif
                                 </div>
                                 <div class="col-md-12">
                                     @php
@@ -185,6 +193,55 @@
    </div>
 
    @foreach ($raport as $item)
+
+   <div id="leger{{ $item->idraport }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="my-modal-title">CETAK LEGER</h5>
+                <button class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{{ route('leger.raport', [$item->idraport]) }}" method="get">
+                @csrf
+                @method("GET")
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="kelas">Kelas</label>
+                        <select id="kelas" class="form-control" name="idkelas">
+                            @foreach ($kelas as $k)
+                            <option value="{{ $k->idkelas }}">{{ $k->namakelas }}</option>
+                                
+                            @endforeach
+                        </select>
+                    </div>
+    
+                    <div class="form-group">
+                        <label for="jurusan">jurusan</label>
+                        <select id="jurusan" class="form-control" name="idjurusan">
+                            <option value="all">Semua Jurusan</option>
+                            @foreach ($jurusan as $k)
+                            <option value="{{ $k->idjurusan }}">{{ $k->namajurusan }}</option>
+                                
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer text-right">
+                    <button type="submit" class="btn btn-success">
+                        Cetak Leger
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+   </div>
+
+
+
+
    <div id="tambahdetailraport{{ $item->idraport }}" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
