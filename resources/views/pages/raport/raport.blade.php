@@ -203,7 +203,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ route('leger.raport', [$item->idraport]) }}" method="get">
+            <form action="{{ route('leger.raport', [$item->idraport]) }}" method="get" target="_blank">
                 @csrf
                 @method("GET")
                 <div class="modal-body">
