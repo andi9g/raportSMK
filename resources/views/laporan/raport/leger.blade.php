@@ -242,7 +242,6 @@
                 <p class="pku">
                     Gunung Kijang, {{ \Carbon\Carbon::parse(date('Y-m-d'))->isoFormat("DD MMMM YY") }} <br>
                     Wali Kelas {{ $item["kelas"] }} {{ $item["jurusan"] }}
-
                     <br>
                     <br>
                     <br>
@@ -255,10 +254,10 @@
                         ->select("identitas.iduser", "identitas.nip")
                         ->where("walikelas.idkelas", $item["idkelas"])
                         ->where("walikelas.idjurusan", $item["idjurusan"])->first();
-                        $user = \App\Models\User::find($walas->iduser)->first();
+                        $user = \App\Models\User::where("iduser", $walas->iduser)->first();
                     @endphp
-                {{ $user->name }} <br>
-                NIP. {{ $user->identitas->nip }}
+                <b> <u> {{ $user->name }} </u> </b><br>
+                <b>NIP. {{ $user->identitas->nip }}</b>
                 </p>
             </td>
         </tr>

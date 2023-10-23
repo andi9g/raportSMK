@@ -361,9 +361,7 @@
                     <center>
                         <p>Mengetahui</p>
                         <p>Kepala Sekolah</p>
-                        <br>
-                        <br>
-                        <br>
+                        <img src="{{ url('gambar', ['ttd.png']) }}" style="margin-top:-30px;margin-bottom:-30px;margin-left:-80px" width="170px" alt="">
                         <p><b>MUSTAFA KAMAL, S.Pd</b></p>
                         <p>NIP.19800909 201001 1 018</p>
                     </center>
