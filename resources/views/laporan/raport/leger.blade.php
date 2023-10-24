@@ -57,7 +57,11 @@
         }
         .tableku {
             border-collapse: collapse;
-            
+            font-size: 8pt;
+        }
+        .tableku2 {
+            border-collapse: collapse;
+            font-size: 7pt;
         }
         
         .tableku tr th {
@@ -70,15 +74,15 @@
         
         .vertical-th {
             writing-mode: vertical-lr; /* Vertical text, from right to left */
-            transform: rotate(-20deg); /* Rotate 180 degrees to bring it up */
+            transform: rotate(-30deg); /* Rotate 180 degrees to bring it up */
             /* white-space: nowrap;  */
             line-height: 10px;
-            font-size: 8pt
+            font-size: 7pt
         }
 
         .vertical-th-2 {
             writing-mode: vertical-lr; /* Vertical text, from right to left */
-            transform: rotate(-20deg); /* Rotate 180 degrees to bring it up */
+            transform: rotate(-30deg); /* Rotate 180 degrees to bring it up */
             /* white-space: nowrap;  */
             line-height: 10px;
             font-size: 6pt
@@ -93,6 +97,13 @@
             border-collapse: collapse;
             height: auto;
             overflow: auto;
+        }
+
+        table {
+            border-collapse: collapse;
+            height: auto;
+            overflow: auto;
+            
         }
         
 
@@ -166,7 +177,11 @@
     </table>
     
 
-    <table border="1" class="tableku" width="100%">
+    <table border="1" class="@if ($item['jumlahmapel'] > 10)
+        tableku2
+    @else 
+        tableku
+    @endif " width="100%">
         <thead>
             <tr>
                 <th rowspan="3" width="5px" align="center">No</th>
@@ -199,7 +214,7 @@
         <tbody>
             @foreach ($item["data"] as $siswa)
                 <tr>
-                    <td>
+                    <td align="center">
                         {{ $loop->iteration }}
                     </td>
                     <td nowrap>
