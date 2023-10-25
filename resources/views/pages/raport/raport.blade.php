@@ -155,7 +155,7 @@
                                     @endif
 
                                     @if ($posisi=="walikelas")
-                                        <a href="{{ route('leger.raport', [$item->idraport]) }}" class="btn btn-block btn-danger mb-2">
+                                        <a href="{{ route('leger.raport', [$item->idraport]) }}" class="btn btn-block btn-danger mb-2" target="_blank">
                                             <b>
                                                 <i class="fa fa-print"></i> CETAK LEGER
                                             </b>
