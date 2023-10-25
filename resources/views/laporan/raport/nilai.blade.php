@@ -218,7 +218,7 @@
                 </tr>
                 @if ($ket=="keduanya")
                 <tr>
-                    <td style="page-break-before: always;" class="fontku2" class="border:0">{{ $item["catatan"] }}</td>
+                    <td style="page-break-before: always;" class="fontku2">{{ $item["catatan"] }}</td>
                 </tr>
                     
                 @endif
@@ -260,7 +260,7 @@
                 </tr>
                     @if ($ket=="keduanya")
                     <tr>
-                        <td style="page-break-before: always;" class="fontku2" class="border:0">{{ $item["catatan"] }}</td>
+                        <td style="page-break-before: always;" class="fontku2">{{ $item["catatan"] }}</td>
                     </tr>
                         
                     @endif
