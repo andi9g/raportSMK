@@ -217,8 +217,8 @@
                     <td align="center">
                         {{ $loop->iteration }}
                     </td>
-                    <td nowrap>
-                        {{ $siswa['namasiswa'] }}
+                    <td nowrap >
+                        {{ ucwords(strtolower($siswa['namasiswa'])) }}
                     </td>
                     <td>{{ $siswa["nisn"] }}</td>
                     @foreach ($siswa["data"] as $mapel)
