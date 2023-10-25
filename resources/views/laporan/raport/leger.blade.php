@@ -113,7 +113,7 @@
             /* max-width: 100px; */
         }
         .pku {
-            font-size: 13pt;
+            font-size: 11pt;
             line-height: 20px;
         }
 
