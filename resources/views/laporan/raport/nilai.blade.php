@@ -375,46 +375,54 @@
 
     <br>
 
-    <div class="fontku">
-        <table width="100%">
-            <tr>
-                <td width="5%"></td>
-                <td width="50%">
-                        
-                        <p>Orang Tua/Wali</p>
-                        <br>
-                        <br>
-                        <br>
-                        <p>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . </p>
-                </td>
-                
-                <td width="40%">
-                        <p>Gunung Kijang, {{ \Carbon\Carbon::parse(date('Y-m-d'))->isoFormat("DD MMMM Y") }}</p>
-                        <p>Wali Kelas</p>
-                        <br>
-                        <br>
-                        <br>
-                        <p><b>{{ $identitas->first()->user->name }}</b></p>
-                        <p>NIP.{{ $identitas->first()->nip }}</p>
+    <table width="100%">
+        <tr>
+            <td class="page-break-before: always;">
+                <div class="fontku">
+                    <table width="100%">
+                        <tr>
+                            <td width="5%"></td>
+                            <td width="50%">
+                                    
+                                    <p>Orang Tua/Wali</p>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <p>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . </p>
+                            </td>
+                            
+                            <td width="40%">
+                                    <p>Gunung Kijang, {{ \Carbon\Carbon::parse(date('Y-m-d'))->isoFormat("DD MMMM Y") }}</p>
+                                    <p>Wali Kelas</p>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <p><b>{{ $identitas->first()->user->name }}</b></p>
+                                    <p>NIP.{{ $identitas->first()->nip }}</p>
+            
+                            </td>
+                        </tr>
+            
+                        <tr>
+                            <td colspan="3">
+                                <center>
+                                    <p>Mengetahui</p>
+                                    <p>Kepala Sekolah</p>
+                                    <img src="{{ url('gambar', ['ttd3.png']) }}" style="margin-top:-10px;margin-bottom:-10px;margin-left:0px" width="100px" alt="">
+                                    <p><b>MUSTAFA KAMAL, S.Pd</b></p>
+                                    <p>NIP.19800909 201001 1 018</p>
+                                </center>
+            
+                            </td>
+                        </tr>
+            
+                    </table>
+                </div>
 
-                </td>
-            </tr>
+            </td>
+        </tr>
 
-            <tr>
-                <td colspan="3">
-                    <center>
-                        <p>Mengetahui</p>
-                        <p>Kepala Sekolah</p>
-                        <img src="{{ url('gambar', ['ttd3.png']) }}" style="margin-top:-10px;margin-bottom:-10px;margin-left:0px" width="100px" alt="">
-                        <p><b>MUSTAFA KAMAL, S.Pd</b></p>
-                        <p>NIP.19800909 201001 1 018</p>
-                    </center>
-
-                </td>
-            </tr>
-
-        </table>
-    </div>
+    </table>
         
     
 </body>
