@@ -162,19 +162,20 @@ class cetakraportC extends Controller
             $catatanBuruk = $catatanBuruk;
             $nilai = $n1/count($nilai2);
 
-            $catatan = catatanM::join("detailraport", "detailraport.iddetailraport", "catatan.iddetailraport")
-            ->where("detailraport.idraport", $idraport)
-            ->where("catatan.idmapel", $nr->idmapel)
-            ->where("catatan.idsiswa", $idsiswa)
-            ->select("catatan.catatan")->get();
+            
+            // $catatan = catatanM::join("detailraport", "detailraport.iddetailraport", "catatan.iddetailraport")
+            // ->where("detailraport.idraport", $idraport)
+            // ->where("catatan.idmapel", $nr->idmapel)
+            // ->where("catatan.idsiswa", $idsiswa)
+            // ->select("catatan.catatan")->get();
 
-            foreach ($catatan as $cat) {
-                if(empty($catatanBuruk)) {
-                    $catatanBuruk = ucfirst(strtolower($cat->catatan));
-                }else {
-                    $catatanBuruk = $catatanBuruk.", ".strtolower($cat->catatan);
-                }
-            }
+            // foreach ($catatan as $cat) {
+            //     if(empty($catatanBuruk)) {
+            //         $catatanBuruk = ucfirst(strtolower($cat->catatan));
+            //     }else {
+            //         $catatanBuruk = $catatanBuruk.", ".strtolower($cat->catatan);
+            //     }
+            // }
 
             $ujian = ujianM::where("idraport", $idraport)
             ->where("idmapel", $nr->idmapel)
@@ -194,8 +195,6 @@ class cetakraportC extends Controller
                     $nilai = ($nilai + $nilaiujian) / 2;
                 }
             }
-
-            
             
             $mapel[$nr->idmapel] = [
                 "namamapel" => $nr->mapel->namamapel,

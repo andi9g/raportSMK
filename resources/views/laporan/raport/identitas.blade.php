@@ -267,9 +267,7 @@
             <td width="55%" valign="top">
                 <p>Gunung Kijang, {{ \Carbon\Carbon::parse(date("Y-m-d"))->isoFormat("DD MMMM Y") }}</p>
                 <p>Kepala Sekolah</p>
-                <br>
-                <br>
-                <br>
+                <img src="{{ url('gambar', ['ttd3.png']) }}" style="margin-top:-25px;margin-bottom:-10px;margin-left:20px" width="130px" alt="">
                 <p>
                     <b>
                         MUSTAFA KAMAL,S.Pd

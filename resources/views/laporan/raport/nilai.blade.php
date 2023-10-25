@@ -120,7 +120,6 @@
                         <td valign="top" width="1px">:&nbsp;&nbsp;</td>
                         <td valign="top">{{ empty($siswa->nis)?"":$siswa->nis." / " }}{{ ucwords(strtolower($siswa->nisn)) }}</td>
                     </tr>
-
                     <tr>
                         <td valign="top" nowrap>Sekolah</td>
                         <td valign="top" width="1px">:&nbsp;&nbsp;</td>
@@ -128,7 +127,6 @@
                             {{ $sekolah->namasekolah }}
                         </td>
                     </tr>
-
                     <tr>
                         <td valign="top" nowrap>Alamat</td>
                         <td valign="top" width="1px">:&nbsp;&nbsp;</td>
@@ -191,18 +189,42 @@
                 <td colspan="4" >A. Kelompok Mata Pelajaran Umum</td>
             </tr>
             @foreach ($mapel as $item)
+                @php
+                    if ((!empty($item["capaian"])) && (empty($item["catatan"]))) {
+                        $ket = "capaian";
+                        $nilai = 1;
+                    }elseif((empty($item["capaian"])) && (!empty($item["catatan"]))) {
+                        $ket = "catatan";
+                        $nilai = 1;
+                    }else {
+                        $ket = "keduanya";
+                        $nilai = 2;
+                    }
+                @endphp
+                
                 @if ($item["ket"]=="umum")
                 <tr>
-                    <td rowspan="2" style="page-break-before: always;" align="center">{{ $loop->iteration }}</td>
-                    <td style="page-break-before: always;" rowspan="2">{{ $item["namamapel"] }}</td>
-                    <td style="page-break-before: always;" align="center" rowspan="2">{{ $item["nilai"] }}</td>
-                    <td style="page-break-before: always;" class="fontku2">{{ $item["capaian"] }}</td>
+                    <td rowspan="{{ $nilai }}" align="center">{{ $loop->iteration }}</td>
+                    <td rowspan="{{ $nilai }}">{{ $item["namamapel"] }}</td>
+                    <td align="center" rowspan="{{ $nilai }}">{{ $item["nilai"] }}</td>
+                    @if ($ket=="capaian")
+                        <td style="page-break-before: always;" class="fontku2">{{ $item["capaian"] }}</td>
+                    @elseif($ket=="catatan")
+                        <td style="page-break-before: always;" class="fontku2">{{ $item["catatan"] }}</td>
+                    @elseif($ket=="keduanya")
+                        <td style="page-break-before: always;" class="fontku2">{{ $item["capaian"] }}</td>
+                    @endif
+
                 </tr>
+                @if ($ket=="keduanya")
                 <tr>
-                    <td style="page-break-before: always;" class="fontku2">{{ $item["catatan"] }}</td>
+                    <td style="page-break-before: always;" class="fontku2" class="border:0">{{ $item["catatan"] }}</td>
                 </tr>
                     
                 @endif
+                    
+                @endif
+                
             @endforeach
             
 
@@ -210,17 +232,39 @@
                 <td colspan="4">B. Kelompok Mata Pelajaran Kejuruan</td>
             </tr>
             @foreach ($mapel as $item)
+                @php
+                    if ((!empty($item["capaian"])) && (empty($item["catatan"]))) {
+                        $ket = "capaian";
+                        $nilai = 1;
+                    }elseif((empty($item["capaian"])) && (!empty($item["catatan"]))) {
+                        $ket = "catatan";
+                        $nilai = 1;
+                    }else {
+                        $ket = "keduanya";
+                        $nilai = 2;
+                    }
+                @endphp
                 @if ($item["ket"]=="kejuruan")
                 <tr>
-                    <td rowspan="2" align="center">{{ $loop->iteration }}</td>
-                    <td rowspan="2">{{ $item["namamapel"] }}</td>
-                    <td align="center" rowspan="2">{{ $item["nilai"] }}</td>
-                    <td style="page-break-before: always;" class="fontku2">{{ $item["capaian"] }}</td>
+                    <td rowspan="{{ $nilai }}" align="center">{{ $loop->iteration }}</td>
+                    <td rowspan="{{ $nilai }}">{{ $item["namamapel"] }}</td>
+                    <td align="center" rowspan="{{ $nilai }}">{{ $item["nilai"] }}</td>
+                    @if ($ket=="capaian")
+                        <td style="page-break-before: always;" class="fontku2">{{ $item["capaian"] }}</td>
+                    @elseif($ket=="catatan")
+                        <td style="page-break-before: always;" class="fontku2">{{ $item["catatan"] }}</td>
+                    @elseif($ket=="keduanya")
+                        <td style="page-break-before: always;" class="fontku2">{{ $item["capaian"] }}</td>
+                    @endif
+
                 </tr>
-                <tr>
-                    <td style="page-break-before: always;" class="fontku2">{{ $item["catatan"] }}</td>
-                </tr>
-                    
+                    @if ($ket=="keduanya")
+                    <tr>
+                        <td style="page-break-before: always;" class="fontku2" class="border:0">{{ $item["catatan"] }}</td>
+                    </tr>
+                        
+                    @endif
+
                 @endif
                 
             @endforeach
@@ -361,7 +405,7 @@
                     <center>
                         <p>Mengetahui</p>
                         <p>Kepala Sekolah</p>
-                        <img src="{{ url('gambar', ['ttd.png']) }}" style="margin-top:-30px;margin-bottom:-30px;margin-left:-80px" width="170px" alt="">
+                        <img src="{{ url('gambar', ['ttd3.png']) }}" style="margin-top:-10px;margin-bottom:-10px;margin-left:0px" width="100px" alt="">
                         <p><b>MUSTAFA KAMAL, S.Pd</b></p>
                         <p>NIP.19800909 201001 1 018</p>
                     </center>
