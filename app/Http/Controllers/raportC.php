@@ -489,6 +489,10 @@ class raportC extends Controller
 
                 }
 
+                if($request->opsi == "urut") {
+                    $hasil = collect($hasil);
+                    $hasil = $hasil->sortByDesc("ratarata");
+                }
 
                 $output[] = [
                     "jurusan" => $jur->jurusan,
@@ -505,12 +509,12 @@ class raportC extends Controller
                     "tahun" => $tahunraport,
                 ];
 
-
+                
             }
             
             // dd($output);
-            $data = collect($hasil);
-            $data = $data->sortByDesc("ratarata");
+            // dd($request->opsi);
+            
 
             $pdf = PDF::loadView("laporan.raport.leger", [
                 "data" => $output,

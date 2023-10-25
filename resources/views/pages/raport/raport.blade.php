@@ -155,12 +155,13 @@
                                     @endif
 
                                     @if ($posisi=="walikelas")
-                                        <a href="{{ route('leger.raport', [$item->idraport]) }}" class="btn btn-block btn-danger mb-2" target="_blank">
+                                        <button class="btn btn-block btn-danger mb-2" type="button" data-toggle="modal" data-target="#legerguru{{ $item->idraport }}">
                                             <b>
                                                 <i class="fa fa-print"></i> CETAK LEGER
                                             </b>
-                                        </a>
-                                       
+                                        </button>
+
+                                        
                                     @endif
 
                                     @if ($posisi=="admin")
@@ -202,6 +203,40 @@
    </div>
 
    @foreach ($raport as $item)
+
+   <div id="legerguru{{ $item->idraport }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="my-modal-title">CETAK LEGER</h5>
+                <button class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{{ route('leger.raport', [$item->idraport]) }}" method="get" target="_blank">
+                @csrf
+                @method("GET")
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="opsi">Pilih Opsi</label>
+                        <select id="opsi" class="form-control" name="opsi">
+                            <option value="urut">Diurutkan berdasarkan ranking</option>
+                            <option value="acak">Berdasarkan Abjad Nama (A-Z)</option>
+                        </select>
+                    </div>
+    
+                    
+                </div>
+                <div class="modal-footer text-right">
+                    <button type="submit" class="btn btn-success">
+                        Cetak Leger
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+   </div>
 
    <div id="leger{{ $item->idraport }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title" aria-hidden="true">
     <div class="modal-dialog" role="document">
