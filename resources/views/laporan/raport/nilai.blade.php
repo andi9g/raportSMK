@@ -213,7 +213,7 @@
                         $nilai = 2;
                     }
 
-                    if($item["agama"]==true && $item['ketAgama'] != "islam") {
+                    if($item["agama"]==true && $item['ketAgama'] != "Islam") {
                         $nilai = 1;
                         // dd($item["ketAgama"].'error');
                     }
@@ -225,7 +225,7 @@
                     <td rowspan="{{ $nilai }}">{{ $item["namamapel"] }}</td>
                     <td align="center" rowspan="{{ $nilai }}">{{ $item["nilai"] }}</td>
                     
-                    @if ($item["agama"] == true && $item['ketAgama'] != "islam") 
+                    @if ($item["agama"] == true && $item['ketAgama'] != "Islam") 
                         <td style="page-break-before: always;" class="fontku2">{{ empty($item["catatanAgama"])?'-':$item["catatanAgama"] }}</td>
                     @else
                     @if ($ket=="capaian")
@@ -237,9 +237,9 @@
                     @endif
                         
                     @endif
-                    {{ dd($item['ketAgama']) }}
+                    
                 </tr>
-                @if ($item["agama"] == false && $item['ketAgama'] == "islam") 
+                @if ($item["agama"] == false && $item['ketAgama'] == "Islam") 
                 @if ($ket=="keduanya")
                 <tr>
                     <td style="page-break-before: always;" class="fontku2">{{ $item["catatan"] }}</td>
@@ -269,7 +269,7 @@
                         $ket = "keduanya";
                         $nilai = 2;
                     }
-                    if($item["agama"]==true && $item['ketAgama'] != "islam") {
+                    if($item["agama"]==true && $item['ketAgama'] != "Islam") {
                         $nilai = 1;
                         // dd($item["catatanAgama"].'error');
                     }
@@ -279,7 +279,7 @@
                     <td rowspan="{{ $nilai }}" align="center">{{ $loop->iteration }}</td>
                     <td rowspan="{{ $nilai }}">{{ $item["namamapel"] }}</td>
                     <td align="center" rowspan="{{ $nilai }}">{{ $item["nilai"] }}</td>
-                    @if ($item["agama"] == true && $item['ketAgama'] != "islam") 
+                    @if ($item["agama"] == true && $item['ketAgama'] != "Islam") 
                         <td style="page-break-before: always;" class="fontku2">{{ empty($item["catatanAgama"])?'-':$item["catatanAgama"] }}</td>
                     @else
                     @if ($ket=="capaian")
@@ -293,7 +293,7 @@
                     @endif
 
                 </tr>
-                @if ($item["agama"] == false && $item['ketAgama'] == "islam")
+                @if ($item["agama"] == false && $item['ketAgama'] == "Islam")
                     @if ($ket=="keduanya")
                     <tr>
                         <td style="page-break-before: always;" class="fontku2">{{ $item["catatan"] }}</td>
