@@ -226,7 +226,7 @@
                     <td align="center" rowspan="{{ $nilai }}">{{ $item["nilai"] }}</td>
                     
                     @if ($item["ket"] == true) 
-                        <td style="page-break-before: always;" class="fontku2">{{ $item["catatanAgama"] }}</td>
+                        <td style="page-break-before: always;" class="fontku2">{{ empty($item["catatanAgama"])?'tidak ada catatan':$item["catatanAgama"] }}</td>
                     @else
                     @if ($ket=="capaian")
                         <td style="page-break-before: always;" class="fontku2">{{ $item["capaian"] }}</td>
