@@ -9,6 +9,7 @@ use App\Models\siswaM;
 use App\Models\sekolahM;
 use App\Models\identitasM;
 use App\Models\jurusanM;
+use App\Models\mapelM;
 use App\Models\kelasM;
 use App\Models\kehadiranM;
 use App\Models\catatanM;
@@ -89,6 +90,7 @@ class cetakraportC extends Controller
 
      public function nilai(Request $request, $idsiswa, $idraport)
      {
+        
         $iduser = Auth::user()->iduser;
         $identitas = identitasM::where("iduser", $iduser);
         if($identitas->count() == 0) {
@@ -138,6 +140,15 @@ class cetakraportC extends Controller
             ->get();
             // dd($nilai2);
             //nilai
+            $agama = false;
+            $agamaData = mapelM::where("namamapel", "like", "%agama%")->get();
+            foreach ($agamaData as $ag) {
+                if($ag->idmapel == $nr->idmapel) {
+                    $agama = true;
+                }
+                
+            }
+
             $n1 = 0;
             $catatanBaik = "";
             $catatanBuruk = "";
@@ -163,19 +174,15 @@ class cetakraportC extends Controller
             $nilai = $n1/count($nilai2);
 
             
-            // $catatan = catatanM::join("detailraport", "detailraport.iddetailraport", "catatan.iddetailraport")
-            // ->where("detailraport.idraport", $idraport)
-            // ->where("catatan.idmapel", $nr->idmapel)
-            // ->where("catatan.idsiswa", $idsiswa)
-            // ->select("catatan.catatan")->get();
-
-            // foreach ($catatan as $cat) {
-            //     if(empty($catatanBuruk)) {
-            //         $catatanBuruk = ucfirst(strtolower($cat->catatan));
-            //     }else {
-            //         $catatanBuruk = $catatanBuruk.", ".strtolower($cat->catatan);
-            //     }
-            // }
+            $catatan = catatanM::join("detailraport", "detailraport.iddetailraport", "catatan.iddetailraport")
+            ->where("detailraport.idraport", $idraport)
+            ->where("catatan.idmapel", $nr->idmapel)
+            ->where("catatan.idsiswa", $idsiswa)
+            ->select("catatan.catatan")->get();
+            $catatanAgama = "";
+            foreach ($catatan as $cat) {
+                $catatanAgama = ucfirst(strtolower($cat->catatan));
+            }
 
             $ujian = ujianM::where("idraport", $idraport)
             ->where("idmapel", $nr->idmapel)
@@ -202,12 +209,14 @@ class cetakraportC extends Controller
                 "nilai" => round($nilai),
                 "ket" => $nr->mapel->ket,
                 "catatan" => $catatanBuruk,
+                "agama" => $agama,
+                "catatanAgama" => $catatanAgama,
             ];
 
             // dd($mapel);
 
         }
-     
+    
         $raport = raportM::where("idraport", $idraport)->first();
         
 

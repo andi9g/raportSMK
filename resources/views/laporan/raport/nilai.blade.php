@@ -212,6 +212,10 @@
                         $ket = "keduanya";
                         $nilai = 2;
                     }
+
+                    if($item["agama"]==true) {
+                        $nilai = 1;
+                    }
                 @endphp
                 
                 @if ($item["ket"]=="umum")
@@ -219,6 +223,10 @@
                     <td rowspan="{{ $nilai }}" align="center">{{ $loop->iteration }}</td>
                     <td rowspan="{{ $nilai }}">{{ $item["namamapel"] }}</td>
                     <td align="center" rowspan="{{ $nilai }}">{{ $item["nilai"] }}</td>
+                    
+                    @if ($item["ket"] == true) 
+                        <td style="page-break-before: always;" class="fontku2">{{ $item["catatanAgama"] }}</td>
+                    @else
                     @if ($ket=="capaian")
                         <td style="page-break-before: always;" class="fontku2">{{ $item["capaian"] }}</td>
                     @elseif($ket=="catatan")
@@ -226,14 +234,19 @@
                     @elseif($ket=="keduanya")
                         <td style="page-break-before: always;" class="fontku2">{{ $item["capaian"] }}</td>
                     @endif
+                        
+                    @endif
 
                 </tr>
+                @if ($item["ket"] == false) 
                 @if ($ket=="keduanya")
                 <tr>
                     <td style="page-break-before: always;" class="fontku2"z>{{ $item["catatan"] }}</td>
                 </tr>
                     
                 @endif
+                @endif
+
                     
                 @endif
                 
@@ -368,7 +381,7 @@
         
         <div class="fontku">
             <b>
-                E. Kenaikan Kelas
+                D. Kenaikan Kelas
             </b>
 
             <table width="100%" class="tableku" border="1">
