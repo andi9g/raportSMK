@@ -215,7 +215,7 @@
 
                     if($item["agama"]==true) {
                         $nilai = 1;
-                        // dd($item["catatanAgama"].'error');
+                        dd($item["ketAgama"].'error');
                     }
                 @endphp
                 
@@ -293,13 +293,13 @@
                     @endif
 
                 </tr>
-                @if ($item["agama"] == false && $item['ketAgama'] == "islam")
-                @if ($ket=="keduanya")
-                <tr>
-                    <td style="page-break-before: always;" class="fontku2">{{ $item["catatan"] }}</td>
-                </tr>
-                    
-                @endif
+                @if ($item["agama"] == false )
+                    @if ($ket=="keduanya")
+                    <tr>
+                        <td style="page-break-before: always;" class="fontku2">{{ $item["catatan"] }}</td>
+                    </tr>
+                        
+                    @endif
                 @endif
 
                 @endif
