@@ -215,7 +215,7 @@
 
                     if($item["agama"]==true) {
                         $nilai = 1;
-                        dd('error');
+                        dd($item["catatanAgama"].'error');
                     }
                 @endphp
                 
