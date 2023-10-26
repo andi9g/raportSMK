@@ -237,7 +237,7 @@
                     @endif
                         
                     @endif
-
+                    {{ dd($item['ketAgama']) }}
                 </tr>
                 @if ($item["agama"] == false && $item['ketAgama'] == "islam") 
                 @if ($ket=="keduanya")
@@ -293,7 +293,7 @@
                     @endif
 
                 </tr>
-                @if ($item["agama"] == false )
+                @if ($item["agama"] == false && $item['ketAgama'] == "islam")
                     @if ($ket=="keduanya")
                     <tr>
                         <td style="page-break-before: always;" class="fontku2">{{ $item["catatan"] }}</td>
