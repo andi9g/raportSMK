@@ -81,6 +81,9 @@
             font-weight: bold;
             
         }
+        .page:nth-child(2) {
+            margin-top: 40mm; /* Margin atas untuk halaman kedua */
+        }
 
         .ukuran-judul {
             padding: 10px auto;
@@ -178,7 +181,7 @@
         </tr>
     </table>
 
-    <div class="fontku">
+    <div class="fontku page" >
         <b>
             A. Nilai Akademik
         </b>
@@ -292,7 +295,7 @@
     
     <br>
     
-    <div class="fontku " style="page-break-before: always;">
+    <div class="fontku page" style="page-break-before: always;">
         <b>
             B. Extrakulikuler
         </b>
