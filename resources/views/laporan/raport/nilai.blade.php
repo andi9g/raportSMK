@@ -213,9 +213,9 @@
                         $nilai = 2;
                     }
 
-                    if($item["agama"]==true) {
+                    if($item["agama"]==true && $item['ketAgama'] != "islam") {
                         $nilai = 1;
-                        dd($item["ketAgama"].'error');
+                        // dd($item["ketAgama"].'error');
                     }
                 @endphp
                 
@@ -269,7 +269,7 @@
                         $ket = "keduanya";
                         $nilai = 2;
                     }
-                    if($item["agama"]==true) {
+                    if($item["agama"]==true && $item['ketAgama'] != "islam") {
                         $nilai = 1;
                         // dd($item["catatanAgama"].'error');
                     }
