@@ -99,6 +99,7 @@ class cetakraportC extends Controller
         
         $detail = raportM::where("idraport", $idraport)->first();
         $siswa = siswaM::where("idsiswa", $idsiswa)->first();
+        
         $sekolah = sekolahM::first();
 
         $mapel = [];
@@ -211,6 +212,7 @@ class cetakraportC extends Controller
                 "catatan" => $catatanBuruk,
                 "agama" => $agama,
                 "catatanAgama" => $catatanAgama,
+                "ketAgama" => $siswa->agama,
             ];
 
             // dd($mapel);
