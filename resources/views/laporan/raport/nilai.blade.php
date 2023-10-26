@@ -215,6 +215,7 @@
 
                     if($item["agama"]==true) {
                         $nilai = 1;
+                        dd('error');
                     }
                 @endphp
                 
