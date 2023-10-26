@@ -239,7 +239,16 @@
                     @endif
                     
                 </tr>
-                @if ($item['ketAgama'] == "Islam") 
+                @if ($item["agama"]==true && $item['ketAgama'] == "Islam") 
+                
+                
+                @if ($ket=="keduanya")
+                <tr>
+                    <td style="page-break-before: always;" class="fontku2">{{ $item["catatan"] }}</td>
+                </tr>
+                    
+                @endif
+                @elseif($item["agama"]==false)
                 @if ($ket=="keduanya")
                 <tr>
                     <td style="page-break-before: always;" class="fontku2">{{ $item["catatan"] }}</td>
@@ -293,15 +302,25 @@
                     @endif
 
                 </tr>
-                @if ($item['ketAgama'] == "Islam")
-                    @if ($ket=="keduanya")
-                    <tr>
-                        <td style="page-break-before: always;" class="fontku2">{{ $item["catatan"] }}</td>
-                    </tr>
-                        
-                    @endif
+                @if ($item["agama"]==true && $item['ketAgama'] == "Islam") 
+                
+                
+                @if ($ket=="keduanya")
+                <tr>
+                    <td style="page-break-before: always;" class="fontku2">{{ $item["catatan"] }}</td>
+                </tr>
+                    
+                @endif
+                @elseif($item["agama"]==false)
+                @if ($ket=="keduanya")
+                <tr>
+                    <td style="page-break-before: always;" class="fontku2">{{ $item["catatan"] }}</td>
+                </tr>
+                    
+                @endif
                 @endif
 
+                    
                 @endif
                 
             @endforeach
