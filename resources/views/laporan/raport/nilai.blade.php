@@ -239,7 +239,7 @@
                     @endif
 
                 </tr>
-                @if ($item["ket"] == false) 
+                @if ($item["agama"] == false) 
                 @if ($ket=="keduanya")
                 <tr>
                     <td style="page-break-before: always;" class="fontku2"z>{{ $item["catatan"] }}</td>
@@ -289,7 +289,7 @@
                     @endif
 
                 </tr>
-                @if ($item["ket"] == false) 
+                @if ($item["agama"] == false) 
                 @if ($ket=="keduanya")
                 <tr>
                     <td style="page-break-before: always;" class="fontku2"z>{{ $item["catatan"] }}</td>
