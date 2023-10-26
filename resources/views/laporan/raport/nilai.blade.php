@@ -292,7 +292,7 @@
     
     <br>
     
-    <div class="fontku">
+    <div class="fontku " style="page-break-before: always;">
         <b>
             B. Extrakulikuler
         </b>
@@ -389,7 +389,7 @@
 
     <table width="100%">
         <tr>
-            <td class="page-break-before: always;">
+            <td style="page-break-before: always;">
                 <div class="fontku">
                     <table width="100%">
                         <tr>
