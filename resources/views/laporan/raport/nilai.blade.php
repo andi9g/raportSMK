@@ -226,7 +226,7 @@
                     <td align="center" rowspan="{{ $nilai }}">{{ $item["nilai"] }}</td>
                     
                     @if ($item["agama"] == true) 
-                        <td style="page-break-before: always;" class="fontku2">{{ empty($item["catatanAgama"])?'tidak ada catatan':$item["catatanAgama"] }}</td>
+                        <td style="page-break-before: always;" class="fontku2">{{ empty($item["catatanAgama"])?'-':$item["catatanAgama"] }}</td>
                     @else
                     @if ($ket=="capaian")
                         <td style="page-break-before: always;" class="fontku2">{{ $item["capaian"] }}</td>
@@ -242,7 +242,7 @@
                 @if ($item["agama"] == false) 
                 @if ($ket=="keduanya")
                 <tr>
-                    <td style="page-break-before: always;" class="fontku2"z>{{ $item["catatan"] }}</td>
+                    <td style="page-break-before: always;" class="fontku2">{{ $item["catatan"] }}</td>
                 </tr>
                     
                 @endif
@@ -276,7 +276,7 @@
                     <td rowspan="{{ $nilai }}">{{ $item["namamapel"] }}</td>
                     <td align="center" rowspan="{{ $nilai }}">{{ $item["nilai"] }}</td>
                     @if ($item["agama"] == true) 
-                        <td style="page-break-before: always;" class="fontku2">{{ empty($item["catatanAgama"])?'tidak ada catatan':$item["catatanAgama"] }}</td>
+                        <td style="page-break-before: always;" class="fontku2">{{ empty($item["catatanAgama"])?'-':$item["catatanAgama"] }}</td>
                     @else
                     @if ($ket=="capaian")
                         <td style="page-break-before: always;" class="fontku2">{{ $item["capaian"] }}</td>
@@ -292,7 +292,7 @@
                 @if ($item["agama"] == false) 
                 @if ($ket=="keduanya")
                 <tr>
-                    <td style="page-break-before: always;" class="fontku2"z>{{ $item["catatan"] }}</td>
+                    <td style="page-break-before: always;" class="fontku2">{{ $item["catatan"] }}</td>
                 </tr>
                     
                 @endif
