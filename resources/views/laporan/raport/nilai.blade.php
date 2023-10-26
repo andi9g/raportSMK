@@ -225,7 +225,7 @@
                     <td rowspan="{{ $nilai }}">{{ $item["namamapel"] }}</td>
                     <td align="center" rowspan="{{ $nilai }}">{{ $item["nilai"] }}</td>
                     
-                    @if ($item["ket"] == true) 
+                    @if ($item["agama"] == true) 
                         <td style="page-break-before: always;" class="fontku2">{{ empty($item["catatanAgama"])?'tidak ada catatan':$item["catatanAgama"] }}</td>
                     @else
                     @if ($ket=="capaian")
@@ -275,7 +275,7 @@
                     <td rowspan="{{ $nilai }}" align="center">{{ $loop->iteration }}</td>
                     <td rowspan="{{ $nilai }}">{{ $item["namamapel"] }}</td>
                     <td align="center" rowspan="{{ $nilai }}">{{ $item["nilai"] }}</td>
-                    @if ($item["ket"] == true) 
+                    @if ($item["agama"] == true) 
                         <td style="page-break-before: always;" class="fontku2">{{ empty($item["catatanAgama"])?'tidak ada catatan':$item["catatanAgama"] }}</td>
                     @else
                     @if ($ket=="capaian")
