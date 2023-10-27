@@ -82,6 +82,13 @@
             
         }
 
+        .ukuran-judul {
+            padding: 10px auto;
+        }
+        .ukuran-judul2 {
+            padding: 7px auto;
+        }
+
         body {
             font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
         }
@@ -188,7 +195,7 @@
 
             <tbody>
                 <tr>
-                <td colspan="4" >A. Kelompok Mata Pelajaran Umum</td>
+                <td colspan="4" class="ukuran-judul">A. Kelompok Mata Pelajaran Umum</td>
             </tr>
             @foreach ($mapel as $item)
                 @php
@@ -231,7 +238,7 @@
             
 
             <tr>
-                <td colspan="4">B. Kelompok Mata Pelajaran Kejuruan</td>
+                <td colspan="4" class="ukuran-judul">B. Kelompok Mata Pelajaran Kejuruan</td>
             </tr>
             @foreach ($mapel as $item)
                 @php
@@ -301,7 +308,7 @@
 
             <tbody>
                 <tr>
-                    <td align="center">1</td>
+                    <td align="center" class="ukuran-judul">1</td>
                     <td>Pramuka</td>
                     <td>-</td>
                 </tr>
@@ -324,7 +331,7 @@
         <table width="75%" class="tableku" border="1">
             <tbody>
                 <tr>
-                    <td style="width: 226px">
+                    <td style="width: 226px" class="ukuran-judul2">
                         Sakit
                     </td>
                     <td>
@@ -332,7 +339,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td class="ukuran-judul2">
                         Izin
                     </td>
                     <td>
@@ -340,7 +347,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td class="ukuran-judul2">
                         Tanpa Keterangan
                     </td>
                     <td>
