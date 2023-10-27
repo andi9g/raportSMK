@@ -105,6 +105,7 @@
             </table>
     </div>
         
+    <br>
     @endif
     <table width="100%" class="fontku">
         <tr>
@@ -218,7 +219,7 @@
                 </tr>
                 @if ($ket=="keduanya")
                 <tr>
-                    <td style="page-break-before: always;" class="fontku2">{{ $item["catatan"] }}</td>
+                    <td style="page-break-before: always;" class="fontku2"z>{{ $item["catatan"] }}</td>
                 </tr>
                     
                 @endif
@@ -260,7 +261,7 @@
                 </tr>
                     @if ($ket=="keduanya")
                     <tr>
-                        <td style="page-break-before: always;" class="fontku2">{{ $item["catatan"] }}</td>
+                        <td style="page-break-before: always;" class="fontku2"z>{{ $item["catatan"] }}</td>
                     </tr>
                         
                     @endif
@@ -290,9 +291,9 @@
 
         <table width="100%" class="tableku" border="1">
             <thead>
-                <tr>
-                    <th width="2px" style="page-break-inside: avoid;">No</th>
-                    <th style="page-break-inside: avoid;width: 200px">Kegiatan Extrakulikuler</th>
+                <tr style="padding: 10px auto">
+                    <th width="2px" style="page-break-inside: avoid;" style="padding: 10px auto">No</th>
+                    <th style="page-break-inside: avoid;width: 200px" >Kegiatan Extrakulikuler</th>
                     <th style="page-break-inside: avoid;">Keterangan</th>
                 </tr>
             </thead>
@@ -352,26 +353,29 @@
 
     <br>
 
-    <div class="fontku">
-        <b>
-            B. Kenaikan Kelas
-        </b>
+    @if (!($raport->namaraport == "raport uts"))
+        
+        <div class="fontku">
+            <b>
+                E. Kenaikan Kelas
+            </b>
 
-        <table width="100%" class="tableku" border="1">
-            
+            <table width="100%" class="tableku" border="1">
+                
 
-            <tbody>
-                <tr>
-                    <td style="padding: 8px auto"> 
-                        <center>
-                            DALAM PENILAIAN
-                        </center>
-                    </td>
-                </tr>
-            </tbody>
+                <tbody>
+                    <tr>
+                        <td style="padding: 8px auto"> 
+                            <center>
+                                DALAM PENILAIAN
+                            </center>
+                        </td>
+                    </tr>
+                </tbody>
 
-        </table>
-    </div>
+            </table>
+        </div>
+    @endif
 
     <br>
 

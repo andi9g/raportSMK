@@ -69,7 +69,7 @@
         <tr>
             <td nowrap valign="top">2.&nbsp;&nbsp;&nbsp;&nbsp; Nomor Induk/NISN</td>
             <td valign="top" style="width: fit-content">&nbsp;:&nbsp;</td>
-            <td valign="top" width="100%">{{ ucwords(strtolower($siswa->nisn))}}</td>
+            <td valign="top" width="100%">{{ ucwords(strtolower(sprintf('%010s',$siswa->nisn)))}}</td>
         </tr>
 
         <tr>
