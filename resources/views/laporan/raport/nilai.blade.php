@@ -59,6 +59,7 @@
         }
         .fontku2 {
             font-size: 8.5pt;
+            line-height: 20px;
         }
         .tableku {
             border-collapse: collapse;
