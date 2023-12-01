@@ -56,6 +56,16 @@
                             <label for="fase">Kurikulum Merdeka Fase </label>
                             <input id="fase" class="form-control text-uppercase" type="text" name="fase" placeholder="contoh: E, F...">
                         </div>
+
+                        <div class="form-group">
+                            <label for="target">Target</label>
+                            <select id="target" class="form-control" name="idtarget">
+                                <option value="">Lewatkan</option>
+                                @foreach ($ketraport as $ket)
+                                    <option value="{{ $ket->idraport }}">{{ $ket->namaraport." [".$ket->semester."] Fase ".$ket->fase }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-success">Tambah Data</button>
@@ -126,6 +136,76 @@
                             </ul>
                         </div>
                         <div class="card-footer">
+                            @if (Auth::user()->identitas->posisi == "admin")
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @php
+
+                                        $detailraport = DB::connection("mysql")->table('detailraport')
+                                        ->where("idraport", $item->idraport)
+                                        ->where("iduser", $iduser)
+                                        ->count()
+                                    @endphp
+                                    @if ($detailraport == 0)
+                                        <button class="btn btn-primary btn-block mb-2" type="button" data-toggle="modal" data-target="#tambahdetailraport{{ $item->idraport }}">
+                                            <b>KELOLA RAPORT</b>
+                                        </button>
+                                    @else   
+                                        <a href="{{ route('detailraport.view', [$item->idraport]) }}" class="btn btn-block btn-primary mb-2">
+                                            <b>
+                                                <i class="fa fa-eye"></i> KELOLA RAPORT
+                                            </b>
+                                        </a>
+                                    @endif
+                                    @if ($posisi=="admin" || $posisi=="walikelas")
+                                        <a href="{{ url('cetakraport', [$item->idraport]) }}" class="btn btn-block btn-secondary mb-2">
+                                            <b>
+                                                <i class="fa fa-print"></i> CETAK RAPORT
+                                            </b>
+                                        </a>
+                                    @endif
+
+                                    @if ($posisi=="walikelas")
+                                        <button class="btn btn-block btn-danger mb-2" type="button" data-toggle="modal" data-target="#legerguru{{ $item->idraport }}">
+                                            <b>
+                                                <i class="fa fa-print"></i> CETAK LEGER
+                                            </b>
+                                        </button>
+
+                                        
+                                    @endif
+
+                                    @if ($posisi=="admin")
+                                        <button class="btn btn-block btn-danger mb-2" type="button" data-toggle="modal" data-target="#leger{{ $item->idraport }}">
+                                            <b>
+                                                <i class="fa fa-print"></i> CETAK LEGER
+                                            </b>
+                                        </button>
+                                    @endif
+                                </div>
+                                <div class="col-md-12">
+                                    @php
+                                        if ($item->ket == 0) {
+                                            $bg= "bg-success";
+                                            $tex = "TELAH DI BUKA";
+                                        }else {
+                                            $bg="bg-danger";
+                                            $tex = "TELAH DI TUTUP";
+                                        }
+                                    @endphp
+                                    @if ($user->identitas->posisi == "admin")
+                                    <form action="{{ route('open.raport', [$item->idraport]) }}" method="post">
+                                        @csrf
+                                        <button type="submit" class="btn {{ $bg }} btn-block">
+                                            <b>{{ $tex }}</b>
+                                        </button>
+                                    </form>
+                                    @endif
+                                </div>
+                            </div>
+                            {{-- ------------------------------------- --}}
+                            @else 
+                            @if (empty($item->idtarget))
                             <div class="row">
                                 <div class="col-md-12">
                                     @php
@@ -192,6 +272,118 @@
                                     @endif
                                 </div>
                             </div>
+
+
+                            @else
+                                @php
+                                    $sinkron = DB::connection("mysql")->table("sinkron")->where("idraport", $item->idraport)->where("iduser", $iduser);
+                                @endphp
+
+                                @if ($sinkron->count()  > 0)
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        @php
+    
+                                            $detailraport = DB::table('detailraport')
+                                            ->where("idraport", $item->idraport)
+                                            ->where("iduser", $iduser)
+                                            ->count()
+                                        @endphp
+                                        @if ($detailraport == 0)
+                                            <button class="btn btn-primary btn-block mb-2" type="button" data-toggle="modal" data-target="#tambahdetailraport{{ $item->idraport }}">
+                                                <b>KELOLA RAPORT</b>
+                                            </button>
+                                        @else   
+                                            <a href="{{ route('detailraport.view', [$item->idraport]) }}" class="btn btn-block btn-primary mb-2">
+                                                <b>
+                                                    <i class="fa fa-eye"></i> KELOLA RAPORT
+                                                </b>
+                                            </a>
+                                        @endif
+                                        @if ($posisi=="admin" || $posisi=="walikelas")
+                                            <a href="{{ url('cetakraport', [$item->idraport]) }}" class="btn btn-block btn-secondary mb-2">
+                                                <b>
+                                                    <i class="fa fa-print"></i> CETAK RAPORT
+                                                </b>
+                                            </a>
+                                        @endif
+    
+                                        @if ($posisi=="walikelas")
+                                            <button class="btn btn-block btn-danger mb-2" type="button" data-toggle="modal" data-target="#legerguru{{ $item->idraport }}">
+                                                <b>
+                                                    <i class="fa fa-print"></i> CETAK LEGER
+                                                </b>
+                                            </button>
+    
+                                            
+                                        @endif
+    
+                                        @if ($posisi=="admin")
+                                            <button class="btn btn-block btn-danger mb-2" type="button" data-toggle="modal" data-target="#leger{{ $item->idraport }}">
+                                                <b>
+                                                    <i class="fa fa-print"></i> CETAK LEGER
+                                                </b>
+                                            </button>
+                                        @endif
+                                    </div>
+                                    <div class="col-md-12">
+                                        @php
+                                            if ($item->ket == 0) {
+                                                $bg= "bg-success";
+                                                $tex = "TELAH DI BUKA";
+                                            }else {
+                                                $bg="bg-danger";
+                                                $tex = "TELAH DI TUTUP";
+                                            }
+                                        @endphp
+                                        @if ($user->identitas->posisi == "admin")
+                                        <form action="{{ route('open.raport', [$item->idraport]) }}" method="post">
+                                            @csrf
+                                            <button type="submit" class="btn {{ $bg }} btn-block">
+                                                <b>{{ $tex }}</b>
+                                            </button>
+                                        </form>
+                                        @endif
+                                    </div>
+                                </div>
+                                @else 
+                                    <button class="btn btn-danger btn-block" type="button" data-toggle="modal" data-target="#prosessinkron{{ $item->idraport }}">SINKRONKAN DATA</button>
+
+
+                                    <div id="prosessinkron{{ $item->idraport }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="my-modal-title">PERHATIAN</h5>
+                                                    <button class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Dengan menekan <b>Sinkronkan Data Sekarang</b>, maka penilaian pada raport UTS {{ $item->semester }} akan di tarik ke raport semester {{ $item->semester }}</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <form action="{{ route('sinkron.raport', [$item->idraport]) }}" method="post">
+                                                        @csrf
+                                                        <button type="submit" class="btn btn-block btn-success">SINKONKAN DATA SEKARANG</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    
+
+                                @endif
+
+                            @endif
+                            
+
+
+                            @endif
+
+
+                            
                         </div>
                     </div>
                 </div>

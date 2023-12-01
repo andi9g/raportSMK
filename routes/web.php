@@ -53,13 +53,15 @@ Route::middleware(['GerbangIdentitas', 'GerbangCekWaliKelas'])->group(function (
             //raport
             Route::post("open/raport/{idraport}", "raportC@open")->name("open.raport");
             Route::post('raport', "raportC@store")->name("raport.store");
-            Route::delete('raport/delete/{idraport}', "raportC@store")->name("raport.destroy");
+            Route::delete('raport/delete/{idraport}', "raportC@destroy")->name("raport.destroy");
 
-            
+           
 
 
         });
         Route::get('raport', "raportC@index");
+        Route::post('sinkron/{idraport}/raport', "raportC@sinkron")->name("sinkron.raport");
+
         //siswa
         Route::resource('siswa', 'siswaC');
         
@@ -79,6 +81,7 @@ Route::middleware(['GerbangIdentitas', 'GerbangCekWaliKelas'])->group(function (
         Route::post("catatan/{iddetailraport}", "nilaiC@catatan")->name("tambah.catatan");
         Route::post("ujian/{idraport}", "nilaiC@ujian")->name("nilai.ujian");
         
+
 
 
         //Menu_cetakraport

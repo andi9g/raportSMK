@@ -81,8 +81,8 @@
             font-weight: bold;
             
         }
-        .page:nth-child(2) {
-            margin-top: 40mm; /* Margin atas untuk halaman kedua */
+        .page:nth-child(3) {
+            margin-top: 30mm; /* Margin atas untuk halaman kedua */
         }
 
         .ukuran-judul {
@@ -339,7 +339,7 @@
     
     <br>
     
-    <div class="fontku page" style="page-break-before: always;">
+    <div class="fontku page">
         <b>
             B. Extrakulikuler
         </b>

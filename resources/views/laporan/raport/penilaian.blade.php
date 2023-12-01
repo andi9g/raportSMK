@@ -83,8 +83,8 @@
             @foreach ($elemen as $e)
                 <th>Nilai{{ $loop->iteration }}</th>
             @endforeach
-            <th>Praktek</th>
-            <th>Nonpraktek</th>
+            <th>Tes</th>
+            <th>Non Tes</th>
             <th><small>(Tugas + Ujian) / 2</small></th>
         </tr>
 

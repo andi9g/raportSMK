@@ -80,6 +80,14 @@ class Raport extends Migration
             $table->enum("semester", ["ganjil", "genap"]);
             $table->string("fase");
             $table->boolean("ket")->default(0);
+            $table->integer("idtarget")->nullable();
+            $table->timestamps();
+        });
+        
+        Schema::create('sinkron', function (Blueprint $table) {
+            $table->bigIncrements('idsinkron');
+            $table->integer("idraport");
+            $table->integer("iduser");
             $table->timestamps();
         });
 
@@ -90,6 +98,7 @@ class Raport extends Migration
             $table->integer("idkelas");
             $table->integer("idmapel");
             $table->integer("idjurusan");
+            $table->integer("idtarget")->nullable();
             $table->timestamps();
         });
 
@@ -101,6 +110,7 @@ class Raport extends Migration
             $table->double("lisan")->default(0);
             $table->double("nonlisan")->default(0);
             $table->double("persen")->default(0);
+            $table->integer("idtarget")->nullable();
             $table->timestamps();
         });
 
@@ -111,6 +121,7 @@ class Raport extends Migration
             $table->integer("izin")->default(0);
             $table->integer("sakit")->default(0);
             $table->integer("tanpaketerangan")->default(0);
+            $table->integer("idtarget")->nullable();
             $table->timestamps();
         });
         
@@ -120,6 +131,7 @@ class Raport extends Migration
             $table->integer("idmapel");
             $table->integer("idsiswa");
             $table->string("catatan")->nullable();
+            $table->integer("idtarget")->nullable();
             $table->timestamps();
         });
 
@@ -129,6 +141,7 @@ class Raport extends Migration
             $table->integer('iduser');
             $table->String('elemen');
             $table->double('persen')->nullable();
+            $table->integer("idtarget")->nullable();
             $table->timestamps();
         });
         
@@ -138,6 +151,7 @@ class Raport extends Migration
             $table->integer("idsiswa");
             $table->double("nilai");
             $table->string("idelemen");
+            $table->integer("idtarget")->nullable();
             $table->timestamps();
         });
 

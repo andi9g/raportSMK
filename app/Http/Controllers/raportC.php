@@ -12,6 +12,7 @@ use App\Models\walikelasM;
 use App\Models\jurusanM;
 use App\Models\nilairaportM;
 use App\Models\elemenM;
+use App\Models\sinkronM;
 use App\Models\detailraportM;
 use App\Models\ujianM;
 use Illuminate\Http\Request;
@@ -41,7 +42,7 @@ class raportC extends Controller
         $kelas = kelasM::get();
         $mapel = mapelM::get();
         $jurusan = jurusanM::get();
-
+        $ketraport = raportM::where("ket", 0)->get();
         $user = User::where("iduser", $iduser)->first();
 
         return view('pages.raport.raport', [
@@ -53,8 +54,89 @@ class raportC extends Controller
             "mapel" => $mapel,
             "jurusan" => $jurusan,
             "posisi" => $posisi,
+            "ketraport" => $ketraport,
         ]);
     }
+
+    public function sinkron(Request $request, $idraport)
+    {
+
+        try {
+            $iduser = Auth::user()->iduser;
+
+            $raport = raportM::where("idraport", $idraport)->select("idtarget")->first();
+            
+            $detailraport = detailraportM::where("iduser", $iduser)->where("idraport", $raport->idtarget)->get();
+            // dd(count($detailraport));
+
+            foreach ($detailraport as $dr) {
+                // dd($dr->toArray());
+                $cek = detailraportM::where("iduser", $iduser)->where("idtarget", $dr->iddetailraport)->count();
+                if($cek == 0) {
+                    $dera = new detailraportM;
+                    $dera->iduser = $iduser;
+                    $dera->idraport = $idraport;
+                    $dera->idkelas = $dr->idkelas;
+                    $dera->idmapel = $dr->idmapel;
+                    $dera->idjurusan = $dr->idjurusan;
+                    $dera->idtarget = $dr->iddetailraport;
+                    $dera->save();
+
+                    $idraportbaru = $dera->iddetailraport;
+                    $elemen = elemenM::where("iddetailraport", $dr->iddetailraport)->where("iduser", $iduser)->get();
+
+                    // dd(count($elemen)." ".$iddetailraport);
+                    foreach ($elemen as $el) {
+                        // dd($dr->toArray());
+                        $cek = elemenM::where("iddetailraport", $dr->iddetailraport)->where("idtarget", $el->idelemen)->where("iduser", $iduser)->count();
+                        if($cek == 0) {
+                            $elementambah = new elemenM;
+                            $elementambah->iddetailraport = $idraportbaru;
+                            $elementambah->iduser = $iduser;
+                            $elementambah->elemen = $el->elemen;
+                            $elementambah->persen = $el->persen;
+                            $elementambah->idtarget = $el->idelemen;
+                            $elementambah->save();
+
+                            $nilairaport = nilairaportM::where("iddetailraport", $dr->iddetailraport)->where("idelemen", $elementambah->idtarget)->get();
+                            foreach ($nilairaport as $nr) {
+                                // dd($dr->toArray());
+                                $cek = nilairaportM::where("idtarget", $nr->idnilairaport)->where("idelemen", $elementambah->idtarget)->count();
+                                if($cek == 0) {
+                                    $nilairaporttambah = new nilairaportM;
+                                    $nilairaporttambah->iddetailraport = $idraportbaru;
+                                    $nilairaporttambah->idsiswa = $nr->idsiswa;
+                                    $nilairaporttambah->nilai = $nr->nilai;
+                                    $nilairaporttambah->idelemen = $elementambah->idelemen;
+                                    $nilairaporttambah->idtarget = $nr->idnilairaport;
+                                    $nilairaporttambah->save();
+                                }
+                            }
+
+                        }
+                    }
+                }
+
+                
+
+                
+
+                $sinkron = new sinkronM;
+                $sinkron->idraport = $idraport;
+                $sinkron->iduser = $iduser;
+                $sinkron->save();
+
+                return redirect()->back()->with("success", "Sinkron Berhasil")->withInput();
+            }
+        } catch (\Throwable $th) {
+            return redirect()->back()->with("error", "Terjadi kesalahan")->withInput();
+        }
+        
+
+
+
+    }
+
 
     public function tambahdetailraport(Request $request, $idraport) {
         $request->validate([
@@ -627,6 +709,7 @@ class raportC extends Controller
         raportM::destroy($idraport);
         return redirect()->back()->with("warning", "success")->withInput();
     }
+
     public function hapus(raportM $raportM, $iddetailraport)
     {
         try {
