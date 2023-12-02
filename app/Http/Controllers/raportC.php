@@ -29,12 +29,24 @@ class raportC extends Controller
     public function index(Request $request)
     {
         $iduser = Auth::user()->iduser;
+        $posisi = AUth::user()->identitas->posisi;
         $posisi = identitasM::where("iduser", $iduser)->first()->posisi;
         $keyword = empty($request->keyword)?"":$request->keyword;
-        $raport = raportM::where("namaraport", "like", "%$keyword%")
-        ->orWhere("semester", "like", "$keyword%")
-        ->orderBy("idraport", "desc")
-        ->paginate(15);
+        
+        if($posisi == "admin") {
+            $raport = raportM::where("namaraport", "like", "%$keyword%")
+            ->orWhere("semester", "like", "$keyword%")
+            ->orderBy("idraport", "desc")
+            ->paginate(15);
+
+        }else {
+            $raport = raportM::where("namaraport", "like", "%$keyword%")
+            ->where("semester", "like", "$keyword%")
+            ->where("ket", "!=", 1)
+            ->orderBy("idraport", "desc")
+            ->paginate(15);
+
+        }
 
         
         $raport->appends($request->all());
