@@ -80,7 +80,7 @@ class raportC extends Controller
             
             $detailraport = detailraportM::where("iduser", $iduser)->where("idraport", $raport->idtarget)->get();
             // dd(count($detailraport));
-
+            dd($detailraport);
             foreach ($detailraport as $dr) {
                 // dd($dr->toArray());
                 $cek = detailraportM::where("iduser", $iduser)->where("idtarget", $dr->iddetailraport)->count();
@@ -130,16 +130,14 @@ class raportC extends Controller
                 }
 
                 
-
-                
-
-                $sinkron = new sinkronM;
-                $sinkron->idraport = $idraport;
-                $sinkron->iduser = $iduser;
-                $sinkron->save();
-
-                return redirect()->back()->with("success", "Sinkron Berhasil")->withInput();
             }
+
+            $sinkron = new sinkronM;
+            $sinkron->idraport = $idraport;
+            $sinkron->iduser = $iduser;
+            $sinkron->save();
+
+            return redirect()->back()->with("success", "Sinkron Berhasil")->withInput();
         } catch (\Throwable $th) {
             return redirect()->back()->with("error", "Terjadi kesalahan")->withInput();
         }
