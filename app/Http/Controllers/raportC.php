@@ -74,10 +74,13 @@ class raportC extends Controller
     {
 
         try {
+            
             $iduser = Auth::user()->iduser;
 
             $raport = raportM::where("idraport", $idraport)->select("idtarget")->first();
             
+            detailraportM::where("iduser", $iduser)->where("idraport", $idraport)->delete();
+
             $detailraport = detailraportM::where("iduser", $iduser)->where("idraport", $raport->idtarget)->get();
             // dd(count($detailraport));
             
