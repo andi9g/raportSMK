@@ -168,21 +168,12 @@ class raportp5C extends Controller
         $idketeranganp5 = $idketeranganp5;
         $idsubdimensip5 = $request->idsubdimensip5;
         $idraportp5 = $request->idraportp5;
-
-        $pesan = [
-            "success" => $nisn,
-        ];
         
         try{
             $cek = penilaianp5M::where("nisn", sprintf("%010s", $nisn))
             ->where("idsubdimensip5", $idsubdimensip5)
-            ->where("idraportp5", $idraportp5)->first();
+            ->where("idraportp5", $idraportp5);
 
-            $pesan = [
-                "success" => $cek->nisn,
-            ];
-            
-            return $pesan;
 
             if($cek->count() == 0 ){
                 $data["nisn"] = sprintf("%010s", $nisn); 
