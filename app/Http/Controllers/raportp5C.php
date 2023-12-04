@@ -164,7 +164,7 @@ class raportp5C extends Controller
 
     public function nilai(Request $request, $nisn, $idketeranganp5)
     {
-        $nisn = $nisn;
+        $nisn = sprintf("%010s", $nisn);
         $idketeranganp5 = $idketeranganp5;
         $idsubdimensip5 = $request->idsubdimensip5;
         $idraportp5 = $request->idraportp5;
