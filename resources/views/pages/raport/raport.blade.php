@@ -138,6 +138,7 @@
                         <div class="card-footer">
                             @if (Auth::user()->identitas->posisi == "admin")
                             <div class="row">
+                                @if ($item->ket == 0)
                                 <div class="col-md-12">
                                     @php
 
@@ -183,6 +184,8 @@
                                         </button>
                                     @endif
                                 </div>
+                                    
+                                @endif
                                 <div class="col-md-12">
                                     @php
                                         if ($item->ket == 0) {

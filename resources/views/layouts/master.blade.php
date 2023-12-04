@@ -33,6 +33,7 @@
   <link rel="stylesheet" href="{{ url('plugins/daterangepicker/daterangepicker.css')}}">
   <!-- summernote -->
   <link rel="stylesheet" href="{{ url('plugins/summernote/summernote-bs4.min.css')}}">
+  @yield('header')
 </head>
 <body class="hold-transition sidebar-mini layout-fixed text-sm">
 
@@ -190,6 +191,8 @@
               </p>
             </a>
           </li>
+
+          
             
           <li class="nav-item">
             <hr class="bg-secondary">
@@ -205,6 +208,41 @@
               </p>
             </a>
           </li>
+
+          <li class="nav-item">
+            <a href="{{ url('raportp5', []) }}" class="nav-link @yield('warnaraportp5')">
+              <i class="nav-icon fas fa-book"></i>
+              <p>
+                Raport P5
+              </p>
+            </a>
+          </li>
+
+
+          @if ($posisi == "admin")
+            <li class="nav-item">
+              <hr class="bg-secondary">
+            </li>
+            
+            <li class="nav-item">
+              <a href="#" class="nav-link @yield('warnapengaturan')">
+                  <i class="nav-icon fas fa-wrench"></i>
+                  <p>
+                      Pengaturan
+                      <i class="right fas fa-angle-left"></i>
+                  </p>
+              </a>
+              <ul class="nav nav-treeview" style="display: none;">
+                  <li class="nav-item">
+                      <a href="{{ url('pengaturanp5', []) }}" class="nav-link @yield('warnapengaturanp5')">
+                          <i class="far fa-circle nav-icon"></i>
+                          <p>Pengaturan P5</p>
+                      </a>
+                  </li>
+                  
+              </ul>
+          </li>
+          @endif
 
 
         </ul>
@@ -263,7 +301,7 @@
 {{-- select2 --}}
 <script src="{{ url('plugins/select2/js/select2.full.min.js', []) }}"></script>
 
-@yield('script')
+
 
 <!-- Bootstrap 4 -->
 <script src="{{ url('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
@@ -289,7 +327,7 @@
 <script src="{{ url('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{ url('dist/js/adminlte.js')}}"></script>
-
+@yield('script')
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{ url('dist/js/pages/dashboard.js')}}"></script>
 @include('sweetalert::alert')
