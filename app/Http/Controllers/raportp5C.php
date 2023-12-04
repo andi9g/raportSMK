@@ -62,7 +62,7 @@ class raportp5C extends Controller
     public function formnilai(Request $request, $idraportp5, $nisn)
     {
         $nisn = sprintf("%010s", $nisn);
-        dd($nisn);
+        
         $siswa = siswaM::where("nisn", $nisn)->first();
         
         $nilai = raportp5M::where("idraportp5", $idraportp5)->first();
