@@ -158,8 +158,6 @@
             success: function(data) {
                 if(data.success != "berhasil") {
                     alert(data.success);
-                }else {
-                    alert(data.success);
                 }
             }
         });

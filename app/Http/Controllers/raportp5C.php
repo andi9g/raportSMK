@@ -183,7 +183,7 @@ class raportp5C extends Controller
                 penilaianp5M::create($data);
 
                 $pesan = [
-                    "success" => "berhasil tambah baru",
+                    "success" => "berhasil",
                 ];
             }else {
                 $data["nisn"] = sprintf("%010s", $nisn); 
@@ -192,7 +192,7 @@ class raportp5C extends Controller
                 $data["idraportp5"] = $idraportp5; 
                 $cek->first()->update($data);
                 $pesan = [
-                    "success" => "berhasil update",
+                    "success" => "berhasil",
                 ];
             }
 
