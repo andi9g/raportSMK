@@ -182,7 +182,7 @@ class raportp5C extends Controller
                 "success" => $cek->nisn,
             ];
             
-            dd($pesan);
+            return $pesan;
             if($cek->count() == 0 ){
                 $data["nisn"] = sprintf("%010s", $nisn); 
                 $data["idketeranganp5"] = $idketeranganp5; 
