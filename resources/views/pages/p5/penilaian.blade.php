@@ -13,6 +13,7 @@
 
 <div class="container">
     <a href="{{ url('raportp5', [$idraportp5]) }}" class="btn btn-danger btn-sm my-0 rounded-0">Kembali Halaman Sebelumnya</a>
+    <input type="text" value="{{ $nisn }}" id="nisn" hidden> 
     <div class="row">
         <div class="col-md-4">
             <div class="card">
@@ -144,7 +145,7 @@
     });
 
     function kirimpost(nisn, idketerangan, idsubdimensi, idraport) {
-
+        var nisn = document.getElementById("nisn").value;
         $.ajax({
             type: 'POST',
             url: "{{ route('kirim.nilai.p5', ['nisn' => ':nisn', 'idketeranganp5' => ':idketeranganp5']) }}"
