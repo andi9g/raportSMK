@@ -80,7 +80,7 @@ class raportC extends Controller
             
             $detailraport = detailraportM::where("iduser", $iduser)->where("idraport", $raport->idtarget)->get();
             // dd(count($detailraport));
-            dd($detailraport);
+            
             foreach ($detailraport as $dr) {
                 // dd($dr->toArray());
                 $cek = detailraportM::where("iduser", $iduser)->where("idtarget", $dr->iddetailraport)->count();
