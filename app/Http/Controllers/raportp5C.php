@@ -211,16 +211,16 @@ class raportp5C extends Controller
 
     public function tambahprojectp5(Request $request, $idraportp5)
     {
-        try{
+        // try{
             $iduser = Auth::user()->iduser;
             $data = $request->all();
             identitasp5M::where("iduser", $iduser)->first()->update($data);
     
             return redirect()->route("penilaian.raportp5", $idraportp5)->with("success", "Project telah ditambahkan");
         
-        }catch(\Throwable $th){
-            return redirect('location')->with('toast_error', 'Terjadi kesalahan');
-        }
+        // }catch(\Throwable $th){
+        //     return redirect()->with('toast_error', 'Terjadi kesalahan');
+        // }
     }
 
     public function ubahprojectp5(Request $request, $idraportp5)
