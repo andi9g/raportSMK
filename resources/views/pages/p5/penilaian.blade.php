@@ -101,7 +101,7 @@
                                                     ->where("idraportp5", $idraportp5)
                                                     ->where("idsubdimensip5", $subdimensi->idsubdimensip5)->count();
                                                 @endphp
-                                                <input type="radio" onchange="kirimpost({{ $siswa->nisn }}, {{ $keterangan->idketeranganp5 }}, {{ $subdimensi->idsubdimensip5 }}, {{ $idraportp5 }})" name="nilai{{ $subdimensi->idsubdimensip5 }}" value="{{ $subdimensi->idsubdimensip5 }}" id="" @if ($checked == 1)
+                                                <input type="radio" onchange="kirimpost({{ $nisn }}, {{ $keterangan->idketeranganp5 }}, {{ $subdimensi->idsubdimensip5 }}, {{ $idraportp5 }})" name="nilai{{ $subdimensi->idsubdimensip5 }}" value="{{ $subdimensi->idsubdimensip5 }}" id="" @if ($checked == 1)
                                                     checked 
                                                 @endif>
                                             </td>
@@ -156,8 +156,6 @@
             },
             success: function(data) {
                 if(data.success != "berhasil") {
-                    alert(data.success);
-                }else {
                     alert(data.success);
                 }
             }
