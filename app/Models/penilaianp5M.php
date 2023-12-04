@@ -12,4 +12,9 @@ class penilaianp5M extends Model
     protected $primaryKey = 'idpenilaianp5';
     protected $guarded = [];
     protected $connection = "mysql";
+
+    public function siswa()
+    {
+        return $this->hasOne(siswaM::class, "nisn", "nisn");
+    }
 }

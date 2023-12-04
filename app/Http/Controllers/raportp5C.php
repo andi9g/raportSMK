@@ -172,9 +172,9 @@ class raportp5C extends Controller
         try{
             $cek = penilaianp5M::where("nisn", sprintf("%010s", $nisn))
             ->where("idsubdimensip5", $idsubdimensip5)
-            ->where("idraportp5", $idraportp5);
+            ->where("idraportp5", $idraportp5)->first();
             $pesan = [
-                "success" => $cek->count(),
+                "success" => $cek->siswa->nama,
             ];
             return $pesan;
 
