@@ -184,7 +184,10 @@
                                         </button>
                                     @endif
                                 </div>
+
+                                
                                     
+
                                 @endif
                                 <div class="col-md-12">
                                     @php
@@ -206,6 +209,9 @@
                                     @endif
                                 </div>
                             </div>
+
+                            
+
                             {{-- ------------------------------------- --}}
                             @else 
                             @if (empty($item->idtarget))
@@ -384,7 +390,13 @@
 
 
                             @endif
-
+                            
+                            @if ($pembinaex > 0)
+                                <a href="{{ route('extrakulikuler.open', [$item->idraport]) }}" class="btn btn-warning btn-block text-bold">
+                                    KELOLA EXTRAKULIKULER
+                                </a>
+                            @endif
+                            
 
                             
                         </div>

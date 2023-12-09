@@ -15,6 +15,7 @@ use App\Models\elemenM;
 use App\Models\sinkronM;
 use App\Models\detailraportM;
 use App\Models\ujianM;
+use App\Models\pembinaexM;
 use Illuminate\Http\Request;
 use Auth;
 use PDF;
@@ -29,6 +30,9 @@ class raportC extends Controller
     public function index(Request $request)
     {
         $iduser = Auth::user()->iduser;
+
+        $pembinaex = pembinaexM::where("iduser", $iduser)->count();
+
         $posisi = AUth::user()->identitas->posisi;
         $posisi = identitasM::where("iduser", $iduser)->first()->posisi;
         $keyword = empty($request->keyword)?"":$request->keyword;
@@ -67,6 +71,7 @@ class raportC extends Controller
             "jurusan" => $jurusan,
             "posisi" => $posisi,
             "ketraport" => $ketraport,
+            "pembinaex" => $pembinaex,
         ]);
     }
 

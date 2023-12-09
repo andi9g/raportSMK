@@ -354,11 +354,14 @@
             </thead>
 
             <tbody>
+                @foreach ($extrakulikuler as $ex)
                 <tr>
-                    <td align="center" class="ukuran-judul">1</td>
-                    <td>Pramuka</td>
-                    <td>-</td>
+                    <td align="center" class="ukuran-judul">{{ $loop->iteration }}</td>
+                    <td>{{ $ex->pembina->namaex }}</td>
+                    <td>{{ $ex->nilai }}</td>
                 </tr>
+                    
+                @endforeach
             </tbody>
 
         </table>
@@ -408,7 +411,7 @@
 
     <br>
 
-    @if (!($raport->namaraport == "raport uts"))
+    @if (!($raport->namaraport == "raport uts") && $detail->semester != "ganjil")
         
         <div class="fontku">
             <b>

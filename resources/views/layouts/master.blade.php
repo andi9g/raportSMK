@@ -239,6 +239,13 @@
                           <p>Pengaturan P5</p>
                       </a>
                   </li>
+
+                  <li class="nav-item">
+                    <a href="{{ url('pengaturanextrakulikuler', []) }}" class="nav-link @yield('warnapengaturanextrakulikuler')">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Extrakulikuler</p>
+                    </a>
+                </li>
                   
               </ul>
           </li>

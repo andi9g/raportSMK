@@ -43,6 +43,9 @@ Route::middleware(['GerbangIdentitas', 'GerbangCekWaliKelas'])->group(function (
         Route::resource('kordinator', "kordinatorp5C");
         
 
+        //pengaturan Extrakulikuler
+        Route::resource("pengaturanextrakulikuler", "pengaturanexC");
+
         //guru
         Route::resource('guru', 'guruC');
         Route::post('import/guru', 'guruC@import')->name("guru.import");
@@ -103,7 +106,13 @@ Route::middleware(['GerbangIdentitas', 'GerbangCekWaliKelas'])->group(function (
     //siswa
     Route::resource('siswa', 'siswaC');
     
-    
+
+    //extrakulikuler
+    Route::get("extrakulikuler/{idraport}", "extrakulikulerC@index")->name("extrakulikuler.open");
+    Route::get("extrakulikuler/{idraport}/kelola/{idpembinaex}", "extrakulikulerC@kelola")->name("extrakulikuler.kelola");
+
+    Route::post("kirim/{idsiswa}/extrakulikuler", "extrakulikulerC@kirim")->name("extrakulikuler.kirim.nilai");
+    Route::delete("extrakulikulerHapus/{idpenilaianex}", "extrakulikulerC@destroy")->name("hapus.extrakulikuler");
 
     Route::post('tambah/detailraport/{idraport}', "raportC@tambahdetailraport")->name("tambah.detailraport");
     //detail raport

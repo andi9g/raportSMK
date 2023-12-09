@@ -9,6 +9,7 @@ use App\Models\siswaM;
 use App\Models\sekolahM;
 use App\Models\identitasM;
 use App\Models\jurusanM;
+use App\Models\penilaianexM;
 use App\Models\mapelM;
 use App\Models\kelasM;
 use App\Models\kehadiranM;
@@ -97,6 +98,9 @@ class cetakraportC extends Controller
             return redirect()->back()->with("error", "terjadi kesalahan")->withInput();
         }
         
+        $extrakulikuler = penilaianexM::where("idraport", $idraport)
+        ->where("idsiswa", $idsiswa)->get();
+
         $detail = raportM::where("idraport", $idraport)->first();
         $siswa = siswaM::where("idsiswa", $idsiswa)->first();
         
@@ -229,6 +233,7 @@ class cetakraportC extends Controller
             "detail" => $detail,
             "identitas" => $identitas,
             "mapel" => $mapel,
+            "extrakulikuler" => $extrakulikuler,
         ]);
 
         return $pdf->stream("cover_".str_replace(" ", "", $siswa->nama).".pdf");
