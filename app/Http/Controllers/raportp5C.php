@@ -29,6 +29,22 @@ class raportp5C extends Controller
             $siswa = siswaM::where("nama", "like", "%$keyword%")
             ->orderBy("nama", "asc")
             ->paginate(20);
+        }else if($posisi == "walikelas"){
+            $idkelas = Auth::user()->identitas->walikelas->idkelas;
+            $idjurusan = Auth::user()->identitas->walikelas->idjurusan;
+            $identitasp5 = identitasp5M::where("idkelas", $idkelas)
+            ->where("idjurusan", $idjurusan)
+            ->orderBy("ididentitasp5", "desc")
+            ->first();
+
+            // dd($identitasp5);
+            $project = $identitasp5->namaproject;
+            
+            $siswa = siswaM::where("idkelas", $idkelas)
+            ->where("idjurusan", $idjurusan)
+            ->where("nama", "like", "%$keyword%")
+            ->orderBy("nama", "asc")
+            ->paginate(20);
         }else {
             $identitasp5 = identitasp5M::where("iduser", Auth::user()->iduser)->first();
             $idkelas = $identitasp5->idkelas;
@@ -145,7 +161,13 @@ class raportp5C extends Controller
         // dd($data);
         $sekolah = sekolahM::first();
 
-        $identitasp5 = identitasp5M::where("iduser", Auth::user()->iduser)->first();
+        // $identitasp5 = identitasp5M::where("iduser", Auth::user()->iduser)->first();
+        $idkelas = Auth::user()->identitas->walikelas->idkelas;
+        $idjurusan = Auth::user()->identitas->walikelas->idjurusan;
+        $identitasp5 = identitasp5M::where("idkelas", $idkelas)
+        ->where("idjurusan", $idjurusan)
+        ->orderBy("ididentitasp5", "desc")
+        ->first();
         
         $pdf = PDF::loadView("laporan.p5.raport", [
             "siswa" => $siswa,
@@ -246,17 +268,28 @@ class raportp5C extends Controller
     {
         $tahun = date("Y");
         $posisi = Auth::user()->identitas->posisi;
+        
 
         if($posisi == "admin") {
             $raportp5 = raportp5M::get();
-        }else {
+            
+        }else if($posisi="walikelas") {
+            $idkelas = Auth::user()->identitas->walikelas->idkelas;
+            $idjurusan = Auth::user()->identitas->walikelas->idjurusan;
             $raportp5 = raportp5M::where("ket", "!=", 0)->paginate(15);
+        }else {
+            $idkelas = Auth::user()->identitasp5->idkelas;
+            $idjurusan = Auth::user()->identitasp5->idjurusan;
+            $raportp5 = raportp5M::where("ket", "!=", 0)->paginate(15);
+            
         }
 
         return view("pages.p5.raport", [
             "posisi" => $posisi,
             "tahun" => $tahun,
             "raportp5" => $raportp5,
+            "idkelas" => $idkelas,
+            "idjurusan" => $idjurusan,
         ]);
     }
 

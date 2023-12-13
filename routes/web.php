@@ -131,19 +131,19 @@ Route::middleware(['GerbangIdentitas', 'GerbangCekWaliKelas'])->group(function (
 
 
 
-        //Menu_cetakraport
-        Route::middleware(['GerbangWalikelas'])->group(function () {
-            Route::get("cetakraport/{iddetailraport}", "cetakraportC@index")->name("raport.view");
-            Route::get("cetak/{idsiswa}/cover", "cetakraportC@cover")->name("cetak.cover");
-            Route::get("cetak/{idsiswa}/nilai/{iddetailraport}", "cetakraportC@nilai")->name("cetak.nilai");
-            Route::get("cetak/{idsiswa}/identitas", "cetakraportC@identitas")->name("cetak.identitas");
-            Route::post("kehadiran/{idraport}", "nilaiC@kehadiran")->name("tambah.kehadiran");
+    //Menu_cetakraport
+    Route::middleware(['GerbangWalikelas'])->group(function () {
+        Route::get("cetakraport/{iddetailraport}", "cetakraportC@index")->name("raport.view");
+        Route::get("cetak/{idsiswa}/cover", "cetakraportC@cover")->name("cetak.cover");
+        Route::get("cetak/{idsiswa}/nilai/{iddetailraport}", "cetakraportC@nilai")->name("cetak.nilai");
+        Route::get("cetak/{idsiswa}/identitas", "cetakraportC@identitas")->name("cetak.identitas");
+        Route::post("kehadiran/{idraport}", "nilaiC@kehadiran")->name("tambah.kehadiran");
 
 
-            Route::get("ranking/{idraport}/cetak", "raportC@ranking")->name("ranking.raport");
-            Route::get("leger/{idraport}/cetak", "raportC@leger")->name("leger.raport");
+        Route::get("ranking/{idraport}/cetak", "raportC@ranking")->name("ranking.raport");
+        Route::get("leger/{idraport}/cetak", "raportC@leger")->name("leger.raport");
 
-        });
+    });
         
         
         

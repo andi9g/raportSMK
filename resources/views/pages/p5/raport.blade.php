@@ -95,7 +95,7 @@
                 </div>
 
                 <div class="card-footer p-2 text-lg">
-                    @if ($posisi == "admin")
+                    @if ($posisi == "admin" || $posisi == "walikelas")
                         <a href="{{ route('open.temap5', [$item->idraportp5]) }}" class="btn btn-block btn-danger text-bold">
                             KELOLA RAPORT P5
                         </a>
@@ -105,7 +105,7 @@
                         </a>
 
                     @else
-                    @if (empty(Auth::user()->identitasp5->namaproject))
+                    @if (empty(Auth::user()->identitasp5->namaproject) && Auth::user()->identitasp5->count() > 0)
                         <button class="btn btn-success btn-block text-bold" type="button" data-toggle="modal" data-target="#tambahproject{{ $item->idraportp5 }}">PENILAIAN RAPORT P5</button>
                     @else
                         <a href="{{ route('penilaian.raportp5', [$item->idraportp5]) }}" class="btn btn-success btn-block text-bold">
@@ -148,12 +148,12 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="kelas">Kelas</label>
-                        <input id="kelas" class="form-control" type="text" disabled value="{{ Auth::user()->identitasp5->kelas->namakelas }}">
+                        <input id="kelas" class="form-control" type="text" disabled value="{{ $idkelas }}">
                     </div>
     
                     <div class="form-group">
                         <label for="jurusan">Jurusan</label>
-                        <input id="jurusan" class="form-control" type="text" disabled value="{{ Auth::user()->identitasp5->jurusan->namajurusan }}">
+                        <input id="jurusan" class="form-control" type="text" disabled value="{{ $idjurusan }}">
                     </div>
     
                     <div class="form-group">

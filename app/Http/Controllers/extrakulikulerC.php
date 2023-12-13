@@ -40,9 +40,9 @@ class extrakulikulerC extends Controller
 
         $siswa = siswaM::orderBy("idkelas", "asc")
         ->orderBy("idjurusan", "asc")
-        ->where("idkelas", "like", "$idkelas%")
-        ->where("idjurusan", "like", "$idjurusan%")
         ->where("nama", "like", "$keyword%")
+        ->where("idkelas", "like", "%$idkelas%")
+        ->where("idjurusan", "like", "%$idjurusan%")
         ->paginate(25);
 
         $siswa->appends($request->only(["limit", "keyword", "jurusan", "kelas"]));

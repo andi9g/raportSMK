@@ -21,7 +21,7 @@
                         <div class="row">
                             <div class="col-md-5">
                                 <div class="form-group">
-                                    <select id="jurusan" class="form-control" onchange="submit()" name="idjurusan">
+                                    <select id="jurusan" class="form-control" onchange="submit()" name="jurusan">
                                         <option value="">Semua Jurusan</option>
                                         @foreach ($jurusan as $item)
                                             <option value="{{ $item->idjurusan }}" @if ($idjurusan == $item->idjurusan)
@@ -33,7 +33,7 @@
                             </div>
                             <div class="col-md-5">
                                 <div class="form-group">
-                                    <select id="kelas" class="form-control" onchange="submit()" name="idkelas">
+                                    <select id="kelas" class="form-control" onchange="submit()" name="kelas">
                                         <option value="">Semua Kelas</option>
                                         @foreach ($kelas as $item)
                                             <option value="{{ $item->idkelas }}" @if ($idkelas == $item->idkelas)

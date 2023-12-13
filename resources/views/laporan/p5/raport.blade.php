@@ -353,17 +353,19 @@
                                     <br>
                                     <br>
                                     <br>
+                                    <br>
                                     <p>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . </p>
                             </td>
                             
                             <td width="40%">
                                     <p>Gunung Kijang, {{ \Carbon\Carbon::parse(date('Y-m-d'))->isoFormat("DD MMMM Y") }}</p>
-                                    <p>Kordinator P5</p>
+                                    <p>Wali Kelas</p>
                                     <br>
                                     <br>
                                     <br>
-                                    <p><b>{{ Auth::user()->name }}</b></p>
-                                    <p>NIP.{{ Auth::user()->identitas->nip }}</p>
+                                    <br>
+                                    <p style="padding: 0 auto;margin:0 auto"><b><u>{{ Auth::user()->name }}</u></b></p>
+                                    <p style="padding: 0 auto;margin:0 auto">{{ Auth::user()->identitas->inip }}. {{ Auth::user()->identitas->nip }}</p>
             
                             </td>
                         </tr>

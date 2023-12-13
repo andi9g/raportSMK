@@ -467,7 +467,7 @@
                                     <br>
                                     <br>
                                     <p><b>{{ $identitas->first()->user->name }}</b></p>
-                                    <p>NIP.{{ $identitas->first()->nip }}</p>
+                                    <p>{{ $identitas->first()->inip }}. {{ $identitas->first()->nip }}</p>
             
                             </td>
                         </tr>

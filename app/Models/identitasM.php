@@ -13,7 +13,7 @@ class identitasM extends Model
     protected $guarded = [];
     protected $connection = "mysql";
 
-    protected $fillable = ['ididentitas', 'iduser', 'nip', 'alamat','email', 'agama', 'posisi', 'jk', 'hp'];
+    protected $fillable = ['ididentitas', 'iduser', 'nip', 'alamat','email', 'agama', 'posisi', 'jk', 'hp', 'inip'];
 
     public function walikelas()
     {

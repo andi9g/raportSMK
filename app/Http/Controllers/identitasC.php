@@ -90,6 +90,8 @@ class identitasC extends Controller
             $cek = identitasM::where("iduser", $iduser)->count();
             $data = $request->all();
 
+            // dd($data);
+
             if($cek > 0) {
                 identitasM::where("iduser", $iduser)->first()->update($data);
                 User::where('iduser', $iduser)->first()->update([

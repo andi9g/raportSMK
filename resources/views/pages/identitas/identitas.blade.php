@@ -50,12 +50,28 @@
                             </div>
                         </div>
 
-                        
+                        <div class="form-group">
+                            
+                            <label for="inip">Identitas Lanjutan</label>
+                            <select id="inip" required class="form-control" name="inip">
+                                <option value="">Silahkan Memilih</option>
+                                <option value="NIP" @if ((empty($identitas->inip)?'':$identitas->inip) == "NIP" )
+                                    selected
+                                @endif>NIP</option>
+                                <option value="NIPPPK" @if ((empty($identitas->inip)?'':$identitas->inip) == "NIPPPK" )
+                                    selected
+                                @endif>NIPPPK</option>
+                                <option value="NRPTK" @if ((empty($identitas->inip)?'':$identitas->inip) == "NRPTK" )
+                                    selected
+                                @endif>NRPTK</option>
+                            </select>
+                        </div>
 
                         <div class="form-group">
-                            <label for="nip">NIP (Opsional)</label>
-                            <input id="nip" class="form-control" placeholder="masukan NIP/kosongkan" type="number" name="nip" value="{{ empty($identitas->nip)?'':$identitas->nip }}">
+                            <label for="nip">Nomor NIP/NIPPPK/NRPTK</label>
+                            <input id="nip" class="form-control" placeholder="NIP/NIPPPK/NRPTK" type="text" name="nip" value="{{ empty($identitas->nip)?'':$identitas->nip }}">
                         </div>
+
                         <div class="form-group">
                             <label for="email">Email *</label>
                             <input required id="email" class="form-control" placeholder="masukan email" type="email" name="email" value="{{ empty($identitas->email)?'':$identitas->email }}">
