@@ -258,7 +258,7 @@
                     
 
                 @else
-                <div class="@if (@if (!empty($siswa->gambar->gambar)))
+                <div class="@if (!empty($siswa->gambar->gambar))
                     fasphoto2
                     @else
                     fasphoto
