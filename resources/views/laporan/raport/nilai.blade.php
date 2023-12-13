@@ -81,7 +81,7 @@
             font-weight: bold;
             
         }
-        .page:nth-child(3) {
+        .page:nth-child(2) {
             margin-top: 30mm; /* Margin atas untuk halaman kedua */
         }
 
