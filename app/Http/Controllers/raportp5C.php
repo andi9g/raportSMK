@@ -269,7 +269,8 @@ class raportp5C extends Controller
         $tahun = date("Y");
         $posisi = Auth::user()->identitas->posisi;
         
-
+        $idkelas = "";
+        $idjurusan = "";
         if($posisi == "admin") {
             $raportp5 = raportp5M::get();
             
