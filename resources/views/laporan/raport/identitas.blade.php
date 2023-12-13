@@ -49,6 +49,13 @@
             text-align: center;
             justify-content: center;
         }
+        .fasphoto2 {
+            float: right;
+            width: 113px;
+            height: 151px;
+            text-align: center;
+            justify-content: center;
+        }
         
     </style>
 </head>
@@ -251,10 +258,14 @@
                     
 
                 @else
-                <div class="fasphoto">
+                <div class="@if (@if (!empty($siswa->gambar->gambar)))
+                    fasphoto2
+                    @else
+                    fasphoto
+                @endif ">
                     @if (!empty($siswa->gambar->gambar))
                     <center>
-                        <img src="https://absen.smkn1gunungkijang.sch.id/gambar/siswa/{{ $siswa->gambar->gambar }}" width="98%" alt="">
+                        <img src="https://absen.smkn1gunungkijang.sch.id/gambar/siswa/{{ $siswa->gambar->gambar }}" width="100%" style="border: 2px solid white" alt="">
                     </center>
                     @else
                     <br>
