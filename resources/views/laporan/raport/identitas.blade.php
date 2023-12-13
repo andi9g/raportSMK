@@ -253,7 +253,9 @@
                 @else
                 <div class="fasphoto">
                     @if (!empty($siswa->gambar->gambar))
-                        <img src="https://absen.smkn1gunungkijang.sch.id/gambar/siswa/{{ $siswa->gambar->gambar }}" width="100%" alt="">
+                    <center>
+                        <img src="https://absen.smkn1gunungkijang.sch.id/gambar/siswa/{{ $siswa->gambar->gambar }}" width="98%" alt="">
+                    </center>
                     @else
                     <br>
                     <br>
