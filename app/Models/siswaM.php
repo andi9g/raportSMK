@@ -28,4 +28,9 @@ class siswaM extends Model
         return $this->hasOne(catatanM::class, "idsiswa", "idsiswa");
     }
 
+    public function gambar()
+    {
+        return $this->hasOne(gambarM::class, "nisn", "nisn");
+    }
+
 }

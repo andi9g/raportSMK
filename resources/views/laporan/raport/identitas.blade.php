@@ -252,12 +252,17 @@
 
                 @else
                 <div class="fasphoto">
+                    @if (!empty($siswa->gambar->gambar))
+                        <img src="https://absen.smkn1gunungkijang.sch.id/public/gambar/siswa/{{ $siswa->gambar->gambar }}" width="100%" alt="">
+                    @else
                     <br>
                     <br>
                     <br>
                     PAS PHOTO 
                     <br>
                     3X4
+
+                    @endif
                 </div>
 
                 @endif
