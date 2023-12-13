@@ -58,7 +58,7 @@
             font-size: 9.5pt;
         }
         .fontku2 {
-            font-size: 8.5pt;
+            font-size: 9pt;
             line-height: 20px;
         }
         .tableku {
@@ -470,7 +470,10 @@
                                 <center>
                                     <p>Mengetahui</p>
                                     <p>Kepala Sekolah</p>
-                                    <img src="{{ url('gambar', ['ttd3.png']) }}" style="margin-top:-10px;margin-bottom:-10px;margin-left:0px" width="100px" alt="">
+                                    {{-- <img src="{{ url('gambar', ['ttd3.png']) }}" style="margin-top:-10px;margin-bottom:-10px;margin-left:0px" width="100px" alt=""> --}}
+                                    <br>
+                                    <br>
+                                    <br>
                                     <p><b>MUSTAFA KAMAL, S.Pd</b></p>
                                     <p>NIP.19800909 201001 1 018</p>
                                 </center>
