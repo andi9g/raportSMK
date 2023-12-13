@@ -265,7 +265,7 @@
                 @endif ">
                     @if (!empty($siswa->gambar->gambar))
                     <center>
-                        <img src="https://absen.smkn1gunungkijang.sch.id/gambar/siswa/{{ $siswa->gambar->gambar }}" width="100%" style="border: 2px solid white" alt="">
+                        <img src="https://absen.smkn1gunungkijang.sch.id/gambar/siswa/{{ $siswa->gambar->gambar }}" width="95%" style="border: 2px solid white" alt="">
                     </center>
                     @else
                     <br>
