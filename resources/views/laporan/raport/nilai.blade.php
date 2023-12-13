@@ -339,7 +339,7 @@
     
     <br>
     
-    <div class="fontku page">
+    <div class="fontku page" style="page-break-inside: avoid;">
         <b>
             B. Extrakulikuler
         </b>
