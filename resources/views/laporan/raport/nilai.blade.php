@@ -362,6 +362,13 @@
                 </tr>
                     
                 @endforeach
+                @if (count($extrakulikuler) == 0)
+                <tr>
+                    <td align="center" class="ukuran-judul">1</td>
+                    <td>Pramuka</td>
+                    <td>-</td>
+                </tr>
+                @endif
             </tbody>
 
         </table>
