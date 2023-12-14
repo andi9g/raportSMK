@@ -287,14 +287,14 @@
                 <p>Kepala Sekolah</p>
                 {{-- <img src="{{ url('gambar', ['ttd3.png']) }}" style="margin-top:-25px;margin-bottom:-10px;margin-left:20px" width="130px" alt=""> --}}
                 <br><br><br><br>
-                <p style="margin: 0 uto;padding:0 auto">
+                <p>
                     <b>
                         <u>
                             MUSTAFA KAMAL,S.Pd
                         </u>
                     </b>
                 </p>
-                <p style="margin: 0 uto;padding:0 auto">
+                <p>
                     NIP. 19800909 201001 1 018
                 </p>
             </td>
