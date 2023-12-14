@@ -268,21 +268,22 @@ class raportp5C extends Controller
     {
         $tahun = date("Y");
         $posisi = Auth::user()->identitas->posisi;
+        $iduser = Auth::user()->identitas->iduser;
         
         $idkelas = "";
         $idjurusan = "";
         if($posisi == "admin") {
             $raportp5 = raportp5M::get();
             
-        }else if($posisi="walikelas") {
-            $idkelas = Auth::user()->identitas->walikelas->idkelas;
-            $idjurusan = Auth::user()->identitas->walikelas->idjurusan;
-            $raportp5 = raportp5M::where("ket", "!=", 0)->paginate(15);
-        }else {
+        }else if(!empty(Auth::user()->identitasp5->idkelas)) {
+            
             $idkelas = Auth::user()->identitasp5->idkelas;
             $idjurusan = Auth::user()->identitasp5->idjurusan;
             $raportp5 = raportp5M::where("ket", "!=", 0)->paginate(15);
-            
+        }else if($posisi="walikelas") {
+            $idkelas = Auth::user()->identitas->walikelas->idkelas;
+            $idjurusan = Auth::user()->identitas->walikelas->idjurusan;
+            $raportp5 = raportp5M::where("ket", "!=", 0)->paginate(15);  
         }
 
         return view("pages.p5.raport", [
