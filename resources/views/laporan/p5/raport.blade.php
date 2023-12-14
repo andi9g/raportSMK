@@ -108,7 +108,7 @@
         <tr>
             <td>
                 <center>
-                    <h4>RAPOR PROJEK PENGUTAN PROFIL PELAJAR PANCASILA</h4>
+                    <h4>RAPOR PROJEK PENGUATAN PROFIL PELAJAR PANCASILA</h4>
                 </center>
 
             </td>
