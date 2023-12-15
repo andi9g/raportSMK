@@ -592,7 +592,7 @@ class raportC extends Controller
                 if($request->opsi == "urut") {
                     $hasil = collect($hasil);
                     $hasil = $hasil->sortByDesc("jumlahnilai");
-                    dd($hasil);
+                    // dd($hasil);
                 }
 
                 $output[] = [
