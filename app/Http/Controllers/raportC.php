@@ -588,10 +588,11 @@ class raportC extends Controller
 
 
                 }
-
+                
                 if($request->opsi == "urut") {
                     $hasil = collect($hasil);
-                    $hasil = $hasil->sortByDesc("ratarata");
+                    $hasil = $hasil->sortByDesc("jumlahnilai");
+                    dd($hasil);
                 }
 
                 $output[] = [
