@@ -14,11 +14,11 @@
         }
 
         h3 {
-            
-            
+
+
             left:25%;
             width: 50%;
-            
+
         }
 
         .nama {
@@ -79,7 +79,7 @@
             font-size: 10pt;
             line-height: 15px;
             font-weight: bold;
-            
+
         }
         .page:nth-child(3) {
             margin-top: 30mm; /* Margin atas untuk halaman kedua */
@@ -95,8 +95,8 @@
         body {
             font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
         }
-        
-        
+
+
     </style>
 </head>
 <body>
@@ -106,16 +106,16 @@
             <tr>
                 <td align="center" width="100%">
                     <div class="mytext">
-                        LAPORAN ASESMEN TENGAH SEMESTER GANJIL <br>
+                        LAPORAN ASESMEN TENGAH SEMESTER {{ strtoupper($raport->semester) }} <br>
                         TP.{{ $raport->tahun }}/{{ $raport->tahun + 1 }} <br>
                         SMKN 1 GUNUNG KIJANG
                     </div>
                     </td>
                 </tr>
-                
+
             </table>
     </div>
-        
+
     <br>
     @endif
     <table width="100%" class="fontku">
@@ -218,14 +218,14 @@
                         // dd($item["ketAgama"].'error');
                     }
                 @endphp
-                
+
                 @if ($item["ket"]=="umum")
                 <tr>
                     <td rowspan="{{ $nilai }}" align="center">{{ $loop->iteration }}</td>
                     <td rowspan="{{ $nilai }}">{{ $item["namamapel"] }}</td>
                     <td align="center" rowspan="{{ $nilai }}">{{ $item["nilai"] }}</td>
-                    
-                    @if ($item["agama"]==true && $item['ketAgama'] != "Islam") 
+
+                    @if ($item["agama"]==true && $item['ketAgama'] != "Islam")
                         <td style="page-break-before: always;" class="fontku2">{{ empty($item["catatanAgama"])?'-':$item["catatanAgama"] }}</td>
                     @else
                     @if ($ket=="capaian")
@@ -235,33 +235,33 @@
                     @elseif($ket=="keduanya")
                         <td style="page-break-before: always;" class="fontku2">{{ $item["capaian"] }}</td>
                     @endif
-                        
+
                     @endif
-                    
+
                 </tr>
-                @if ($item["agama"]==true && $item['ketAgama'] == "Islam") 
-                
-                
+                @if ($item["agama"]==true && $item['ketAgama'] == "Islam")
+
+
                 @if ($ket=="keduanya")
                 <tr>
                     <td style="page-break-before: always;" class="fontku2">{{ $item["catatan"] }}</td>
                 </tr>
-                    
+
                 @endif
                 @elseif($item["agama"]==false)
                 @if ($ket=="keduanya")
                 <tr>
                     <td style="page-break-before: always;" class="fontku2">{{ $item["catatan"] }}</td>
                 </tr>
-                    
+
                 @endif
                 @endif
 
-                    
+
                 @endif
-                
+
             @endforeach
-            
+
 
             <tr>
                 <td colspan="4" class="ukuran-judul">B. Kelompok Mata Pelajaran Kejuruan</td>
@@ -288,7 +288,7 @@
                     <td rowspan="{{ $nilai }}" align="center">{{ $loop->iteration }}</td>
                     <td rowspan="{{ $nilai }}">{{ $item["namamapel"] }}</td>
                     <td align="center" rowspan="{{ $nilai }}">{{ $item["nilai"] }}</td>
-                    @if ($item["agama"]==true && $item['ketAgama'] != "Islam") 
+                    @if ($item["agama"]==true && $item['ketAgama'] != "Islam")
                         <td style="page-break-before: always;" class="fontku2">{{ empty($item["catatanAgama"])?'-':$item["catatanAgama"] }}</td>
                     @else
                     @if ($ket=="capaian")
@@ -298,47 +298,47 @@
                     @elseif($ket=="keduanya")
                         <td style="page-break-before: always;" class="fontku2">{{ $item["capaian"] }}</td>
                     @endif
-                        
+
                     @endif
 
                 </tr>
-                @if ($item["agama"]==true && $item['ketAgama'] == "Islam") 
-                
-                
+                @if ($item["agama"]==true && $item['ketAgama'] == "Islam")
+
+
                 @if ($ket=="keduanya")
                 <tr>
                     <td style="page-break-before: always;" class="fontku2">{{ $item["catatan"] }}</td>
                 </tr>
-                    
+
                 @endif
                 @elseif($item["agama"]==false)
                 @if ($ket=="keduanya")
                 <tr>
                     <td style="page-break-before: always;" class="fontku2">{{ $item["catatan"] }}</td>
                 </tr>
-                    
+
                 @endif
                 @endif
 
-                    
+
                 @endif
-                
+
             @endforeach
 
 
             </tbody>
-            
 
-            
+
+
 
 
 
         </table>
 
     </div>
-    
+
     <br>
-    
+
     <div class="fontku page" style="page-break-before: always;">
         <b>
             B. Extrakulikuler
@@ -360,7 +360,7 @@
                     <td>{{ $ex->pembina->namaex }}</td>
                     <td>{{ $ex->nilai }}</td>
                 </tr>
-                    
+
                 @endforeach
                 @if (count($extrakulikuler) == 0)
                 <tr>
@@ -419,18 +419,18 @@
     <br>
 
     @if (!($raport->namaraport == "raport uts") && $detail->semester != "ganjil")
-        
+
         <div class="fontku">
             <b>
                 D. Kenaikan Kelas
             </b>
 
             <table width="100%" class="tableku" border="1">
-                
+
 
                 <tbody>
                     <tr>
-                        <td style="padding: 8px auto"> 
+                        <td style="padding: 8px auto">
                             <center>
                                 DALAM PENILAIAN
                             </center>
@@ -452,14 +452,14 @@
                         <tr>
                             <td width="5%"></td>
                             <td width="50%">
-                                    
+
                                     <p>Orang Tua/Wali</p>
                                     <br>
                                     <br>
                                     <br>
                                     <p>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . </p>
                             </td>
-                            
+
                             <td width="40%">
                                     <p>Gunung Kijang, {{ \Carbon\Carbon::parse(date('Y-m-d'))->isoFormat("DD MMMM Y") }}</p>
                                     <p>Wali Kelas</p>
@@ -468,10 +468,10 @@
                                     <br>
                                     <p><b><u>{{ $identitas->first()->user->name }}</u></b></p>
                                     <p>{{ $identitas->first()->inip }}. {{ $identitas->first()->nip }}</p>
-            
+
                             </td>
                         </tr>
-            
+
                         <tr>
                             <td colspan="3">
                                 <center>
@@ -484,10 +484,10 @@
                                     <p><b>MUSTAFA KAMAL, S.Pd</b></p>
                                     <p>NIP.19800909 201001 1 018</p>
                                 </center>
-            
+
                             </td>
                         </tr>
-            
+
                     </table>
                 </div>
 
@@ -495,7 +495,7 @@
         </tr>
 
     </table>
-        
-    
+
+
 </body>
 </html>
