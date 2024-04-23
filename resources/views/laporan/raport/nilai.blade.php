@@ -481,7 +481,7 @@
                                     <br>
                                     <br>
                                     <br>
-                                    <p><b>MUSTAFA KAMAL, S.Pd</b></p>
+                                    <p><b><u>MUSTAFA KAMAL, S.Pd</u></b></p>
                                     <p>NIP.19800909 201001 1 018</p>
                                 </center>
 
