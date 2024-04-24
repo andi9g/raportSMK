@@ -41,7 +41,7 @@ Route::middleware(['GerbangIdentitas', 'GerbangCekWaliKelas'])->group(function (
         //pengaturan p5
         Route::resource('pengaturanp5', "pengaturanp5C");
         Route::resource('kordinator', "kordinatorp5C");
-        
+
 
         //pengaturan Extrakulikuler
         Route::resource("pengaturanextrakulikuler", "pengaturanexC");
@@ -50,7 +50,7 @@ Route::middleware(['GerbangIdentitas', 'GerbangCekWaliKelas'])->group(function (
         Route::resource('guru', 'guruC');
         Route::post('import/guru', 'guruC@import')->name("guru.import");
         Route::post('reset/guru/{iduser}', 'guruC@reset')->name("guru.reset");
-        
+
 
         //mapel
         Route::resource('mapel', 'mapelC');
@@ -62,6 +62,7 @@ Route::middleware(['GerbangIdentitas', 'GerbangCekWaliKelas'])->group(function (
         Route::post("open/raport/{idraport}", "raportC@open")->name("open.raport");
         Route::post('raport', "raportC@store")->name("raport.store");
         Route::delete('raport/delete/{idraport}', "raportC@destroy")->name("raport.destroy");
+        Route::put('raport/update/{idraport}', "raportC@update")->name("raport.update");
 
         Route::post("p5/tambah", "raportp5C@tambah")->name("tambah.raportp5");
         Route::get("p5/temap5/{idraportp5}", "raportp5C@temap5")->name("open.temap5");
@@ -82,7 +83,7 @@ Route::middleware(['GerbangIdentitas', 'GerbangCekWaliKelas'])->group(function (
 
 
     });
-    
+
     Route::middleware(['GerbangKordinator'])->group(function () {
         //raport p5
         Route::get("raportp5", "raportp5C@index");
@@ -93,7 +94,7 @@ Route::middleware(['GerbangIdentitas', 'GerbangCekWaliKelas'])->group(function (
         //NILAI
         Route::get("raportp5/{idraportp5}/nilai/{nisn}", "raportp5C@formnilai")->name("nilai.raport.p5");
         Route::post("raportp5/{nisn}/nilai/{idketeranganp5}", "raportp5C@nilai")->name("kirim.nilai.p5");
-        
+
 
         //cetak
         Route::get("raportp5/{idraportp5}/cetak/{nisn}", "raportp5C@cetak")->name("cetak.raport.p5");
@@ -105,7 +106,7 @@ Route::middleware(['GerbangIdentitas', 'GerbangCekWaliKelas'])->group(function (
 
     //siswa
     Route::resource('siswa', 'siswaC');
-    
+
 
     //extrakulikuler
     Route::get("extrakulikuler/{idraport}", "extrakulikulerC@index")->name("extrakulikuler.open");
@@ -127,7 +128,7 @@ Route::middleware(['GerbangIdentitas', 'GerbangCekWaliKelas'])->group(function (
     Route::post("nilaisiswa/{iddetailraport}", "nilaiC@nilai")->name("nilai.siswa");
     Route::post("catatan/{iddetailraport}", "nilaiC@catatan")->name("tambah.catatan");
     Route::post("ujian/{idraport}", "nilaiC@ujian")->name("nilai.ujian");
-        
+
 
 
 
@@ -144,12 +145,12 @@ Route::middleware(['GerbangIdentitas', 'GerbangCekWaliKelas'])->group(function (
         Route::get("leger/{idraport}/cetak", "raportC@leger")->name("leger.raport");
 
     });
-        
-        
-        
+
+
+
     });
 
     Route::resource('identitas', "identitasC");
-    
+
 });
 

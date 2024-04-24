@@ -36,7 +36,7 @@ class raportC extends Controller
         $posisi = AUth::user()->identitas->posisi;
         $posisi = identitasM::where("iduser", $iduser)->first()->posisi;
         $keyword = empty($request->keyword)?"":$request->keyword;
-        
+
         if($posisi == "admin") {
             $raport = raportM::where("namaraport", "like", "%$keyword%")
             ->orWhere("semester", "like", "$keyword%")
@@ -52,7 +52,7 @@ class raportC extends Controller
 
         }
 
-        
+
         $raport->appends($request->all());
 
         $kelas = kelasM::get();
@@ -79,16 +79,16 @@ class raportC extends Controller
     {
 
         try {
-            
+
             $iduser = Auth::user()->iduser;
 
             $raport = raportM::where("idraport", $idraport)->select("idtarget")->first();
-            
+
             detailraportM::where("iduser", $iduser)->where("idraport", $idraport)->delete();
 
             $detailraport = detailraportM::where("iduser", $iduser)->where("idraport", $raport->idtarget)->get();
             // dd(count($detailraport));
-            
+
             foreach ($detailraport as $dr) {
                 // dd($dr->toArray());
                 $cek = detailraportM::where("iduser", $iduser)->where("idtarget", $dr->iddetailraport)->count();
@@ -137,7 +137,7 @@ class raportC extends Controller
                     }
                 }
 
-                
+
             }
 
             $sinkron = new sinkronM;
@@ -149,7 +149,7 @@ class raportC extends Controller
         } catch (\Throwable $th) {
             return redirect()->back()->with("error", "Terjadi kesalahan")->withInput();
         }
-        
+
 
 
 
@@ -193,7 +193,7 @@ class raportC extends Controller
         ->where('idraport', $idraport)
         ->get();
 
-        
+
         return view("pages.raport.detailraport", [
             "judul" => $judul,
             "idraport" => $idraport,
@@ -206,7 +206,7 @@ class raportC extends Controller
         ]);
 
     }
-    
+
     public function cetak(Request $request, $iddetailraport)
     {
         try {
@@ -229,13 +229,13 @@ class raportC extends Controller
             $namamapel = $detailraport->mapel->namamapel;
             $idmapel = $detailraport->mapel->idmapel;
             $idjurusan = $detailraport->jurusan->idjurusan;
-            
+
 
             $siswa = siswaM::where('idkelas', $idkelas)
             ->where("idjurusan", $idjurusan)->get();
 
             foreach ($siswa as $s) {
-                
+
                 $idsiswa = $s->idsiswa;
                 $elemen = elemenM::where("iddetailraport", $iddetailraport)
                 ->where("iduser", $iduser)->get();
@@ -252,7 +252,7 @@ class raportC extends Controller
                             "namaelemen" => $e->elemen,
                             "nilai" => $totalnilaisiswa = $totalnilaisiswa + 0,
                         ];
-                        
+
                     }
 
                     foreach ($nilai as $n) {
@@ -261,14 +261,14 @@ class raportC extends Controller
                             "nilai" => (int)(empty($n->nilai)?0:$n->nilai),
                         ];
 
-                        
+
                         $totalnilaisiswa = $totalnilaisiswa + (empty($n->nilai)?0:$n->nilai);
-                        
+
                     }
                 }
 
                 $totalnilai1 = $totalnilaisiswa / count($elemen);
-                
+
 
                 $ujian = ujianM::where("idraport", $idraport)
                 ->where("idsiswa", $idsiswa)
@@ -277,13 +277,13 @@ class raportC extends Controller
 
                 $praktek = (int)empty($ujian->lisan)?0:$ujian->lisan;
                 $nonpraktek = (int)empty($ujian->nonlisan)?0:$ujian->nonlisan;
-                
+
                 if($praktek != 0 && $nonpraktek != 0) {
                     $totalnilai2 = ($praktek + $nonpraktek) / 2;
                 }else {
                     $totalnilai2 = $praktek + $nonpraktek;
                 }
-               
+
                 $hasil = ($totalnilai1 + $totalnilai2) / 2;
 
                 $data[] = [
@@ -293,7 +293,7 @@ class raportC extends Controller
                     "nonpraktek" => $nonpraktek,
                     "hasil" => $hasil,
                 ];
-  
+
             }
 
             $data = collect($data);
@@ -307,10 +307,10 @@ class raportC extends Controller
             return $pdf->stream($namamapel.".pdf");
 
 
-            
-            
 
-            
+
+
+
         } catch (\Throwable $th) {
             return redirect()->back()->withInput();
         }
@@ -333,7 +333,7 @@ class raportC extends Controller
                 $mapel = detailraportM::where("idraport", $idraport)->select("idmapel")
                 ->where("idjurusan", $idjurusan)
                 ->where('idkelas', $idkelas)->groupBy("idmapel")->get();
-                
+
                 $data = [];
                 $ratarata = 0;
                 foreach ($mapel as $m) {
@@ -345,7 +345,7 @@ class raportC extends Controller
                     // dd($detailraport->toArray());
                     $i = 1;
 
-                    
+
                     $tampung = 0;
                     $tampung2 = [];
                     foreach ($detailraport as $dr) {
@@ -354,7 +354,7 @@ class raportC extends Controller
                         ->where("nilairaport.iddetailraport", $dr->iddetailraport)
                         ->where("nilairaport.idsiswa", $s->idsiswa)
                         ->get();
-                        
+
                         // dd($nilairaport);
                         foreach ($nilairaport as $n) {
                             $tampung = $tampung + $n->nilai;
@@ -363,20 +363,20 @@ class raportC extends Controller
                                 "elemen" => $n->elemen->elemen,
                                 "nama" => $n->nilai,
                             ];
-                            
+
                         }
 
-                        
-                        
+
+
                     }
-                    
+
                     if($tampung != 0) {
                         $general = round($tampung / count($tampung2));
                     }else {
                         $general = $tampung;
                     }
-                    
-                   
+
+
 
                     $ujian = ujianM::where("idraport", $idraport)
                     ->where("idsiswa", $idsiswa)
@@ -385,14 +385,14 @@ class raportC extends Controller
 
                     $praktek = (int)empty($ujian->lisan)?0:$ujian->lisan;
                     $nonpraktek = (int)empty($ujian->nonlisan)?0:$ujian->nonlisan;
-                    
+
                     if($praktek != 0 && $nonpraktek != 0) {
                         $totalnilai2 = ($praktek + $nonpraktek) / 2;
                     }else {
                         $totalnilai2 = $praktek + $nonpraktek;
                     }
-                
-                    
+
+
                     $data[] = [
                         "nilai" => $tampung2,
                         "mapel" => $m->mapel->namamapel,
@@ -400,7 +400,7 @@ class raportC extends Controller
                         "nonpraktek" => $nonpraktek,
                         "hasil" => ($general + $totalnilai2) / 2,
                     ];
-                    
+
                     $ratarata = $ratarata + (($general + $totalnilai2) / 2);
 
                     // $hasil = ($rata + $totalnilai2) / 2;
@@ -435,10 +435,10 @@ class raportC extends Controller
             return $pdf->stream("asdasd.pdf");
 
 
-            
-            
 
-            
+
+
+
         // } catch (\Throwable $th) {
         //     return redirect()->back()->withInput();
         // }
@@ -455,9 +455,9 @@ class raportC extends Controller
             }
             $namaraport = $namaraport." ".strtoupper($raport->semester);
 
-            
+
             $ididentitas = Auth::user()->identitas->ididentitas;
-            
+
 
             if(Auth::user()->identitas->posisi == "walikelas") {
                 $idjurusan = Auth::user()->identitas->walikelas->idjurusan;
@@ -475,14 +475,14 @@ class raportC extends Controller
 
             $output = [];
             foreach ($jurusan as $jur) {
-                
+
                 $namakelas = kelasM::where("idkelas", $idkelas)->first()->namakelas;
                 $idjurusan = $jur->idjurusan;
 
                 $siswa = siswaM::where('idkelas', $idkelas)
                 ->where("idjurusan", $idjurusan)->get();
 
-                
+
                 $mapel = detailraportM::where("idraport", $idraport)->select("idmapel")
                 ->where("idjurusan", $jur->idjurusan)
                 ->where('idkelas', $idkelas)->groupBy("idmapel")->get();
@@ -490,9 +490,9 @@ class raportC extends Controller
                 $hasil = [];
                 foreach ($siswa as $s) {
                     $idsiswa = $s->idsiswa;
-                    
-                    
-                    
+
+
+
 
                     $data = [];
                     $ratarata = 0;
@@ -504,7 +504,7 @@ class raportC extends Controller
                         }else {
                             $umum = $umum + 1;
                         }
-                       
+
                         $idmapel = $m->idmapel;
                         $detailraport = detailraportM::where("idraport", $idraport)->where("idmapel", $m->idmapel)
                         ->where('idjurusan', $jur->idjurusan)
@@ -512,7 +512,7 @@ class raportC extends Controller
                         ->get();
                         // dd($detailraport->toArray());
                         $i = 1;
-                        
+
                         $tampung = 0;
                         $tampung2 = [];
                         foreach ($detailraport as $dr) {
@@ -521,7 +521,7 @@ class raportC extends Controller
                             ->where("nilairaport.iddetailraport", $dr->iddetailraport)
                             ->where("nilairaport.idsiswa", $s->idsiswa)
                             ->get();
-                            
+
                             // dd($nilairaport);
                             foreach ($nilairaport as $n) {
                                 $tampung = $tampung + $n->nilai;
@@ -530,20 +530,20 @@ class raportC extends Controller
                                     "elemen" => $n->elemen->elemen,
                                     "nama" => $n->nilai,
                                 ];
-                                
+
                             }
 
-                            
-                            
+
+
                         }
-                        
+
                         if($tampung != 0) {
                             $general = round($tampung / count($tampung2));
                         }else {
                             $general = $tampung;
                         }
-                        
-                    
+
+
 
                         $ujian = ujianM::where("idraport", $idraport)
                         ->where("idsiswa", $idsiswa)
@@ -552,14 +552,14 @@ class raportC extends Controller
 
                         $praktek = (int)empty($ujian->lisan)?0:$ujian->lisan;
                         $nonpraktek = (int)empty($ujian->nonlisan)?0:$ujian->nonlisan;
-                        
+
                         if($praktek != 0 && $nonpraktek != 0) {
                             $totalnilai2 = ($praktek + $nonpraktek) / 2;
                         }else {
                             $totalnilai2 = $praktek + $nonpraktek;
                         }
-                    
-                        
+
+
                         $data[] = [
                             "nilai" => $tampung2,
                             "mapel" => $m->mapel->namamapel,
@@ -568,7 +568,7 @@ class raportC extends Controller
                             "nonpraktek" => $nonpraktek,
                             "hasil" => round(($general + $totalnilai2) / 2),
                         ];
-                        
+
                         $ratarata = $ratarata + (($general + $totalnilai2) / 2);
 
                         // $hasil = ($rata + $totalnilai2) / 2;
@@ -588,7 +588,7 @@ class raportC extends Controller
 
 
                 }
-                
+
                 if($request->opsi == "urut") {
                     $hasil = collect($hasil);
                     $hasil = $hasil->sortByDesc("jumlahnilai");
@@ -610,12 +610,12 @@ class raportC extends Controller
                     "tahun" => $tahunraport,
                 ];
 
-                
+
             }
-            
+
             // dd($output);
             // dd($request->opsi);
-            
+
 
             $pdf = PDF::loadView("laporan.raport.leger", [
                 "data" => $output,
@@ -627,10 +627,10 @@ class raportC extends Controller
             return $pdf->stream("asdasd.pdf");
 
 
-            
-            
 
-            
+
+
+
         // } catch (\Throwable $th) {
         //     return redirect()->back()->withInput();
         // }
@@ -671,7 +671,7 @@ class raportC extends Controller
     public function store(Request $request)
     {
         try {
-            
+
             $data = $request->all();
             $data["fase"] = strtoupper($request->fase);
             raportM::create($data);
@@ -712,9 +712,19 @@ class raportC extends Controller
      * @param  \App\Models\raportM  $raportM
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, raportM $raportM)
+    public function update(Request $request, raportM $raportM, $idraport)
     {
-        //
+        try {
+
+            $data = $request->all();
+            $data["fase"] = strtoupper($request->fase);
+            raportM::where("idraport", $idraport)->first()->update($data);
+
+            return redirect()->back()->with("success", "success")->withInput();
+
+        } catch (\Throwable $th) {
+            return redirect()->back()->with("error", "terjadi kesalahan")->withInput();
+        }
     }
 
     /**
@@ -739,7 +749,7 @@ class raportC extends Controller
             if($cek->count() === 0) {
                 return redirect()->back()->with("error", "terjadi kesalahan")->withInput();
             }
-            
+
             $cek->delete();
             return redirect()->back()->with("success", "Data berhasil dihapus")->withInput();
 

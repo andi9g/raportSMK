@@ -22,12 +22,12 @@ class Raport extends Migration
             $table->string('alamat');
             $table->string('email');
             $table->string('agama');
-            $table->enum('posisi', ['guru','walikelas', "admin"]);
+            $table->enum('posisi', ['guru','walikelas', "admin", "tu"]);
             $table->enum('jk',["L","P"]);
             $table->string('hp');
             $table->timestamps();
         });
-       
+
 
         DB::table("identitas")->insert([
             "iduser" => 1,
@@ -64,7 +64,7 @@ class Raport extends Migration
                 "namakelas" => $item,
             ]);
         }
-        
+
         Schema::create('walikelas', function (Blueprint $table) {
             $table->bigIncrements('idwalikelas');
             $table->integer("ididentitas")->unique();
@@ -76,6 +76,7 @@ class Raport extends Migration
         Schema::create('raport', function (Blueprint $table) {
             $table->bigIncrements('idraport');
             $table->string("namaraport");
+            $table->date("tanggal");
             $table->char("tahun",5);
             $table->enum("semester", ["ganjil", "genap"]);
             $table->string("fase");
@@ -83,7 +84,7 @@ class Raport extends Migration
             $table->integer("idtarget")->nullable();
             $table->timestamps();
         });
-        
+
         Schema::create('sinkron', function (Blueprint $table) {
             $table->bigIncrements('idsinkron');
             $table->integer("idraport");
@@ -124,7 +125,7 @@ class Raport extends Migration
             $table->integer("idtarget")->nullable();
             $table->timestamps();
         });
-        
+
         Schema::create('catatan', function (Blueprint $table) {
             $table->bigIncrements('idcatatan');
             $table->integer("iddetailraport");
@@ -144,7 +145,7 @@ class Raport extends Migration
             $table->integer("idtarget")->nullable();
             $table->timestamps();
         });
-        
+
         Schema::create('nilairaport', function (Blueprint $table) {
             $table->bigIncrements('idnilairaport');
             $table->integer("iddetailraport");

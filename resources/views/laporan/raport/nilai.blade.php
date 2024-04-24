@@ -461,7 +461,7 @@
                             </td>
 
                             <td width="40%">
-                                    <p>Gunung Kijang, {{ \Carbon\Carbon::parse(date('Y-m-d'))->isoFormat("DD MMMM Y") }}</p>
+                                    <p>Gunung Kijang, {{ \Carbon\Carbon::parse($raport->tanggal)->isoFormat("DD MMMM Y") }}</p>
                                     <p>Wali Kelas</p>
                                     <br>
                                     <br>

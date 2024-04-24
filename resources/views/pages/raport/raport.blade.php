@@ -25,8 +25,9 @@
                                 <option value="raport semester" class="text-capitalize">Raport Semester</option>
                             </select>
                         </div>
-                        
-    
+
+
+
                         <div class="form-group">
                             <label for="tahun">Tahun</label>
                             <select id="tahun" class="form-control" name="tahun" sele>
@@ -36,13 +37,13 @@
                                 @endphp
                                 @for ($i = $tahun; $i <= ((int) date('Y')); $i++)
                                     <option value="{{ $i }}" @if ($i == date("Y"))
-                                        selected 
+                                        selected
                                     @endif>{{ $i }}</option>
-                                    
+
                                 @endfor
                             </select>
                         </div>
-    
+
                         <div class="form-group">
                             <label for="semester">Semester</label>
                             <select required id="semester" class="form-control" name="semester">
@@ -55,6 +56,11 @@
                         <div class="form-group">
                             <label for="fase">Kurikulum Merdeka Fase </label>
                             <input id="fase" class="form-control text-uppercase" type="text" name="fase" placeholder="contoh: E, F...">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="tanggal">Tanggal Penerimaan Raport </label>
+                            <input id="tanggal" class="form-control text-uppercase" type="date" name="tanggal" placeholder="">
                         </div>
 
                         <div class="form-group">
@@ -96,13 +102,13 @@
                                     </button>
                                 </div>
                             </div>
-                        
+
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-            
+
         @endif
 
 
@@ -115,6 +121,7 @@
                                 <h2 class="card-title text-lg text-center"><b>{{ strtoupper($item->namaraport) }}</b></h2>
                             </center>
                             @if (Auth::user()->identitas->posisi == "admin")
+
                             <div class="float-right">
                                 <form action="{{ route('raport.destroy', [$item->idraport]) }}" method="post">
                                     @csrf
@@ -124,7 +131,90 @@
                                     </button>
                                 </form>
                             </div>
-                                
+
+                            <div class="float-right">
+                                <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#ubahdata{{ $item->idraport }}">
+                                    <i class="fa fa-edit text-white"></i>
+                                </button>
+
+                                <div id="ubahdata{{ $item->idraport }}" class="modal fade text-left" tabindex="-1" role="dialog" aria-labelledby="my-modal-title" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="my-modal-title">Title</h5>
+                                                <button class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <form action="{{ route('raport.update', [$item->idraport]) }}" method="post">
+                                                @csrf
+                                                @method("PUT")
+                                                <div class="modal-body">
+                                                    <div class="form-group">
+                                                        <label for="namaraport">Judul Raport</label>
+                                                        <select required id="namaraport" class="form-control" name="namaraport">
+                                                            <option value="">Pilih</option>
+                                                            <option value="raport uts" class="text-capitalize" @if ($item->namaraport=="raport uts")
+                                                                selected
+                                                            @endif>Raport UTS</option>
+                                                            <option value="raport semester" class="text-capitalize" @if ($item->namaraport=="raport semester")
+                                                                selected
+                                                            @endif>Raport Semester</option>
+                                                        </select>
+                                                    </div>
+
+
+                                                    <div class="form-group">
+                                                        <label for="tahun">Tahun</label>
+                                                        <select id="tahun" class="form-control" name="tahun" sele>
+                                                            @php
+                                                                $tahun = ((int) date('Y')) - 3;
+                                                                $sekarang = ((int) date('Y'));
+                                                            @endphp
+                                                            @for ($i = $tahun; $i <= ((int) date('Y')); $i++)
+                                                                <option value="{{ $i }}" @if ($i == $item->tahun)
+                                                                    selected
+                                                                @endif>{{ $i }}</option>
+
+                                                            @endfor
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="semester">Semester</label>
+                                                        <select required id="semester" class="form-control" name="semester">
+                                                            <option value="">Pilih..</option>
+                                                            <option value="ganjil" @if ($item->semester == "ganjil")
+                                                                selected
+                                                            @endif>Ganjil</option>
+                                                            <option value="genap" @if ($item->semester == "genap")
+                                                                selected
+                                                            @endif>Genap</option>
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="fase">Kurikulum Merdeka Fase </label>
+                                                        <input id="fase" class="form-control text-uppercase" type="text" name="fase" placeholder="contoh: E, F..." value="{{ $item->fase }}">
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="tanggal">Tanggal Penerimaan Raport </label>
+                                                        <input id="tanggal" class="form-control text-uppercase" type="date" name="tanggal" placeholder="" value="{{ $item->tanggal }}">
+                                                    </div>
+
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-success">Ubah Data</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
                             @endif
                         </div>
 
@@ -151,7 +241,7 @@
                                         <button class="btn btn-primary btn-block mb-2" type="button" data-toggle="modal" data-target="#tambahdetailraport{{ $item->idraport }}">
                                             <b>KELOLA RAPORT</b>
                                         </button>
-                                    @else   
+                                    @else
                                         <a href="{{ route('detailraport.view', [$item->idraport]) }}" class="btn btn-block btn-primary mb-2">
                                             <b>
                                                 <i class="fa fa-eye"></i> KELOLA RAPORT
@@ -173,7 +263,7 @@
                                             </b>
                                         </button>
 
-                                        
+
                                     @endif
 
                                     @if ($posisi=="admin")
@@ -185,8 +275,8 @@
                                     @endif
                                 </div>
 
-                                
-                                    
+
+
 
                                 @endif
                                 <div class="col-md-12">
@@ -210,10 +300,10 @@
                                 </div>
                             </div>
 
-                            
+
 
                             {{-- ------------------------------------- --}}
-                            @else 
+                            @else
                             @if (empty($item->idtarget))
                             <div class="row">
                                 <div class="col-md-12">
@@ -228,7 +318,7 @@
                                         <button class="btn btn-primary btn-block mb-2" type="button" data-toggle="modal" data-target="#tambahdetailraport{{ $item->idraport }}">
                                             <b>KELOLA RAPORT</b>
                                         </button>
-                                    @else   
+                                    @else
                                         <a href="{{ route('detailraport.view', [$item->idraport]) }}" class="btn btn-block btn-primary mb-2">
                                             <b>
                                                 <i class="fa fa-eye"></i> KELOLA RAPORT
@@ -250,7 +340,7 @@
                                             </b>
                                         </button>
 
-                                        
+
                                     @endif
 
                                     @if ($posisi=="admin")
@@ -292,7 +382,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         @php
-    
+
                                             $detailraport = DB::table('detailraport')
                                             ->where("idraport", $item->idraport)
                                             ->where("iduser", $iduser)
@@ -302,7 +392,7 @@
                                             <button class="btn btn-primary btn-block mb-2" type="button" data-toggle="modal" data-target="#tambahdetailraport{{ $item->idraport }}">
                                                 <b>KELOLA RAPORT</b>
                                             </button>
-                                        @else   
+                                        @else
                                             <a href="{{ route('detailraport.view', [$item->idraport]) }}" class="btn btn-block btn-primary mb-2">
                                                 <b>
                                                     <i class="fa fa-eye"></i> KELOLA RAPORT
@@ -316,17 +406,17 @@
                                                 </b>
                                             </a>
                                         @endif
-    
+
                                         @if ($posisi=="walikelas")
                                             <button class="btn btn-block btn-danger mb-2" type="button" data-toggle="modal" data-target="#legerguru{{ $item->idraport }}">
                                                 <b>
                                                     <i class="fa fa-print"></i> CETAK LEGER
                                                 </b>
                                             </button>
-    
-                                            
+
+
                                         @endif
-    
+
                                         @if ($posisi=="admin")
                                             <button class="btn btn-block btn-danger mb-2" type="button" data-toggle="modal" data-target="#leger{{ $item->idraport }}">
                                                 <b>
@@ -355,7 +445,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                @else 
+                                @else
                                     <button class="btn btn-danger btn-block" type="button" data-toggle="modal" data-target="#prosessinkron{{ $item->idraport }}">SINKRONKAN DATA</button>
 
 
@@ -381,29 +471,29 @@
                                         </div>
                                     </div>
 
-                                    
+
 
                                 @endif
 
                             @endif
-                            
+
 
 
                             @endif
-                            
+
                             @if ($pembinaex > 0)
                                 <a href="{{ route('extrakulikuler.open', [$item->idraport]) }}" class="btn btn-warning btn-block text-bold">
                                     KELOLA EXTRAKULIKULER
                                 </a>
                             @endif
-                            
 
-                            
+
+
                         </div>
                     </div>
                 </div>
 
-                
+
             @endforeach
 
         </div>
@@ -431,8 +521,8 @@
                             <option value="acak">Berdasarkan Abjad Nama (A-Z)</option>
                         </select>
                     </div>
-    
-                    
+
+
                 </div>
                 <div class="modal-footer text-right">
                     <button type="submit" class="btn btn-success">
@@ -463,18 +553,18 @@
                         <select id="kelas" class="form-control" name="idkelas">
                             @foreach ($kelas as $k)
                             <option value="{{ $k->idkelas }}">{{ $k->namakelas }}</option>
-                                
+
                             @endforeach
                         </select>
                     </div>
-    
+
                     <div class="form-group">
                         <label for="jurusan">jurusan</label>
                         <select id="jurusan" class="form-control" name="idjurusan">
                             <option value="all">Semua Jurusan</option>
                             @foreach ($jurusan as $k)
                             <option value="{{ $k->idjurusan }}">{{ $k->namajurusan }}</option>
-                                
+
                             @endforeach
                         </select>
                     </div>
@@ -518,7 +608,7 @@
                             @endforeach
                         </select>
                     </div>
-    
+
                     <div class="form-group">
                         <label>Mata Pelajaran</label>
                         <select required name="idmapel" class="form-control select2mapel{{ $loop->iteration }}" style="width: 100%;">
@@ -528,7 +618,7 @@
                             @endforeach
                         </select>
                     </div>
-    
+
                     <div class="form-group">
                         <label>Mata Pelajaran</label>
                         <select required name="idjurusan" class="form-control select2jurusan{{ $loop->iteration }}" style="width: 100%;">
@@ -567,6 +657,6 @@
             dropdownParent: $('#tambahdetailraport{{ $item->idraport }}')
         });
     </script>
-    
+
 @endforeach
 @endsection
