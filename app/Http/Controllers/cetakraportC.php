@@ -29,16 +29,6 @@ class cetakraportC extends Controller
      */
     public function index(Request $request, $idraport)
     {
-        // $iduser = Auth::user()->iduser;
-        // $walikelas = Auth::user()->identitas->walikelas->
-        // $cek = detailraportM::where("idraport", $idraport)->where("iduser", $iduser)->count();
-        // if($cek == 0) {
-        //     $tambah = new detailraportM;
-        //     $tambah->iduser = $iduser;
-        //     $tambah->idraport = $idraport;
-        //     $tambah->idraport = $idraport;
-        // }
-
 
         $keyword = empty($request->keyword)?"":$request->keyword;
         $kelas = empty($request->kelas)?"":$request->kelas;
