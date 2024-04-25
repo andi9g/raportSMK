@@ -30,7 +30,7 @@ class nilaiC extends Controller
             ->where("detailraport.iddetailraport", $iddetailraport)
             ->select("detailraport.*", "raport.namaraport", "mapel.namamapel", "mapel.idmapel")
             ->first();
-            
+
             $idkelas = $detailraport->idkelas;
             $idjurusan = $detailraport->idjurusan;
             $idraport = $detailraport->idraport;
@@ -41,10 +41,10 @@ class nilaiC extends Controller
             $elemen = elemenM::where("iddetailraport", $iddetailraport)
             ->where("iduser", $iduser)
             ->get();
-           
+
             $jmlelemen = elemenM::where("iddetailraport", $iddetailraport)
             ->where("iduser", $iduser)
-            ->get();  
+            ->get();
 
             $keyword = empty($request->keyword)?"":$request->keyword;
 
@@ -82,7 +82,7 @@ class nilaiC extends Controller
             if($detailraport == 0 ){
                 return redirect()->back()->with("error", "terjadi kesalahan");
             }
-            
+
             $data = $request->all();
 
             $ujian = ujianM::where("idsiswa", $request->idsiswa)
@@ -110,24 +110,23 @@ class nilaiC extends Controller
 
     public function kehadiran(Request $request, $idraport)
     {
-        $iduser = Auth::user()->iduser;
-        $detailraport = detailraportM::where("idraport", $idraport)
-        ->where("iduser", $iduser)->count();
+        try{
+            $iduser = Auth::user()->iduser;
 
-        if($detailraport == 0 ){
-            return redirect()->back()->with("error", "terjadi kesalahan");
+            $data = $request->all();
+            $cek = kehadiranM::where("idsiswa", $request->idsiswa)->where("idraport", $idraport);
+
+            if($cek->count() == 0) {
+                $data["idraport"] = $idraport;
+                kehadiranM::create($data);
+            }else {
+                $cek->first()->update($data);
+            }
+            return redirect()->back()->with("toast_success", "success");
+        }catch(\Throwable $th){
+            return redirect()->back()->with('toast_error', 'Terjadi kesalahan');
         }
 
-        $data = $request->all();
-        $cek = kehadiranM::where("idsiswa", $request->idsiswa)->where("idraport", $idraport);
-
-        if($cek->count() == 0) {
-            $data["idraport"] = $idraport;
-            kehadiranM::create($data);
-        }else {
-            $cek->first()->update($data);
-        }
-        return redirect()->back()->with("toast_success", "success");
 
     }
 
@@ -232,7 +231,7 @@ class nilaiC extends Controller
             $notif = true;
 
             foreach ($elemen as $e) {
-                
+
                 $name = "elemen".$e->idelemen;
                 $nilai = $request->$name;
                 $cek = nilairaportM::where("iddetailraport", $iddetailraport)
@@ -251,7 +250,7 @@ class nilaiC extends Controller
                         $cek->first()->update([
                             "nilai" => $nilai,
                         ]);
-                        
+
                     }
                 }else {
                     $notif = false;

@@ -28,7 +28,18 @@ class cetakraportC extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request, $idraport)
-    {   
+    {
+        // $iduser = Auth::user()->iduser;
+        // $walikelas = Auth::user()->identitas->walikelas->
+        // $cek = detailraportM::where("idraport", $idraport)->where("iduser", $iduser)->count();
+        // if($cek == 0) {
+        //     $tambah = new detailraportM;
+        //     $tambah->iduser = $iduser;
+        //     $tambah->idraport = $idraport;
+        //     $tambah->idraport = $idraport;
+        // }
+
+
         $keyword = empty($request->keyword)?"":$request->keyword;
         $kelas = empty($request->kelas)?"":$request->kelas;
         $jurusan = empty($request->jurusan)?"":$request->jurusan;
@@ -42,7 +53,7 @@ class cetakraportC extends Controller
         if($cek->count() == 0) {
             return redirect()->back()->with("error", "terjadi kesalahan")->withInput();
         }
-        
+
         // $idkelas = $cek->first()->walikelas->idkelas;
         // $idjurusan = $cek->first()->walikelas->idjurusan;
 
@@ -65,8 +76,8 @@ class cetakraportC extends Controller
             ->where("idkelas", $idkelas)
             ->orderBy("nama", "asc")
             ->where("nama", "like", "%$keyword%")->paginate(15);
-            
-            
+
+
         }
 
         $siswa->appends($request->all());
@@ -91,24 +102,24 @@ class cetakraportC extends Controller
 
      public function nilai(Request $request, $idsiswa, $idraport)
      {
-        
+
         $iduser = Auth::user()->iduser;
         $identitas = identitasM::where("iduser", $iduser);
         if($identitas->count() == 0) {
             return redirect()->back()->with("error", "terjadi kesalahan")->withInput();
         }
-        
+
         $extrakulikuler = penilaianexM::where("idraport", $idraport)
         ->where("idsiswa", $idsiswa)->get();
 
         $detail = raportM::where("idraport", $idraport)->first();
         $siswa = siswaM::where("idsiswa", $idsiswa)->first();
-        
+
         $sekolah = sekolahM::first();
 
         $mapel = [];
-        
-        
+
+
         $nilairaport = nilairaportM::join("detailraport", "detailraport.iddetailraport", "nilairaport.iddetailraport")
         ->join("raport", "raport.idraport", "detailraport.idraport")
         ->join("mapel", "mapel.idmapel", "detailraport.idmapel")
@@ -122,10 +133,10 @@ class cetakraportC extends Controller
         ->groupBy("mapel.idmapel")
         ->get();
 
-        
+
         // dd($nilairaport->toArray());
-        // $idmapel = null; 
-        // $hitung = 1; 
+        // $idmapel = null;
+        // $hitung = 1;
         // $data = [];
         // $ket = null;
         // $umum = [];
@@ -151,7 +162,7 @@ class cetakraportC extends Controller
                 if($ag->idmapel == $nr->idmapel) {
                     $agama = true;
                 }
-                
+
             }
 
             $n1 = 0;
@@ -159,7 +170,7 @@ class cetakraportC extends Controller
             $catatanBuruk = "";
             foreach ($nilai2 as $nilai) {
                 $n1 = $n1 + $nilai->nilai;
-                
+
                 if($nilai->nilai < 70) {
                     if(empty($catatanBuruk)) {
                         $catatanBuruk = "Perlu ditingkatkan dalam ".strtolower($nilai->elemen);
@@ -178,7 +189,7 @@ class cetakraportC extends Controller
             $catatanBuruk = $catatanBuruk;
             $nilai = $n1/count($nilai2);
 
-            
+
             $catatan = catatanM::join("detailraport", "detailraport.iddetailraport", "catatan.iddetailraport")
             ->where("detailraport.idraport", $idraport)
             ->where("catatan.idmapel", $nr->idmapel)
@@ -207,7 +218,7 @@ class cetakraportC extends Controller
                     $nilai = ($nilai + $nilaiujian) / 2;
                 }
             }
-            
+
             $mapel[$nr->idmapel] = [
                 "namamapel" => $nr->mapel->namamapel,
                 "capaian" => $catatanBaik,
@@ -222,9 +233,9 @@ class cetakraportC extends Controller
             // dd($mapel);
 
         }
-    
+
         $raport = raportM::where("idraport", $idraport)->first();
-        
+
 
         $pdf = PDF::loadView("laporan.raport.nilai", [
             "siswa" => $siswa,
@@ -250,13 +261,13 @@ class cetakraportC extends Controller
     //     if($identitas->count() == 0) {
     //         return redirect()->back()->with("error", "terjadi kesalahan")->withInput();
     //     }
-        
+
     //     $detail = raportM::where("idraport", $idraport)->first();
     //     $siswa = siswaM::where("idsiswa", $idsiswa)->first();
     //     $sekolah = sekolahM::first();
 
-        
-        
+
+
     //     $nilairaport = nilairaportM::join("detailraport", "detailraport.iddetailraport", "nilairaport.iddetailraport")
     //     ->join("raport", "raport.idraport", "detailraport.idraport")
     //     ->join("mapel", "mapel.idmapel", "detailraport.idmapel")
@@ -269,8 +280,8 @@ class cetakraportC extends Controller
     //     ->get();
 
     //     // dd($nilairaport->toArray());
-    //     $idmapel = null; 
-    //     $hitung = 1; 
+    //     $idmapel = null;
+    //     $hitung = 1;
     //     $data = [];
     //     $ket = null;
     //     $umum = [];
@@ -282,16 +293,16 @@ class cetakraportC extends Controller
     //     foreach ($nilairaport as $nilai) {
     //         if($nilai->mapel->ket == "kejuruan") {
     //             if($idmapel != $nilai->idmapel) {
-    //                 $hitung = 1; 
+    //                 $hitung = 1;
     //                 $idmapel = $nilai->idmapel;
-                    
+
     //                 $n1 = (int)$nilai->nilai;
     //                 $ket ="";
     //                 $ct = catatanM::join("detailraport", "detailraport.iddetailraport", "catatan.iddetailraport")
     //                 ->join("mapel", "mapel.idmapel", "detailraport.idmapel")
     //                 ->where("mapel.idmapel", $nilai->idmapel)
     //                 ->where("catatan.idsiswa", $idsiswa)->where("detailraport.idraport", $nilai->detailraport->idraport)->get();
-                    
+
     //                 if (count($ct) == 0) {
     //                     $catatan = "";
     //                 }else {
@@ -299,7 +310,7 @@ class cetakraportC extends Controller
     //                     $guru = "";
     //                     $i=1;
     //                     foreach ($ct as $ct2) {
-                            
+
     //                         if($i++ >= count($ct) && count($ct) !=1) {
     //                             $guru = $guru.", ".$ct2->catatan;
     //                         }else {
@@ -307,7 +318,7 @@ class cetakraportC extends Controller
     //                         }
     //                     }
     //                 }
-                    
+
     //                 if($n1 < 70) {
     //                     $catatan = (empty($catatan)?"Perlu ditingkatkan dalam ":$catatan." ")." ".$nilai->elemen;
     //                 }else {
@@ -316,7 +327,7 @@ class cetakraportC extends Controller
 
     //             }else {
     //                 $n2 = (int)$nilai->nilai;
-    //                 $hitung++; 
+    //                 $hitung++;
     //                 $n1 = (int)($n1 + $nilai->nilai);
     //                 if($n2 < 70) {
     //                     $catatan = (empty($catatan)?"Perlu ditingkatkan dalam ":$catatan.", ")." ".$nilai->elemen;
@@ -326,15 +337,15 @@ class cetakraportC extends Controller
     //             }
     //         }else if($nilai->mapel->ket == "umum") {
     //             if($idmapel != $nilai->idmapel) {
-    //                 $hitung = 1; 
+    //                 $hitung = 1;
     //                 $idmapel = $nilai->idmapel;
-                    
+
     //                 $n1 = (int)$nilai->nilai;
     //                 $ct = catatanM::join("detailraport", "detailraport.iddetailraport", "catatan.iddetailraport")
     //                 ->join("mapel", "mapel.idmapel", "detailraport.idmapel")
     //                 ->where("mapel.idmapel", $nilai->idmapel)
     //                 ->where("catatan.idsiswa", $idsiswa)->where("detailraport.idraport", $nilai->detailraport->idraport)->get();
-                    
+
     //                 if (count($ct) == 0) {
     //                     $catatan = "";
     //                 }else {
@@ -342,7 +353,7 @@ class cetakraportC extends Controller
     //                     $guru = "";
     //                     $i=1;
     //                     foreach ($ct as $ct2 ) {
-                            
+
     //                         if($i++ >= count($ct) && count($ct) !=1) {
     //                             $guru = $guru.", ".$ct2->catatan;
     //                         }else {
@@ -350,16 +361,16 @@ class cetakraportC extends Controller
     //                         }
     //                     }
     //                 }
-                    
+
     //                 if($n1 < 70) {
     //                     $catatan = (empty($catatan)?"Perlu ditingkatkan dalam ":$catatan." ")." ".$nilai->elemen;
     //                 }else {
     //                     $ket = $nilai->elemen;
     //                 }
-    
+
     //             }else {
-    //                 $hitung++; 
-                    
+    //                 $hitung++;
+
     //                 $n2 = (int)$nilai->nilai;
     //                 $n1 = (int)($n1 + $nilai->nilai);
     //                 if($n2 < 70) {
@@ -371,7 +382,7 @@ class cetakraportC extends Controller
 
     //         }
 
-            
+
     //         $mapel[$nilai->mapel->idmapel] = [
     //             "namamapel" => $nilai->mapel->namamapel,
     //             "capaian" => $ket,
@@ -380,11 +391,11 @@ class cetakraportC extends Controller
     //             "catatan" => ucfirst(strtolower($catatan.". ".$guru)),
     //         ];
 
-            
+
 
     //     }
-     
-        
+
+
 
     //     $pdf = PDF::loadView("laporan.raport.nilai", [
     //         "siswa" => $siswa,
@@ -403,7 +414,7 @@ class cetakraportC extends Controller
     {
         $angka = intval($angka);
         $result = '';
-        
+
         $array = array('M' => 1000,
         'CM' => 900,
         'D' => 500,
@@ -417,15 +428,15 @@ class cetakraportC extends Controller
         'V' => 5,
         'IV' => 4,
         'I' => 1);
-        
+
         foreach($array as $roman => $value){
         $matches = intval($angka/$value);
-        
+
         $result .= str_repeat($roman,$matches);
-        
+
         $angka = $angka % $value;
         }
-        
+
         return $result;
     }
 

@@ -19,7 +19,7 @@
                 </a>
             </div>
             <div class="col-md-6 text-right">
-               
+
             </div>
         </div>
 
@@ -48,7 +48,7 @@
                                         <option value="{{ $item->idjurusan }}" @if ($jurusan==$item->idjurusan)
                                             selected
                                         @endif>{{ $item->jurusan }}</option>
-                                            
+
                                         @endforeach
                                     </select>
                             </div>
@@ -61,12 +61,12 @@
                                         <option value="{{ $item->idkelas }}" @if ($kelas==$item->idkelas)
                                             selected
                                         @endif>{{ $item->namakelas }}</option>
-                                            
+
                                         @endforeach
                                 </select>
                             </div>
                         </div>
-                        
+
                         @endif
                         <div class="col-md-4">
                             <div class="input-group">
@@ -79,7 +79,7 @@
                             </div>
                         </div>
                     </div>
-                
+
                 </form>
             </div>
 
@@ -88,11 +88,11 @@
                 @if (Auth::user()->identitas->posisi != "admin")
                 <a href="{{ route('ranking.raport', [$idraport]) }}" class="btn btn-secondary btn-md my-0 mb-2 rounded-0" target="_blank">
                     <b>
-                        <i class="fa fa-print"></i> 
+                        <i class="fa fa-print"></i>
                         CETAK DETAIL RANKING SISWA
                     </b>
                 </a>
-                    
+
                 @endif
 
                 <div class="table-responsive">
@@ -111,7 +111,7 @@
                                 <th class="text-center bg-success">Nilai</th>
                             </tr>
                         </thead>
-    
+
                         <tbody>
                             @foreach ($siswa as $item)
                             <tr>
@@ -156,8 +156,8 @@
                                     </a>
                                 </td>
                             </tr>
-                            
-                                
+
+
                             @endforeach
                         </tbody>
                     </table>
@@ -183,7 +183,7 @@
                 </div>
                 <form action="{{ route('tambah.kehadiran', [$idraport]) }}" method="post">
                     @csrf
-                
+
                     <div class="modal-body">
                         @php
                             $kehadiran = DB::table("kehadiran")->where("idsiswa", $item->idsiswa)
@@ -230,7 +230,7 @@
                     <form action="{{ route('siswa.update', [$item->idsiswa]) }}" method="post">
                         @csrf
                         @method("PUT")
-                    
+
                         <div class="modal-body">
                             <div class="form-group">
                                 <label for="nisn">NISN</label>
@@ -273,13 +273,13 @@
                                     @php
                                         $agama = [
                                             "Islam",
-                                            "Kristen Protestan", 
-                                            "Kristen Katolik", 
-                                            "Hindu", 
-                                            "Buddha", 
+                                            "Kristen Protestan",
+                                            "Kristen Katolik",
+                                            "Hindu",
+                                            "Buddha",
                                             "Khonghucu"
                                         ];
-                                    @endphp 
+                                    @endphp
                                     @foreach ($agama as $a)
                                         <option value="{{ $a }}" @if ($item->agama == $a)
                                             selected
@@ -287,7 +287,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label for="namaayah">Nama Ayah</label>
                                 <input id="namaayah" class="form-control" type="text" value="{{ $item->namaayah }}" name="namaayah">
