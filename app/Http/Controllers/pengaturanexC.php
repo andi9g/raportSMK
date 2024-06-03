@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\pembinaexM;
 use App\Models\User;
 use App\Models\identitasM;
+use App\Models\siswa2M;
+use App\Models\siswaM;
 use Illuminate\Http\Request;
 
 class pengaturanexC extends Controller
@@ -18,7 +20,7 @@ class pengaturanexC extends Controller
     {
         $pembina = pembinaexM::get();
         $identitas = identitasM::get();
-        
+
         return view("pages.pengaturan.extrakulikuler",[
             "pembina" => $pembina,
             "identitas" => $identitas,
@@ -30,9 +32,26 @@ class pengaturanexC extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function sinkron(Request $request)
     {
-        //
+        $siswalama = siswa2M::where("idkelas", 2)->get();
+
+        foreach ($siswalama as $item) {
+            $cek = siswaM::where("nisn", $item->nisn)->count();
+            if($cek == 0) {
+                $tambah = new siswaM;
+                $tambah->nisn = $item->nisn;
+                $tambah->nis = $item->nis;
+                $tambah->tempatlahir = $item->tempatlahir;
+                $tambah->agama = $item->agama;
+                $tambah->alamat = $item->alamat;
+                $tambah->idkelas = $item->idkelas;
+                $tambah->idjurusan = $item->idjurusan;
+                $tambah->save();
+            }
+        }
+
+        return dd("SELESAI");
     }
 
     /**

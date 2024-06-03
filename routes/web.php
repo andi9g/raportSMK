@@ -1,7 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -45,7 +45,7 @@ Route::middleware(['GerbangIdentitas', 'GerbangCekWaliKelas'])->group(function (
 
         //pengaturan Extrakulikuler
         Route::resource("pengaturanextrakulikuler", "pengaturanexC");
-
+        Route::post("sinkrondata", "pengaturanexC@sinkron");
         //guru
         Route::resource('guru', 'guruC');
         Route::post('import/guru', 'guruC@import')->name("guru.import");
