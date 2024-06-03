@@ -32,28 +32,28 @@ class pengaturanexC extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function sinkron(Request $request)
-    {
-        $siswalama = siswa2M::where("idkelas", 2)->get();
+    // public function sinkron(Request $request)
+    // {
+    //     $siswalama = siswa2M::where("idkelas", 2)->get();
 
-        foreach ($siswalama as $item) {
-            $cek = siswaM::where("nisn", $item->nisn)->count();
-            if($cek == 0) {
-                $tambah = new siswaM;
-                $tambah->nisn = $item->nisn;
-                $tambah->nis = $item->nis;
-                $tambah->nama = $item->nama;
-                $tambah->tempatlahir = $item->tempatlahir;
-                $tambah->agama = $item->agama;
-                $tambah->alamat = $item->alamat;
-                $tambah->idkelas = $item->idkelas;
-                $tambah->idjurusan = $item->idjurusan;
-                $tambah->save();
-            }
-        }
+    //     foreach ($siswalama as $item) {
+    //         $cek = siswaM::where("nisn", $item->nisn)->count();
+    //         if($cek == 0) {
+    //             $tambah = new siswaM;
+    //             $tambah->nisn = $item->nisn;
+    //             $tambah->nis = $item->nis;
+    //             $tambah->nama = $item->nama;
+    //             $tambah->tempatlahir = $item->tempatlahir;
+    //             $tambah->agama = $item->agama;
+    //             $tambah->alamat = $item->alamat;
+    //             $tambah->idkelas = $item->idkelas;
+    //             $tambah->idjurusan = $item->idjurusan;
+    //             $tambah->save();
+    //         }
+    //     }
 
-        return dd("SELESAI");
-    }
+    //     return dd("SELESAI");
+    // }
 
     /**
      * Store a newly created resource in storage.
