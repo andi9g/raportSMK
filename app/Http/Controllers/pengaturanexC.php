@@ -42,6 +42,7 @@ class pengaturanexC extends Controller
                 $tambah = new siswaM;
                 $tambah->nisn = $item->nisn;
                 $tambah->nis = $item->nis;
+                $tambah->nama = $item->nama;
                 $tambah->tempatlahir = $item->tempatlahir;
                 $tambah->agama = $item->agama;
                 $tambah->alamat = $item->alamat;
