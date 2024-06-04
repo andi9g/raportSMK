@@ -13,11 +13,11 @@
         }
 
         h3 {
-            
-            
+
+
             left:25%;
             width: 50%;
-            
+
         }
 
         .nama {
@@ -56,7 +56,7 @@
             text-align: center;
             justify-content: center;
         }
-        
+
     </style>
 </head>
 <body>
@@ -138,7 +138,7 @@
         </tr>
         <tr>
             <td nowrap valign="top">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b.&nbsp;&nbsp; 
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b.&nbsp;&nbsp;
                 Pada Tanggal
             </td>
             <td valign="top" style="width: fit-content">&nbsp;:&nbsp;</td>
@@ -147,13 +147,13 @@
 
         {{-- subpoint2 --}}
         <tr>
-            <td nowrap valign="top" colspan="3">12.&nbsp;&nbsp; 
+            <td nowrap valign="top" colspan="3">12.&nbsp;&nbsp;
                 Orang Tua
             </td>
         </tr>
         <tr>
             <td nowrap valign="top">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a.&nbsp;&nbsp; 
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a.&nbsp;&nbsp;
                 Ayah
             </td>
             <td valign="top" style="width: fit-content">&nbsp;:&nbsp;</td>
@@ -161,7 +161,7 @@
         </tr>
         <tr>
             <td nowrap valign="top">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b.&nbsp;&nbsp; 
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b.&nbsp;&nbsp;
                 Ibu
             </td>
             <td valign="top" style="width: fit-content">&nbsp;:&nbsp;</td>
@@ -170,7 +170,7 @@
 
         <tr>
             <td nowrap valign="top">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c.&nbsp;&nbsp; 
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c.&nbsp;&nbsp;
                 Alamat Orang Tua
             </td>
             <td valign="top" style="width: fit-content">&nbsp;:&nbsp;</td>
@@ -179,7 +179,7 @@
 
         <tr>
             <td nowrap valign="top">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;d.&nbsp;&nbsp; 
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;d.&nbsp;&nbsp;
                 Nomor Telp/HP
             </td>
             <td valign="top" style="width: fit-content">&nbsp;:&nbsp;</td>
@@ -188,13 +188,13 @@
 
         {{-- subpoint3 --}}
         <tr>
-            <td nowrap valign="top" colspan="3">13.&nbsp;&nbsp; 
+            <td nowrap valign="top" colspan="3">13.&nbsp;&nbsp;
                 Pekerjaan Orang Tua
             </td>
         </tr>
         <tr>
             <td nowrap valign="top">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a.&nbsp;&nbsp; 
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a.&nbsp;&nbsp;
                 Ayah
             </td>
             <td valign="top" style="width: fit-content">&nbsp;:&nbsp;</td>
@@ -202,7 +202,7 @@
         </tr>
         <tr>
             <td nowrap valign="top">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b.&nbsp;&nbsp; 
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b.&nbsp;&nbsp;
                 Ibu
             </td>
             <td valign="top" style="width: fit-content">&nbsp;:&nbsp;</td>
@@ -211,13 +211,13 @@
 
         {{-- subpoint3 --}}
         <tr>
-            <td nowrap valign="top" colspan="3">14.&nbsp;&nbsp; 
+            <td nowrap valign="top" colspan="3">14.&nbsp;&nbsp;
                 Wali Peserta Didik
             </td>
         </tr>
         <tr>
             <td nowrap valign="top">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a.&nbsp;&nbsp; 
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a.&nbsp;&nbsp;
                 Nama Wali
             </td>
             <td valign="top" style="width: fit-content">&nbsp;:&nbsp;</td>
@@ -225,7 +225,7 @@
         </tr>
         <tr>
             <td nowrap valign="top">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b.&nbsp;&nbsp; 
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b.&nbsp;&nbsp;
                 Nomor Telp/HP
             </td>
             <td valign="top" style="width: fit-content">&nbsp;:&nbsp;</td>
@@ -233,16 +233,16 @@
         </tr>
         <tr>
             <td nowrap valign="top">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c.&nbsp;&nbsp; 
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c.&nbsp;&nbsp;
                 Alamat Wali
             </td>
             <td valign="top" style="width: fit-content">&nbsp;:&nbsp;</td>
             <td valign="top" width="100%">{{ ucwords(strtolower($siswa->alamatwali))}}</td>
         </tr>
-        
+
         <tr>
             <td nowrap valign="top">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;d.&nbsp;&nbsp; 
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;d.&nbsp;&nbsp;
                 Pekerjaan
             </td>
             <td valign="top" style="width: fit-content">&nbsp;:&nbsp;</td>
@@ -255,7 +255,7 @@
             <td width="40%" align="right" style="padding-top: 10px">
                 @if (!empty($siswa->foto))
                 <img src="{{ url('gambar/siswa', [$siswa->foto]) }}" width="113.38" height="151.18" alt="">
-                    
+
 
                 @else
                 <div class="@if (!empty($siswa->gambar->gambar))
@@ -265,13 +265,13 @@
                 @endif ">
                     @if (!empty($siswa->gambar->gambar))
                     <center>
-                        <img src="https://absen.smkn1gunungkijang.sch.id/gambar/siswa/{{ $siswa->gambar->gambar }}" width="95%" style="border: 2px solid white" alt="">
+                        <img src="https://absen.smkn1gunungkijang.sch.id/gambar/siswa/{{ str_replace(" ", "%20", $siswa->gambar->gambar) }}" width="95%" style="border: 2px solid white" alt="">
                     </center>
                     @else
                     <br>
                     <br>
                     <br>
-                    PAS PHOTO 
+                    PAS PHOTO
                     <br>
                     3X4
 
@@ -300,7 +300,7 @@
             </td>
         </tr>
     </table>
-        
-    
+
+
 </body>
 </html>
