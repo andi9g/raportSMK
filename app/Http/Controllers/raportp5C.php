@@ -12,9 +12,9 @@ use App\Models\raportp5M;
 use App\Models\User;
 use App\Models\sekolahM;
 use App\Models\siswaM;
-use Auth;
-use PDF;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class raportp5C extends Controller
 {
