@@ -102,7 +102,7 @@ class raportp5C extends Controller
         $siswa = siswaM::where("nisn", sprintf("%010s", $nisn))->first();
 
         $raportp5 = raportp5M::where("idraportp5", $idraportp5)->first();
-
+        dd($raportp5);
         $data = [];
         $temap5 = $raportp5->temap5->get();
         dd($temap5);
