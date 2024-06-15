@@ -105,6 +105,7 @@ class raportp5C extends Controller
 
         $data = [];
         $temap5 = $raportp5->temap5->get();
+        dd($temap5);
         foreach ($temap5 as $tema) {
 
             $dimensip5 = $tema->dimensip5->get();

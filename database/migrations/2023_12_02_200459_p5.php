@@ -13,7 +13,7 @@ class P5 extends Migration
      */
     public function up()
     {
-        
+
 
         Schema::create('keteranganp5', function (Blueprint $table) {
             $table->bigIncrements('idketeranganp5');
@@ -40,7 +40,7 @@ class P5 extends Migration
             $table->boolean("ket")->default(1);
             $table->timestamps();
         });
-        
+
         Schema::create('temap5', function (Blueprint $table) {
             $table->bigIncrements('idtemap5');
             $table->integer("idraportp5");

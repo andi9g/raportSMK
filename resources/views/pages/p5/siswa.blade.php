@@ -39,9 +39,9 @@
         <div class="card-header">
             <div class="row">
                 <div class="col-md-8">
-                    <h4 class="text-uppercase text-bold w-100 mb-0 p-0 d-inline"> 
+                    <h4 class="text-uppercase text-bold w-100 mb-0 p-0 d-inline">
                         <u>
-                            "{{ $project }}" 
+                            "{{ $project }}"
                         </u>
                     </h4>
                     &emsp;
@@ -91,7 +91,7 @@
                             <td width="8px">
                                 @php
                                     $cek = \App\Models\penilaianp5M::where("idraportp5", $idraportp5)->where("nisn", sprintf("%010s", $item->nisn))->count();
-                                    
+
                                 @endphp
                                 @if ($totalHitung == $cek)
                                     <small class="badge badge-success">Telah Dinilai</small>
@@ -113,7 +113,7 @@
                                 </a>
                             </td>
                         </tr>
-                            
+
                         @endforeach
                     </tbody>
                 </table>
@@ -151,6 +151,6 @@
             dropdownParent: $('#tambahdetailraport{{ $item->idraport }}')
         });
     </script>
-    
+
 @endforeach --}}
 @endsection
