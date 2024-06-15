@@ -273,7 +273,7 @@ class raportp5C extends Controller
         $idkelas = "";
         $idjurusan = "";
         if($posisi == "admin") {
-            $raportp5 = raportp5M::get();
+            $raportp5 = raportp5M::orderBy("idraportp5", 'DESC')->get();
 
         }else if(!empty(Auth::user()->identitasp5->idkelas)) {
 
