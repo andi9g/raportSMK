@@ -99,7 +99,8 @@ class raportp5C extends Controller
 
     public function cetak(Request $request, $idraportp5, $nisn)
     {
-        $keteranganp5 = keteranganp5M::orderBy("index", "asc")->get();
+        try{
+            $keteranganp5 = keteranganp5M::orderBy("index", "asc")->get();
 
         $siswa = siswaM::where("nisn", sprintf("%010s", $nisn))->first();
 
@@ -190,6 +191,11 @@ class raportp5C extends Controller
 
 
         return $pdf->stream("Raport_P5_".$siswa->nama.".pdf");
+
+        }catch(\Throwable $th){
+            abort(405);
+        }
+
 
 
     }
