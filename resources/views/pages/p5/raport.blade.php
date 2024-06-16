@@ -21,14 +21,18 @@
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
+                            <label for="temap5">Masukan temap5</label>
+                            <input id="temap5" class="form-control" type="text" placeholder="Masukan tema P5" name="tema">
+                        </div>
+                        <div class="form-group">
                             <label for="fase">Masukan Fase</label>
                             <input id="fase" class="form-control" type="text" placeholder="E, F..." name="fase">
                         </div>
-    
+
                         <div class="form-group">
                             <label for="tahun">Tahun Ajaran</label>
                             <select id="tahun" class="form-control" name="tahun">
-                                
+
                                 @php
                                     $urut = $tahun - 3;
                                 @endphp
@@ -37,10 +41,10 @@
                                         selected
                                     @endif>{{ $i }}</option>
                                 @endfor
-                                
+
                             </select>
                         </div>
-    
+
                         <div class="form-group">
                             <label for="semester">Semester</label>
                             <select id="semester" required class="form-control" name="semester">
@@ -70,7 +74,7 @@
 
         </div>
     </div>
-        
+
 </div>
 @endif
 
@@ -91,7 +95,9 @@
                         <li>SEMESTER {{ strtoupper($item->semester) }}</li>
                         <li>FASE {{ strtoupper($item->fase) }}</li>
                     </ul>
-                    
+
+                    <center><h4 class="mt-2 pt-2 mb-0 pb-0 text-bold text-primary text-uppercase">{{ $item->tema }}</h4></center>
+
                 </div>
 
                 <div class="card-footer p-2 text-lg">
@@ -99,7 +105,7 @@
                         <a href="{{ route('open.temap5', [$item->idraportp5]) }}" class="btn btn-block btn-danger text-bold">
                             KELOLA RAPORT P5
                         </a>
-                        
+
                         <a href="{{ route('penilaian.raportp5', [$item->idraportp5]) }}" class="btn btn-success btn-block text-bold">
                             PENILAIAN RAPORT P5
                         </a>
@@ -116,17 +122,17 @@
                     @endif
 
 
-                    
-                    
+
+
 
                 </div>
             </div>
-            
-        </div>    
-        
-        
+
+        </div>
+
+
         @endforeach
-        
+
     </div>
 
 </div>
@@ -150,12 +156,12 @@
                         <label for="kelas">Kelas</label>
                         <input id="kelas" class="form-control" type="text" disabled value="{{ $idkelas }}">
                     </div>
-    
+
                     <div class="form-group">
                         <label for="jurusan">Jurusan</label>
                         <input id="jurusan" class="form-control" type="text" disabled value="{{ $idjurusan }}">
                     </div>
-    
+
                     <div class="form-group">
                         <label for="namaproject">Nama Project Penilaian</label>
                         <input id="namaproject" class="form-control" type="text" name="namaproject" placeholder="contoh : Cegah Perundungan Dunia Maya">
@@ -198,6 +204,6 @@
             dropdownParent: $('#tambahdetailraport{{ $item->idraport }}')
         });
     </script>
-    
+
 @endforeach --}}
 @endsection

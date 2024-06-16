@@ -62,12 +62,12 @@ class pengaturanp5C extends Controller
             'index' => 'required',
         ]);
         try {
-            
-          
+
+
             $data = $request->all();
-        
+
             keteranganp5M::create($data);
-            
+
             return redirect()->back()->with('success', 'Success');
 
 
@@ -114,15 +114,15 @@ class pengaturanp5C extends Controller
             'index' => 'required',
         ]);
         try {
-            
-            
+
+
             $data = $request->all();
-        
+
             keteranganp5M::where("idketeranganp5", $idketeranganp5)->first()->update($data);
-            
+
             return redirect()->back()->with('success', 'Success');
 
-            
+
 
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'Terjadi kesalahan');

@@ -17,4 +17,8 @@ class raportp5M extends Model
     {
         return $this->hasOne(temap5M::class, "idraportp5", "idraportp5");
     }
+    public function identitasp5()
+    {
+        return $this->hasOne(identitasp5M::class, "idraportp5", "idraportp5");
+    }
 }

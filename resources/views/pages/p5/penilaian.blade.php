@@ -13,7 +13,7 @@
 
 <div class="container">
     <a href="{{ url('raportp5', [$idraportp5]) }}" class="btn btn-danger btn-sm my-0 rounded-0">Kembali Halaman Sebelumnya</a>
-    <input type="text" value="{{ $nisn }}" id="nisn" hidden> 
+    <input type="text" value="{{ $nisn }}" id="nisn" hidden>
     <div class="row">
         <div class="col-md-4">
             <div class="card">
@@ -71,7 +71,7 @@
                             </tr>
 
                             @php
-                                $dimensip5 = $tema->dimensip5->get();
+                                $dimensip5 = $tema->dimensip5->where("idtemap5", $tema->idtemap5)->get();
                             @endphp
 
                             @foreach ($dimensip5 as $dimensi)
@@ -103,16 +103,16 @@
                                                     ->where("idsubdimensip5", $subdimensi->idsubdimensip5)->count();
                                                 @endphp
                                                 <input type="radio" onchange="kirimpost({{ $nisn }}, {{ $keterangan->idketeranganp5 }}, {{ $subdimensi->idsubdimensip5 }}, {{ $idraportp5 }})" name="nilai{{ $subdimensi->idsubdimensip5 }}" value="{{ $subdimensi->idsubdimensip5 }}" id="" @if ($checked == 1)
-                                                    checked 
+                                                    checked
                                                 @endif>
                                             </td>
                                     @endforeach
                                     </tr>
-                                    
+
                                 @endforeach
 
                             @endforeach
-                                
+
                             @endforeach
                         </table>
                     </div>

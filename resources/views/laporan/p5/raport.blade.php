@@ -14,11 +14,11 @@
         }
 
         h3 {
-            
-            
+
+
             left:25%;
             width: 50%;
-            
+
         }
 
         .nama {
@@ -42,7 +42,7 @@
         .identitas {
             font-size: 12pt;
         }
-        
+
 
         .fasphoto {
             float: right;
@@ -53,7 +53,7 @@
             justify-content: center;
         }
         .fontku {
-            font-size: 9.5pt;
+            font-size: 9.0pt;
         }
         .fontku2 {
             font-size: 8.5pt;
@@ -77,7 +77,7 @@
             font-size: 10pt;
             line-height: 15px;
             font-weight: bold;
-            
+
         }
         .page:nth-child(3) {
             margin-top: 30mm; /* Margin atas untuk halaman kedua */
@@ -92,6 +92,7 @@
 
         body {
             font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            margin-top: 120px;
         }
 
         .justify {
@@ -100,95 +101,104 @@
         .text-bold {
             font-weight: bold;
         }
-        
+        header {
+            position: fixed;
+            top: 0;
+            left: 0px;
+            right: 0px;
+            height: 50px;
+        }
+
     </style>
 </head>
 <body>
-    <table width="100%" class="myfont tableku" style="margin: -13px auto">
-        <tr>
-            <td>
-                <center>
-                    <h4>RAPOR PROJEK PENGUATAN PROFIL PELAJAR PANCASILA</h4>
-                </center>
+    <header>
+        <table width="100%" class="myfont tableku" style="margin: -13px auto">
+            <tr>
+                <td>
+                    <center>
+                        <h4>RAPOR PROJEK PENGUATAN PROFIL PELAJAR PANCASILA</h4>
+                    </center>
 
-            </td>
-        </tr>
-    </table>
-    <table width="100%" class="fontku">
-        <tr>
-            <td width="50%" valign="top">
-                <table width="100%" class="myfont">
-                    <tr>
-                        <td valign="top" nowrap>Nama Peserta Didik</td>
-                        <td valign="top" width="1px">:&nbsp;&nbsp;</td>
-                        <td valign="top">{{ strtoupper($siswa->nama) }}</td>
-                    </tr>
-                    <tr>
-                        <td valign="top" nowrap>Nomor Induk/NISN</td>
-                        <td valign="top" width="1px">:&nbsp;&nbsp;</td>
-                        <td valign="top">{{ empty($siswa->nis)?"":$siswa->nis." / " }}{{ ucwords(strtolower($siswa->nisn)) }}</td>
-                    </tr>
-                    <tr>
-                        <td valign="top" nowrap>Sekolah</td>
-                        <td valign="top" width="1px">:&nbsp;&nbsp;</td>
-                        <td valign="top">
-                            {{ $sekolah->namasekolah }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td valign="top" nowrap>Alamat</td>
-                        <td valign="top" width="1px">:&nbsp;&nbsp;</td>
-                        <td valign="top">
-                            {{ $sekolah->alamatsekolah }}
-                        </td>
-                    </tr>
-                </table>
-            </td>
-            <td width="50%" valign="top">
-                <table width="100%" class="myfont">
-                    <tr>
-                        <td valign="top" nowrap>Kelas</td>
-                        <td valign="top" width="1px">:&nbsp;&nbsp;</td>
-                        <td valign="top">{{ $siswa->kelas->namakelas." ".$siswa->jurusan->jurusan }}</td>
-                    </tr>
-                    <tr>
-                        <td valign="top" nowrap>Fase</td>
-                        <td valign="top" width="1px">:&nbsp;&nbsp;</td>
-                        <td valign="top">{{ strtoupper($detail->fase) }}</td>
-                    </tr>
+                </td>
+            </tr>
+        </table>
+        <table width="100%" class="fontku">
+            <tr>
+                <td width="50%" valign="top">
+                    <table width="100%" class="myfont">
+                        <tr>
+                            <td valign="top" nowrap>Nama Peserta Didik</td>
+                            <td valign="top" width="1px">:&nbsp;&nbsp;</td>
+                            <td valign="top">{{ strtoupper($siswa->nama) }}</td>
+                        </tr>
+                        <tr>
+                            <td valign="top" nowrap>Nomor Induk/NISN</td>
+                            <td valign="top" width="1px">:&nbsp;&nbsp;</td>
+                            <td valign="top">{{ empty($siswa->nis)?"":$siswa->nis." / " }}{{ ucwords(strtolower($siswa->nisn)) }}</td>
+                        </tr>
+                        <tr>
+                            <td valign="top" nowrap>Sekolah</td>
+                            <td valign="top" width="1px">:&nbsp;&nbsp;</td>
+                            <td valign="top">
+                                {{ $sekolah->namasekolah }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td valign="top" nowrap>Alamat</td>
+                            <td valign="top" width="1px">:&nbsp;&nbsp;</td>
+                            <td valign="top">
+                                {{ $sekolah->alamatsekolah }}
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td width="50%" valign="top">
+                    <table width="100%" class="myfont">
+                        <tr>
+                            <td valign="top" nowrap>Kelas</td>
+                            <td valign="top" width="1px">:&nbsp;&nbsp;</td>
+                            <td valign="top">{{ $siswa->kelas->namakelas." ".$siswa->jurusan->jurusan }}</td>
+                        </tr>
+                        <tr>
+                            <td valign="top" nowrap>Fase</td>
+                            <td valign="top" width="1px">:&nbsp;&nbsp;</td>
+                            <td valign="top">{{ strtoupper($detail->fase) }}</td>
+                        </tr>
 
-                    <tr>
-                        <td valign="top" nowrap>Semester</td>
-                        <td valign="top" width="1px">:&nbsp;&nbsp;</td>
-                        <td valign="top">
-                            {{ ucwords($detail->semester) }}
-                        </td>
-                    </tr>
+                        <tr>
+                            <td valign="top" nowrap>Semester</td>
+                            <td valign="top" width="1px">:&nbsp;&nbsp;</td>
+                            <td valign="top">
+                                {{ ucwords($detail->semester) }}
+                            </td>
+                        </tr>
 
-                    <tr>
-                        <td valign="top" nowrap>Tahun Pelajaran</td>
-                        <td valign="top" width="1px">:&nbsp;&nbsp;</td>
-                        <td valign="top">
-                            {{ $detail->tahun."/".($detail->tahun+1) }}
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    </table>
+                        <tr>
+                            <td valign="top" nowrap>Tahun Pelajaran</td>
+                            <td valign="top" width="1px">:&nbsp;&nbsp;</td>
+                            <td valign="top">
+                                {{ $detail->tahun."/".($detail->tahun+1) }}
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+    </header>
 
     @php
         $bilangan = ["nomor", "satu", "dua", "tiga", "empat", "lima", "enam", "tujuh", "delapan", "sembilan", "sepuluh"];
     @endphp
 
-    <br>
     <table class="tableku fontku" border="1" width="100%">
         <tr>
             <td style="padding: 8px 15px">
                 @foreach ($data as $item)
                 <p style="font-weight: bold;">Projek {{ $loop->iteration }} | Tema : {{ $item['tema'] }}</p>
-                <p class="justify">Projek ini adalah projek pertama dikelas {{ $siswa->kelas->namakelas }}. projek ini diharapkan membangun {{ $bilangan[count($item['dimensi'])] }} dimensi Profil Pelajar Pancasila, yakni 
-                
+                <p class="justify">Projek ini adalah projek pertama dikelas {{ $siswa->kelas->namakelas }}. projek ini diharapkan membangun {{ $bilangan[count($item['dimensi'])] }} dimensi Profil Pelajar Pancasila, yakni
+
                 @foreach ($item['dimensi'] as $d)
                     @php
                         if(($loop->iteration + 1) == count($item["dimensi"])) {
@@ -199,10 +209,10 @@
                         else {
                             $pisah = ", ";
                         }
-                    @endphp 
+                    @endphp
                     {{ $d["dimensi"].$pisah }}
                 @endforeach
-                Pada Projek ini peserta didik diharapkan mampu  untuk membangun Kesadaran dan keterampilan 
+                Pada Projek ini peserta didik diharapkan mampu  untuk membangun Kesadaran dan keterampilan
 
                 @php
                     $i1 = $detail->temap5->dimensip5->subdimensip5->count();
@@ -222,32 +232,32 @@
                             $pisah = ", ";
                         }
                         $i2++;
-                    @endphp     
+                    @endphp
                     {{ $s["subdimensi"].$pisah }}
 
                     @endforeach
-                    
-                    
+
+
                 @endforeach
 
-                melalui projek <b>"{{ $identitasp5->namaproject }}"</b>.
+                melalui projek <b>"{{ $judulp5 }}"</b>.
 
 
                 </p>
-                    
+
                 @endforeach
             </td>
         </tr>
     </table>
 
-    
+
     <table class="tableku fontku" width="100%" style="margin:6px auto">
         <tr>
             @foreach ($keteranganp5 as $k)
                 <td valign="top" width="25%" style="padding:5px 15px">
                     <p style="font-weight: bold;margin: 0px;padding:0">
                         <input type="checkbox" style="font-size: 11px;margin-bottom:-3px">
-                        
+
                         &nbsp;{{ $k->keteranganp5 }}
                     </p>
                     <p style="margin: 0px;padding:0">{{ $k->deskripsi }}</p>
@@ -267,7 +277,7 @@
                     <td align="center" class="text-bold">{{ $k->inisialp5 }}</td>
                 @endforeach
             </tr>
-            
+
             @foreach ($d["dimensi"] as $dim)
                 <tr>
                     <td style="padding:4px auto"  colspan="{{ count($keteranganp5) + 1 }}">{{ $dim["dimensi"] }}</td>
@@ -301,8 +311,8 @@
             <td>
                 <p class="text-bold" style="margin: 0;padding:0">Catatan Kegiatan</p>
                 <p class="justify" style="margin: 0;padding:0">
-                    Ananda {{ $siswa->nama }} menunjukan kemampuan untuk 
-                    
+                    Ananda {{ $siswa->nama }} menunjukan kemampuan untuk
+
 
                     @php
                         $i1 = $detail->temap5->dimensip5->subdimensip5->count();
@@ -321,18 +331,18 @@
                                         $pisah = ", ";
                                     }
                                     $i2++;
-                                @endphp   
+                                @endphp
 
                                 {{ $s["subdimensi"] }}
-                                dalam tahap 
+                                dalam tahap
                                 @foreach ($s["keterangan"] as $sk)
                                     {{ $sk["keterangan"].$pisah }}
                                 @endforeach
-                                
+
                             @endforeach
                         @endforeach
                     @endforeach
-                    melalui projek <b>"{{ $identitasp5->namaproject }}"</b>.
+                    melalui projek <b>"{{ $judulp5 }}"</b>.
                 </p>
 
             </td>
@@ -348,7 +358,7 @@
                         <tr>
                             <td width="5%"></td>
                             <td width="50%">
-                                    
+
                                     <p>Orang Tua/Wali</p>
                                     <br>
                                     <br>
@@ -356,7 +366,7 @@
                                     <br>
                                     <p>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . </p>
                             </td>
-                            
+
                             <td width="40%">
                                     <p>Gunung Kijang, {{ \Carbon\Carbon::parse(date('Y-m-d'))->isoFormat("DD MMMM Y") }}</p>
                                     <p>Wali Kelas</p>
@@ -366,10 +376,10 @@
                                     <br>
                                     <p style="padding: 0 auto;margin:0 auto"><b><u>{{ Auth::user()->name }}</u></b></p>
                                     <p style="padding: 0 auto;margin:0 auto">{{ Auth::user()->identitas->inip }}. {{ Auth::user()->identitas->nip }}</p>
-            
+
                             </td>
                         </tr>
-            
+
                         {{-- <tr>
                             <td colspan="3">
                                 <center>
@@ -379,10 +389,10 @@
                                     <p><b>MUSTAFA KAMAL, S.Pd</b></p>
                                     <p>NIP.19800909 201001 1 018</p>
                                 </center>
-            
+
                             </td>
                         </tr> --}}
-            
+
                     </table>
                 </div>
 
@@ -390,7 +400,7 @@
         </tr>
 
     </table>
-        
-    
+
+
 </body>
 </html>

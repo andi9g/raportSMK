@@ -41,11 +41,11 @@ class kordinatorp5C extends Controller
             'idjurusan' => 'required',
         ]);
         try {
-        
+
             $data = $request->all();
-        
+
             identitasp5M::create($data);
-            
+
             return redirect()->back()->with('success', 'Success');
 
 
@@ -91,11 +91,11 @@ class kordinatorp5C extends Controller
             'idjurusan' => 'required',
         ]);
         try {
-        
+
             $data = $request->all();
-        
+
             identitasp5M::where("ididentitasp5", $ididentitasp5)->first()->update($data);
-            
+
             return redirect()->back()->with('success', 'Success');
 
 

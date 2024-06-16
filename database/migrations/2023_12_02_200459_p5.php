@@ -28,7 +28,9 @@ class P5 extends Migration
             $table->bigIncrements('ididentitasp5');
             $table->integer("iduser")->unique();
             $table->integer("idkelas");
+            $table->integer("idraportp5");
             $table->integer("idjurusan");
+            $table->String("namaproject");
             $table->timestamps();
         });
 
@@ -37,6 +39,7 @@ class P5 extends Migration
             $table->char("tahun", 4);
             $table->enum("semester", ["ganjil", "genap"]);
             $table->char("fase", 2);
+            $table->String("tema");
             $table->boolean("ket")->default(1);
             $table->timestamps();
         });

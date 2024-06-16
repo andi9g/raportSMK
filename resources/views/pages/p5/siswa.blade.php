@@ -20,7 +20,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="namaproject">Nama Project</label>
-                        <input id="namaproject" class="form-control" type="text" name="namaproject" value="{{ $project }}">
+                        <input id="namaproject" class="form-control" type="text" name="judulp5" value="{{ empty($project->judulp5)?'':$project->judulp5 }}">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -41,7 +41,7 @@
                 <div class="col-md-8">
                     <h4 class="text-uppercase text-bold w-100 mb-0 p-0 d-inline">
                         <u>
-                            "{{ $project }}"
+                            "{{ empty($project->judulp5)?"Belum memiliki nama kegiatan":$project->judulp5 }}"
                         </u>
                     </h4>
                     &emsp;
@@ -68,6 +68,7 @@
 
         <div class="card-body">
             <div class="table-responsive">
+                <h5 class="text-right text-uppercase text-primary"><b>{{ $raportp5->tema }}</b></h5>
                 <table class="table table-striped table-bordered ">
                     <thead>
                         <tr>
