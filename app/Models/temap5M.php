@@ -15,6 +15,6 @@ class temap5M extends Model
 
     public function dimensip5()
     {
-        return $this->hasOne(dimensip5M::class, "idtemap5", "idtemap5");
+        return $this->belongsTo(dimensip5M::class, "idtemap5", "idtemap5");
     }
 }

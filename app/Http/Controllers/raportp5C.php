@@ -22,58 +22,76 @@ class raportp5C extends Controller
 
     public function siswa(Request $request, $idraportp5)
     {
-        $keyword = empty($request->keyword)?'':$request->keyword;
-        $posisi = Auth::user()->identitas->posisi;
-        $iduser = Auth::user()->iduser;
+        // try{
+            $keyword = empty($request->keyword)?'':$request->keyword;
+            $posisi = Auth::user()->identitas->posisi;
+            $iduser = Auth::user()->iduser;
 
 
-        if($posisi == "admin") {
-            $siswa = siswaM::where("nama", "like", "%$keyword%")
-            ->orderBy("nama", "asc")
-            ->paginate(20);
-        }else if($posisi == "walikelas"){
-            $idkelas = Auth::user()->identitas->walikelas->idkelas;
-            $idjurusan = Auth::user()->identitas->walikelas->idjurusan;
+            if($posisi == "admin") {
+                $siswa = siswaM::where("nama", "like", "%$keyword%")
+                ->orderBy("nama", "asc")
+                ->paginate(20);
+            }else if($posisi == "walikelas"){
+                $idkelas = Auth::user()->identitas->walikelas->idkelas;
+                $idjurusan = Auth::user()->identitas->walikelas->idjurusan;
 
-            $siswa = siswaM::where("idkelas", $idkelas)
-            ->where("idjurusan", $idjurusan)
-            ->where("nama", "like", "%$keyword%")
-            ->orderBy("nama", "asc")
-            ->paginate(20);
-        }else {
-            $identitasp5 = identitasp5M::where("iduser", Auth::user()->iduser)->first();
-            $idkelas = $identitasp5->idkelas;
-            $idjurusan = $identitasp5->idjurusan;
+                $siswa = siswaM::where("idkelas", $idkelas)
+                ->where("idjurusan", $idjurusan)
+                ->where("nama", "like", "%$keyword%")
+                ->orderBy("nama", "asc")
+                ->paginate(20);
+            }else {
+                $identitasp5 = identitasp5M::where("iduser", Auth::user()->iduser)->first();
+                $idkelas = $identitasp5->idkelas;
+                $idjurusan = $identitasp5->idjurusan;
 
-            $siswa = siswaM::where("idkelas", $idkelas)
-            ->where("idjurusan", $idjurusan)
-            ->where("nama", "like", "%$keyword%")
-            ->orderBy("nama", "asc")
-            ->paginate(20);
-        }
+                $siswa = siswaM::where("idkelas", $idkelas)
+                ->where("idjurusan", $idjurusan)
+                ->where("nama", "like", "%$keyword%")
+                ->orderBy("nama", "asc")
+                ->paginate(20);
+            }
 
-        $raportp5 = raportp5M::where("idraportp5",$idraportp5)->first();
+            $raportp5 = raportp5M::where("idraportp5",$idraportp5)->first();
 
-        $siswa->appends($request->only(["limit", "keyword"]));
-
-        $total = raportp5M::where("idraportp5", $idraportp5)->first();
-
-        $totalHitung = $total->temap5->dimensip5->subdimensip5->count();
-
-        $project = judulp5M::where("idraportp5", $idraportp5)
-        ->where("iduser", $iduser)
-        ->first();
-        // dd($project);
+            $siswa->appends($request->only(["limit", "keyword"]));
 
 
-        return view("pages.p5.siswa", [
-            "keyword" => $keyword,
-            "siswa" => $siswa,
-            "project" => $project,
-            "idraportp5" => $idraportp5,
-            "raportp5" => $raportp5,
-            "totalHitung" => $totalHitung,
-        ]);
+            $totalHitung = 0;
+            $temap5 = temap5M::where("idraportp5", $idraportp5)->get();
+
+            foreach ($temap5 as $tema) {
+                $dimensip5 = dimensip5M::where("idtemap5", $tema->idtemap5)->get();
+                foreach ($dimensip5 as $dimensi) {
+                    $subdimensip5 = subdimensip5M::where("iddimensip5", $dimensi->iddimensip5)->get();
+                    foreach ($subdimensip5 as $looping) {
+                        $totalHitung++;
+                    }
+                }
+            }
+
+            // $dimensi = dimensip5M::where("idtemap5", $total->temap5->idtemap5)->get()->subdimensip5->count();
+            // $totalHitung = $total->temap5->where("idraportp5", $idraportp5)->first()->dimensip5->subdimensip5->count();
+
+            $project = judulp5M::where("idraportp5", $idraportp5)
+            ->where("iduser", $iduser)
+            ->first();
+            // dd($project);
+
+
+            return view("pages.p5.siswa", [
+                "keyword" => $keyword,
+                "siswa" => $siswa,
+                "project" => $project,
+                "idraportp5" => $idraportp5,
+                "raportp5" => $raportp5,
+                "totalHitung" => $totalHitung,
+            ]);
+
+        // }catch(\Throwable $th){
+        //     return redirect()->back()->with('toast_error', 'Silahkan melakukan pengelolaan rapor P5');
+        // }
     }
 
 
@@ -99,7 +117,7 @@ class raportp5C extends Controller
 
     public function cetak(Request $request, $idraportp5, $nisn)
     {
-        try{
+        // try{
             $keteranganp5 = keteranganp5M::orderBy("index", "asc")->get();
 
         $siswa = siswaM::where("nisn", sprintf("%010s", $nisn))->first();
@@ -177,7 +195,7 @@ class raportp5C extends Controller
         ->where("idkelas", $idkelas)
         ->where("idraportp5", $idraportp5)
         ->orderBy("idjudulp5", "desc")
-        ->first()->judulp5;
+        ->first()->judulp5 ?? "Belum Memiliki Judul";
 
         $pdf = PDF::loadView("laporan.p5.raport", [
             "siswa" => $siswa,
@@ -192,9 +210,9 @@ class raportp5C extends Controller
 
         return $pdf->stream("Raport_P5_".$siswa->nama.".pdf");
 
-        }catch(\Throwable $th){
-            abort(500);
-        }
+        // }catch(\Throwable $th){
+        //     abort(500);
+        // }
 
 
 

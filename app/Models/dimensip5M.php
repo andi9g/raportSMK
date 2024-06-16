@@ -15,6 +15,6 @@ class dimensip5M extends Model
 
     public function subdimensip5()
     {
-        return $this->hasOne(subdimensip5M::class, "iddimensip5", "iddimensip5");
+        return $this->belongsTo(subdimensip5M::class, "iddimensip5", "iddimensip5");
     }
 }
