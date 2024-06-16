@@ -117,7 +117,7 @@ class raportp5C extends Controller
 
     public function cetak(Request $request, $idraportp5, $nisn)
     {
-        // try{
+        try{
             $keteranganp5 = keteranganp5M::orderBy("index", "asc")->get();
 
             $siswa = siswaM::where("nisn", sprintf("%010s", $nisn))->first();
@@ -210,9 +210,9 @@ class raportp5C extends Controller
 
             return $pdf->stream("Raport_P5_".$siswa->nama.".pdf");
 
-        // }catch(\Throwable $th){
-        //     abort(500);
-        // }
+        }catch(\Throwable $th){
+            abort(500, $message='MAAF, HANYA WALIKELAS YANG DAPAT MENCETAK');
+        }
 
 
 
