@@ -15,8 +15,10 @@ class Judulp5 extends Migration
     {
         Schema::create('judulp5', function (Blueprint $table) {
             $table->bigIncrements('idjudulp5');
-            $table->String('iduser');
-            $table->String('idraportp5');
+            $table->integer('iduser');
+            $table->integer('idjurusan');
+            $table->integer('idkelas');
+            $table->integer('idraportp5');
             $table->String('judulp5');
             $table->timestamps();
         });

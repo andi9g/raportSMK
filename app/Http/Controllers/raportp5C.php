@@ -160,7 +160,7 @@ class raportp5C extends Controller
 
         }
 
-        $judulp5 = judulp5M::where("idraportp5", $idraportp5)->first()->judulp5;
+
 
         $sekolah = sekolahM::first();
 
@@ -171,6 +171,12 @@ class raportp5C extends Controller
         ->where("idjurusan", $idjurusan)
         ->orderBy("ididentitasp5", "desc")
         ->first();
+
+        $judulp5 = judulp5M::where("idjurusan", $idjurusan)
+        ->where("idkelas", $idkelas)
+        ->where("idraportp5", $idraportp5)
+        ->orderBy("idjudulp5", "desc")
+        ->first()->judulp5;
 
         $pdf = PDF::loadView("laporan.p5.raport", [
             "siswa" => $siswa,
@@ -259,15 +265,22 @@ class raportp5C extends Controller
             $cek = judulp5M::where("idraportp5", $idraportp5)
             ->where("iduser", $iduser);
 
+            $idkelas = Auth::user()->identitasp5->idkelas;
+            $idjurusan = Auth::user()->identitasp5->idjurusan;
+
             if($cek->count() == 0) {
                 judulp5M::create([
                     "iduser" => $iduser,
+                    "idkelas" => $idkelas,
+                    "idjurusan" => $idjurusan,
                     "judulp5" => $judulp5,
                     "idraportp5" => $idraportp5,
                 ]);
             }else {
                 $cek->first()->update([
                     "iduser" => $iduser,
+                    "idkelas" => $idkelas,
+                    "idjurusan" => $idjurusan,
                     "judulp5" => $judulp5,
                     "idraportp5" => $idraportp5,
                 ]);
@@ -276,7 +289,7 @@ class raportp5C extends Controller
             return redirect()->route("penilaian.raportp5", $idraportp5)->with("success", "Judul telah diupdate");
 
         }catch(\Throwable $th){
-            return redirect('location')->with('toast_error', 'Terjadi kesalahan');
+            return redirect()->back()->with('toast_error', 'Bukan hak admin');
         }
     }
     /**
