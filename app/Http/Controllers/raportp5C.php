@@ -211,7 +211,7 @@ class raportp5C extends Controller
             return $pdf->stream("Raport_P5_".$siswa->nama.".pdf");
 
         }catch(\Throwable $th){
-            abort(500, $message='MAAF, HANYA WALIKELAS YANG DAPAT MENCETAK');
+            abort(500, 'MAAF, HANYA WALIKELAS YANG DAPAT MENCETAK');
         }
 
 
