@@ -193,7 +193,7 @@ class raportp5C extends Controller
         return $pdf->stream("Raport_P5_".$siswa->nama.".pdf");
 
         }catch(\Throwable $th){
-            abort(405);
+            abort(500);
         }
 
 
