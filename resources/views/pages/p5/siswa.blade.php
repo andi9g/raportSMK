@@ -78,7 +78,9 @@
                             <th>Rombel</th>
                             <th>Ket</th>
                             <th>Nilai</th>
+                            @if (!empty(Auth::user()->identitas->walikelas))
                             <th>Cetak</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -108,12 +110,15 @@
                             <td>
                                 <a href="{{ route('nilai.raport.p5', [$idraportp5,$item->nisn]) }}" class="btn btn-success btn-block btn-sm rounded-0 text-bold">NILAI</a>
                             </td>
+                            @if (!empty(Auth::user()->identitas->walikelas))
                             <td>
-                                <a href="{{ route('cetak.raport.p5', [$idraportp5,$item->nisn]) }}" target="_blank" class="btn btn-secondary btn-block btn-sm">
-                                    <i class="fa fa-print"></i> CETAK
-                                </a>
-                            </td>
-                        </tr>
+                                    <a href="{{ route('cetak.raport.p5', [$idraportp5,$item->nisn]) }}" target="_blank" class="btn btn-secondary btn-block btn-sm">
+                                        <i class="fa fa-print"></i> CETAK
+                                    </a>
+
+                                </td>
+                            </tr>
+                            @endif
 
                         @endforeach
                     </tbody>
