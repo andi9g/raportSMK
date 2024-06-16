@@ -117,102 +117,102 @@ class raportp5C extends Controller
 
     public function cetak(Request $request, $idraportp5, $nisn)
     {
-        // try{
+        try{
             $keteranganp5 = keteranganp5M::orderBy("index", "asc")->get();
 
-        $siswa = siswaM::where("nisn", sprintf("%010s", $nisn))->first();
+            $siswa = siswaM::where("nisn", sprintf("%010s", $nisn))->first();
 
-        $raportp5 = raportp5M::where("idraportp5", $idraportp5)->first();
+            $raportp5 = raportp5M::where("idraportp5", $idraportp5)->first();
 
-        $data = [];
-        $temap5 = temap5M::where("idraportp5", $idraportp5)->get();
-        foreach ($temap5 as $tema) {
+            $data = [];
+            $temap5 = temap5M::where("idraportp5", $idraportp5)->get();
+            foreach ($temap5 as $tema) {
 
-            $dimensip5 = dimensip5M::where("idtemap5", $tema->idtemap5)->get();
-            $dim = [];
-            foreach ($dimensip5 as $dimensi) {
+                $dimensip5 = dimensip5M::where("idtemap5", $tema->idtemap5)->get();
+                $dim = [];
+                foreach ($dimensip5 as $dimensi) {
 
-                $subdimensip5 = subdimensip5M::where("iddimensip5", $dimensi->iddimensip5)->get();
+                    $subdimensip5 = subdimensip5M::where("iddimensip5", $dimensi->iddimensip5)->get();
 
-                $sub = [];
-                foreach ($subdimensip5 as $subdimensi) {
-                    $nilai = [];
-                    $ket = [];
-                    foreach ($keteranganp5 as $keterangan) {
-                        $hitung = penilaianp5M::where("idketeranganp5", $keterangan->idketeranganp5)
-                        ->where("nisn", sprintf("%010s", $nisn))
-                        ->where("idsubdimensip5", $subdimensi->idsubdimensip5)
-                        ->where("idraportp5", $idraportp5)
-                        ->count();
+                    $sub = [];
+                    foreach ($subdimensip5 as $subdimensi) {
+                        $nilai = [];
+                        $ket = [];
+                        foreach ($keteranganp5 as $keterangan) {
+                            $hitung = penilaianp5M::where("idketeranganp5", $keterangan->idketeranganp5)
+                            ->where("nisn", sprintf("%010s", $nisn))
+                            ->where("idsubdimensip5", $subdimensi->idsubdimensip5)
+                            ->where("idraportp5", $idraportp5)
+                            ->count();
 
-                        $nilai[] = $hitung;
+                            $nilai[] = $hitung;
 
-                        if($hitung == 1) {
-                            $ket[] = [
-                                "keterangan" => $keterangan->keteranganp5,
-                                "inisial" => $keterangan->inisialp5,
-                            ];
+                            if($hitung == 1) {
+                                $ket[] = [
+                                    "keterangan" => $keterangan->keteranganp5,
+                                    "inisial" => $keterangan->inisialp5,
+                                ];
 
+                            }
                         }
+
+                        $sub[] = [
+                            "subdimensi" => $subdimensi->subdimensip5,
+                            "deskripsi" => $subdimensi->deskripsi,
+                            "nilai" => $nilai,
+                            "keterangan" => $ket,
+                        ];
                     }
 
-                    $sub[] = [
-                        "subdimensi" => $subdimensi->subdimensip5,
-                        "deskripsi" => $subdimensi->deskripsi,
-                        "nilai" => $nilai,
-                        "keterangan" => $ket,
-                    ];
+                $dim[] = [
+                    "dimensi" => $dimensi->dimensip5,
+                    "subdimensi" => $sub,
+                ];
+
+
                 }
 
-            $dim[] = [
-                "dimensi" => $dimensi->dimensip5,
-                "subdimensi" => $sub,
+            $data[] = [
+                "tema" => $tema->temap5,
+                "dimensi" => $dim,
             ];
-
 
             }
 
-        $data[] = [
-            "tema" => $tema->temap5,
-            "dimensi" => $dim,
-        ];
 
+
+            $sekolah = sekolahM::first();
+
+            // $identitasp5 = identitasp5M::where("iduser", Auth::user()->iduser)->first();
+            $idkelas = Auth::user()->identitas->walikelas->idkelas;
+            $idjurusan = Auth::user()->identitas->walikelas->idjurusan;
+            $identitasp5 = identitasp5M::where("idkelas", $idkelas)
+            ->where("idjurusan", $idjurusan)
+            ->orderBy("ididentitasp5", "desc")
+            ->first();
+
+            $judulp5 = judulp5M::where("idjurusan", $idjurusan)
+            ->where("idkelas", $idkelas)
+            ->where("idraportp5", $idraportp5)
+            ->orderBy("idjudulp5", "desc")
+            ->first()->judulp5 ?? "Belum Memiliki Judul";
+
+            $pdf = PDF::loadView("laporan.p5.raport", [
+                "siswa" => $siswa,
+                "keteranganp5" => $keteranganp5,
+                "data" => $data,
+                "sekolah" => $sekolah,
+                "judulp5" => $judulp5,
+                "detail" => $raportp5,
+                "identitasp5" => $identitasp5,
+            ]);
+
+
+            return $pdf->stream("Raport_P5_".$siswa->nama.".pdf");
+
+        }catch(\Throwable $th){
+            abort(500);
         }
-
-
-
-        $sekolah = sekolahM::first();
-
-        // $identitasp5 = identitasp5M::where("iduser", Auth::user()->iduser)->first();
-        $idkelas = Auth::user()->identitas->walikelas->idkelas;
-        $idjurusan = Auth::user()->identitas->walikelas->idjurusan;
-        $identitasp5 = identitasp5M::where("idkelas", $idkelas)
-        ->where("idjurusan", $idjurusan)
-        ->orderBy("ididentitasp5", "desc")
-        ->first();
-
-        $judulp5 = judulp5M::where("idjurusan", $idjurusan)
-        ->where("idkelas", $idkelas)
-        ->where("idraportp5", $idraportp5)
-        ->orderBy("idjudulp5", "desc")
-        ->first()->judulp5 ?? "Belum Memiliki Judul";
-
-        $pdf = PDF::loadView("laporan.p5.raport", [
-            "siswa" => $siswa,
-            "keteranganp5" => $keteranganp5,
-            "data" => $data,
-            "sekolah" => $sekolah,
-            "judulp5" => $judulp5,
-            "detail" => $raportp5,
-            "identitasp5" => $identitasp5,
-        ]);
-
-
-        return $pdf->stream("Raport_P5_".$siswa->nama.".pdf");
-
-        // }catch(\Throwable $th){
-        //     abort(500);
-        // }
 
 
 
