@@ -16,8 +16,8 @@ use App\Models\kehadiranM;
 use App\Models\catatanM;
 use App\Models\ujianM;
 use App\Models\User;
-use Auth;
-use PDF;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class cetakraportC extends Controller

@@ -16,9 +16,9 @@ use App\Models\sinkronM;
 use App\Models\detailraportM;
 use App\Models\ujianM;
 use App\Models\pembinaexM;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Illuminate\Http\Request;
-use Auth;
-use PDF;
+use Illuminate\Support\Facades\Auth;
 
 class raportC extends Controller
 {
@@ -250,7 +250,7 @@ class raportC extends Controller
                     if(count($nilai)==0) {
                         $nilaisiswa[] = [
                             "namaelemen" => $e->elemen,
-                            "nilai" => $totalnilaisiswa = $totalnilaisiswa + 0,
+                            "nilai" => 0,
                         ];
 
                     }
@@ -750,6 +750,7 @@ class raportC extends Controller
                 return redirect()->back()->with("error", "terjadi kesalahan")->withInput();
             }
 
+            $idraport = $cek->first()->idraport;
             $cek->delete();
             return redirect()->back()->with("success", "Data berhasil dihapus")->withInput();
 

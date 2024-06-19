@@ -292,7 +292,9 @@
                         <td style="page-break-before: always;" class="fontku2">{{ empty($item["catatanAgama"])?'-':$item["catatanAgama"] }}</td>
                     @else
                     @if ($ket=="capaian")
-                        <td style="page-break-before: always;" class="fontku2">{{ $item["capaian"] }}</td>
+                        <td style="page-break-before: always;" class="fontku2">
+                            {{ $item["capaian"] }}
+                        </td>
                     @elseif($ket=="catatan")
                         <td style="page-break-before: always;" class="fontku2">{{ $item["catatan"] }}</td>
                     @elseif($ket=="keduanya")
@@ -339,7 +341,7 @@
 
     <br>
 
-    <div class="fontku page" style="page-break-before: always;">
+    <div class="fontku page" style="page-break-inside: avoid;">
         <b>
             B. Extrakulikuler
         </b>
@@ -418,83 +420,87 @@
 
     <br>
 
-    @if (!($raport->namaraport == "raport uts") && $detail->semester != "ganjil")
+    <div class="" style="page-break-inside: avoid;">
 
-        <div class="fontku">
-            <b>
-                D. Kenaikan Kelas
-            </b>
+        @if (!($raport->namaraport == "raport uts") && $detail->semester != "ganjil")
 
-            <table width="100%" class="tableku" border="1">
+            <div class="fontku">
+                <b>
+                    D. Kenaikan Kelas
+                </b>
+
+                <table width="100%" class="tableku" border="1">
 
 
-                <tbody>
-                    <tr>
-                        <td style="padding: 8px auto">
-                            <center>
-                                DALAM PENILAIAN
-                            </center>
-                        </td>
-                    </tr>
-                </tbody>
-
-            </table>
-        </div>
-    @endif
-
-    <br>
-
-    <table width="100%">
-        <tr>
-            <td style="page-break-before: always;">
-                <div class="fontku">
-                    <table width="100%">
+                    <tbody>
                         <tr>
-                            <td width="5%"></td>
-                            <td width="50%">
-
-                                    <p>Orang Tua/Wali</p>
-                                    <br>
-                                    <br>
-                                    <br>
-                                    <p>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . </p>
-                            </td>
-
-                            <td width="40%">
-                                    <p>Gunung Kijang, {{ \Carbon\Carbon::parse($raport->tanggal)->isoFormat("DD MMMM Y") }}</p>
-                                    <p>Wali Kelas</p>
-                                    <br>
-                                    <br>
-                                    <br>
-                                    <p><b><u>{{ $identitas->first()->user->name }}</u></b></p>
-                                    <p>{{ $identitas->first()->inip }}. {{ $identitas->first()->nip }}</p>
-
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td colspan="3">
+                            <td style="padding: 8px auto">
                                 <center>
-                                    <p>Mengetahui</p>
-                                    <p>Kepala Sekolah</p>
-                                    {{-- <img src="{{ url('gambar', ['ttd3.png']) }}" style="margin-top:-10px;margin-bottom:-10px;margin-left:0px" width="100px" alt=""> --}}
-                                    <br>
-                                    <br>
-                                    <br>
-                                    <p><b><u>MUSTAFA KAMAL, S.Pd</u></b></p>
-                                    <p>NIP.19800909 201001 1 018</p>
+                                    DALAM PENILAIAN
                                 </center>
-
                             </td>
                         </tr>
+                    </tbody>
 
-                    </table>
-                </div>
+                </table>
+            </div>
+        @endif
 
-            </td>
-        </tr>
+        <br>
 
-    </table>
+        <table width="100%">
+            <tr>
+                <td style="page-break-before: always;">
+                    <div class="fontku">
+                        <table width="100%">
+                            <tr>
+                                <td width="5%"></td>
+                                <td width="50%">
+
+                                        <p>Orang Tua/Wali</p>
+                                        <br>
+                                        <br>
+                                        <br>
+                                        <p>. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . </p>
+                                </td>
+
+                                <td width="40%">
+                                        <p>Gunung Kijang, {{ \Carbon\Carbon::parse($raport->tanggal)->isoFormat("DD MMMM Y") }}</p>
+                                        <p>Wali Kelas</p>
+                                        <br>
+                                        <br>
+                                        <br>
+                                        <p><b><u>{{ $identitas->first()->user->name }}</u></b></p>
+                                        <p>{{ $identitas->first()->inip }}. {{ $identitas->first()->nip }}</p>
+
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="3">
+                                    <center>
+                                        <p>Mengetahui</p>
+                                        <p>Kepala Sekolah</p>
+                                        {{-- <img src="{{ url('gambar', ['ttd3.png']) }}" style="margin-top:-10px;margin-bottom:-10px;margin-left:0px" width="100px" alt=""> --}}
+                                        <br>
+                                        <br>
+                                        <br>
+                                        <p><b><u>MUSTAFA KAMAL, S.Pd</u></b></p>
+                                        <p>NIP.19800909 201001 1 018</p>
+                                    </center>
+
+                                </td>
+                            </tr>
+
+                        </table>
+                    </div>
+
+                </td>
+            </tr>
+
+        </table>
+
+    </div>
 
 
 </body>
