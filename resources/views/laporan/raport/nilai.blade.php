@@ -436,7 +436,7 @@
                         <tr>
                             <td style="padding: 8px auto">
                                 <center>
-                                    DALAM PENILAIAN
+                                    NAIK KELAS
                                 </center>
                             </td>
                         </tr>

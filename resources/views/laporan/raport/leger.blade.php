@@ -63,15 +63,15 @@
             border-collapse: collapse;
             font-size: 7pt;
         }
-        
+
         .tableku tr th {
             line-height: 20px;
-        
+
         }
         .tableku tr td {
             padding: 4px;
         }
-        
+
         .vertical-th {
             writing-mode: vertical-lr; /* Vertical text, from right to left */
             transform: rotate(-30deg); /* Rotate 180 degrees to bring it up */
@@ -103,9 +103,9 @@
             border-collapse: collapse;
             height: auto;
             overflow: auto;
-            
+
         }
-        
+
 
         th, td {
             padding: 8px;
@@ -175,11 +175,11 @@
             <td class="tdku">{{ $item["namajurusan"]." (".$item["jurusan"].")" }}</td>
         </tr>
     </table>
-    
+
 
     <table border="1" class="@if ($item['jumlahmapel'] > 10)
         tableku2
-    @else 
+    @else
         tableku
     @endif " width="100%">
         <thead>
@@ -200,12 +200,12 @@
                 @foreach ($item["mapel"] as $mapel)
                     @if ($mapel->mapel->ket == "umum")
                         <th><p class="vertical-th" >{{ $mapel->mapel->namamapel }}</p></th>
-                        
+
                     @endif
                 @endforeach
                 @foreach ($item["mapel"] as $mapel)
                     @if ($mapel->mapel->ket == "kejuruan")
-                        <th><p class="vertical-th">{{ $mapel->mapel->namamapel }}</p></th> 
+                        <th><p class="vertical-th">{{ $mapel->mapel->namamapel }}</p></th>
                     @endif
                 @endforeach
             </tr>
@@ -223,21 +223,29 @@
                     <td>{{ $siswa["nisn"] }}</td>
                     @foreach ($siswa["data"] as $mapel)
                         @if ($mapel["ket"] == "umum")
+                            @if ($mapel['hasil'] < 65)
+                            <td align="center" style="color:red">{{ $mapel["hasil"]}}</td>
+                            @else
                             <td align="center">{{ $mapel["hasil"]}}</td>
+                            @endif
                         @endif
-                        
+
                     @endforeach
                     @foreach ($siswa["data"] as $mapel)
                         @if ($mapel["ket"] == "kejuruan")
+                            @if ($mapel['hasil'] < 65)
+                            <td align="center" style="color:red">{{ $mapel["hasil"]}}</td>
+                            @else
                             <td align="center">{{ $mapel["hasil"]}}</td>
+                            @endif
                         @endif
-                        
+
                     @endforeach
                     <td align="center">{{ $siswa["jumlahnilai"] }}</td>
                     <td align="center">{{ $siswa["ratarata"] }}</td>
                     <td>
                         @if ($siswa["ratarata"] > 63)
-                            LULUS    
+                            LULUS
                         @else
                             TIDAK LULUS
                         @endif
@@ -246,7 +254,7 @@
             </tr>
             @endforeach
         </tbody>
-        
+
     </table>
 
     <table width="100%">
@@ -263,7 +271,7 @@
                     <br>
                     <br>
                     @php
-                        
+
                         $walas = DB::table("walikelas")
                         ->join("identitas", "identitas.ididentitas", "walikelas.ididentitas")
                         ->select("identitas.iduser", "identitas.nip")
@@ -280,21 +288,21 @@
     </table>
 
     <div class="page-break"></div>
-        
+
     @endforeach
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </body>
 </html>
