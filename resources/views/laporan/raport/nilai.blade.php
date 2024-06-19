@@ -436,7 +436,17 @@
                         <tr>
                             <td style="padding: 8px auto">
                                 <center>
-                                    NAIK KELAS
+                                    <b>
+                                        @if ($tidaklolos >= 3)
+                                        <font style="color:red">
+                                            TINGGAL KELAS
+                                        </font>
+                                        @else
+                                        <font style="color:green">
+                                            NAIK KELAS
+                                        </font>
+                                        @endif
+                                    </b>
                                 </center>
                             </td>
                         </tr>
