@@ -289,16 +289,16 @@
                     <td rowspan="{{ $nilai }}">{{ $item["namamapel"] }}</td>
                     <td align="center" rowspan="{{ $nilai }}">{{ $item["nilai"] }}</td>
                     @if ($item["agama"]==true && $item['ketAgama'] != "Islam")
-                        <td  class="fontku2">{{ empty($item["catatanAgama"])?'-':$item["catatanAgama"] }}</td>
+                        <td style="page-break-inside: always;" class="fontku2">{{ empty($item["catatanAgama"])?'-':$item["catatanAgama"] }}</td>
                     @else
                     @if ($ket=="capaian")
-                        <td  class="fontku2">
+                        <td style="page-break-inside: always;" class="fontku2">
                             {{ $item["capaian"] }}
                         </td>
                     @elseif($ket=="catatan")
-                        <td  class="fontku2">{{ $item["catatan"] }}</td>
+                        <td style="page-break-inside: always;" class="fontku2">{{ $item["catatan"] }}</td>
                     @elseif($ket=="keduanya")
-                        <td  class="fontku2">{{ $item["capaian"] }}</td>
+                        <td style="page-break-inside: always;" class="fontku2">{{ $item["capaian"] }}</td>
                     @endif
 
                     @endif
