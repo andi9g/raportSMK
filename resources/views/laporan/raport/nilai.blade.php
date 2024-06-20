@@ -284,7 +284,7 @@
                     }
                 @endphp
                 @if ($item["ket"]=="kejuruan")
-                <tr>
+                <tr style="page-break-inside: avoid;">
                     <td rowspan="{{ $nilai }}" align="center">{{ $loop->iteration }}</td>
                     <td rowspan="{{ $nilai }}">{{ $item["namamapel"] }}</td>
                     <td align="center" rowspan="{{ $nilai }}">{{ $item["nilai"] }}</td>
