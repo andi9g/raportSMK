@@ -443,7 +443,7 @@
 
     <br>
 
-    <div class="" style="page-break-inside: avoid;">
+    <div class="" style="page-break-inside: avoid;margin: 0;padding: 0;">
 
         @if (!($raport->namaraport == "raport uts") && $detail->semester != "ganjil")
 
