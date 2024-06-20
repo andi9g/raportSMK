@@ -284,7 +284,7 @@
                     }
                 @endphp
                 @if ($item["ket"]=="kejuruan")
-                <tr style="page-break-inside: avoid;">
+                <tr style="page-break-before: always;">
                     <td rowspan="{{ $nilai }}" align="center">{{ $loop->iteration }}</td>
                     <td rowspan="{{ $nilai }}">{{ $item["namamapel"] }}</td>
                     <td align="center" rowspan="{{ $nilai }}">{{ $item["nilai"] }}</td>
@@ -296,9 +296,9 @@
                             {{ $item["capaian"] }}
                         </td>
                     @elseif($ket=="catatan")
-                        <td style="page-break-inside: avoid;" class="fontku2">{{ $item["catatan"] }}</td>
+                        <td style="page-break-before: always;" class="fontku2">{{ $item["catatan"] }}</td>
                     @elseif($ket=="keduanya")
-                        <td style="page-break-inside: avoid;" class="fontku2">{{ $item["capaian"] }}</td>
+                        <td style="page-break-before: always;" class="fontku2">{{ $item["capaian"] }}</td>
                     @endif
 
                     @endif
