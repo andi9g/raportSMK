@@ -20,6 +20,9 @@
             width: 50%;
 
         }
+        div {
+            margin: 2px 8px;
+        }
 
         .nama {
             margin:auto 20%;
@@ -200,6 +203,7 @@
                 <tr>
                 <td colspan="4" class="ukuran-judul">A. Kelompok Mata Pelajaran Umum</td>
             </tr>
+
             @foreach ($mapel as $item)
                 @php
                     if ((!empty($item["capaian"])) && (empty($item["catatan"]))) {
@@ -221,41 +225,50 @@
 
                 @if ($item["ket"]=="umum")
                 <tr>
-                    <td rowspan="{{ $nilai }}" align="center">{{ $loop->iteration }}</td>
-                    <td rowspan="{{ $nilai }}">{{ $item["namamapel"] }}</td>
-                    <td align="center" rowspan="{{ $nilai }}">{{ $item["nilai"] }}</td>
+                    <td align="center">{{ $loop->iteration }}</td>
+                    <td>{{ $item["namamapel"] }}</td>
+                    <td align="center">{{ $item["nilai"] }}</td>
+                    <td class="fontku2" style="padding: 0;page-break-inside: avoid;">
+                        <div>
+                            @if ($item["agama"]==true && $item['ketAgama'] != "Islam")
+                            {{ empty($item["catatanAgama"])?'-':$item["catatanAgama"] }}
+                            @else
+                            @if ($ket=="capaian")
+                                {{ $item["capaian"] }}
+                            @elseif($ket=="catatan")
+                                {{ $item["catatan"] }}
+                            @elseif($ket=="keduanya")
+                                {{ $item["capaian"] }}
+                            @endif
 
-                    @if ($item["agama"]==true && $item['ketAgama'] != "Islam")
-                        <td style="page-break-before: always;" class="fontku2">{{ empty($item["catatanAgama"])?'-':$item["catatanAgama"] }}</td>
-                    @else
-                    @if ($ket=="capaian")
-                        <td style="page-break-before: always;" class="fontku2">{{ $item["capaian"] }}</td>
-                    @elseif($ket=="catatan")
-                        <td style="page-break-before: always;" class="fontku2">{{ $item["catatan"] }}</td>
-                    @elseif($ket=="keduanya")
-                        <td style="page-break-before: always;" class="fontku2">{{ $item["capaian"] }}</td>
-                    @endif
+                            @endif
+                        </div>
 
-                    @endif
+                        @if (!empty($item["capaian"]) && !empty($item["catatan"]) )
+                        <hr style="border:0.5px solid grey;margin: 0;padding: 0;margin-top:5px">
+
+                        @endif
+
+                        <div>
+                            @if ($item["agama"]==true && $item['ketAgama'] == "Islam")
+
+
+                            @if ($ket=="keduanya")
+                                {{ $item["catatan"] }}
+                            @endif
+                            @elseif($item["agama"]==false)
+                            @if ($ket=="keduanya")
+                                {{ $item["catatan"] }}
+                            @endif
+                            @endif
+                        </div>
+
+                    </td>
+
+
 
                 </tr>
-                @if ($item["agama"]==true && $item['ketAgama'] == "Islam")
 
-
-                @if ($ket=="keduanya")
-                <tr>
-                    <td style="page-break-before: always;" class="fontku2">{{ $item["catatan"] }}</td>
-                </tr>
-
-                @endif
-                @elseif($item["agama"]==false)
-                @if ($ket=="keduanya")
-                <tr>
-                    <td style="page-break-before: always;" class="fontku2">{{ $item["catatan"] }}</td>
-                </tr>
-
-                @endif
-                @endif
 
 
                 @endif
@@ -278,49 +291,59 @@
                         $ket = "keduanya";
                         $nilai = 2;
                     }
+
                     if($item["agama"]==true && $item['ketAgama'] != "Islam") {
                         $nilai = 1;
-                        // dd($item["catatanAgama"].'error');
+                        // dd($item["ketAgama"].'error');
                     }
                 @endphp
+
                 @if ($item["ket"]=="kejuruan")
-                <tr style="page-break-inside: avoid;">
-                    <td style="page-break-inside: avoid;" rowspan="{{ $nilai }}" align="center">{{ $loop->iteration }}</td>
-                    <td style="page-break-inside: avoid;" rowspan="{{ $nilai }}">{{ $item["namamapel"] }}</td>
-                    <td align="center" style="page-break-inside: avoid;" rowspan="{{ $nilai }}">{{ $item["nilai"] }}</td>
-                    @if ($item["agama"]==true && $item['ketAgama'] != "Islam")
-                        <td style="page-break-inside: avoid;" class="fontku2">{{ empty($item["catatanAgama"])?'-':$item["catatanAgama"] }}</td>
-                    @else
-                    @if ($ket=="capaian")
-                        <td style="page-break-inside: avoid;" class="fontku2">
-                            {{ $item["capaian"] }}
-                        </td>
-                    @elseif($ket=="catatan")
-                        <td style="page-break-inside: avoid;" class="fontku2">{{ $item["catatan"] }}</td>
-                    @elseif($ket=="keduanya")
-                        <td style="page-break-inside: avoid;" class="fontku2">{{ $item["capaian"] }}</td>
-                    @endif
-
-                    @endif
-
-                </tr>
-                @if ($item["agama"]==true && $item['ketAgama'] == "Islam")
-
-
-                @if ($ket=="keduanya")
                 <tr>
-                    <td style="page-break-before: always;" class="fontku2">{{ $item["catatan"] }}</td>
+                    <td align="center">{{ $loop->iteration }}</td>
+                    <td>{{ $item["namamapel"] }}</td>
+                    <td align="center">{{ $item["nilai"] }}</td>
+                    <td class="fontku2" style="padding: 0;page-break-inside: avoid;">
+                        <div>
+                            @if ($item["agama"]==true && $item['ketAgama'] != "Islam")
+                            {{ empty($item["catatanAgama"])?'-':$item["catatanAgama"] }}
+                            @else
+                            @if ($ket=="capaian")
+                                {{ $item["capaian"] }}
+                            @elseif($ket=="catatan")
+                                {{ $item["catatan"] }}
+                            @elseif($ket=="keduanya")
+                                {{ $item["capaian"] }}
+                            @endif
+
+                            @endif
+                        </div>
+
+                        @if (!empty($item["capaian"]) && !empty($item["catatan"]) )
+                        <hr style="border:0.5px solid grey;margin: 0;padding: 0;margin-top:5px">
+
+                        @endif
+
+                        <div>
+                            @if ($item["agama"]==true && $item['ketAgama'] == "Islam")
+
+
+                            @if ($ket=="keduanya")
+                                {{ $item["catatan"] }}
+                            @endif
+                            @elseif($item["agama"]==false)
+                            @if ($ket=="keduanya")
+                                {{ $item["catatan"] }}
+                            @endif
+                            @endif
+                        </div>
+
+                    </td>
+
+
+
                 </tr>
 
-                @endif
-                @elseif($item["agama"]==false)
-                @if ($ket=="keduanya")
-                <tr>
-                    <td style="page-break-before: always;" class="fontku2">{{ $item["catatan"] }}</td>
-                </tr>
-
-                @endif
-                @endif
 
 
                 @endif
