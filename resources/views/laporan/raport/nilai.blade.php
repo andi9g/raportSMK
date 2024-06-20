@@ -285,8 +285,8 @@
                 @endphp
                 @if ($item["ket"]=="kejuruan")
                 <tr style="page-break-inside: avoid;">
-                    <td rowspan="{{ $nilai }}" align="center">{{ $loop->iteration }}</td>
-                    <td rowspan="{{ $nilai }}">{{ $item["namamapel"] }}</td>
+                    <td style="page-break-inside: avoid;" rowspan="{{ $nilai }}" align="center">{{ $loop->iteration }}</td>
+                    <td style="page-break-inside: avoid;" rowspan="{{ $nilai }}">{{ $item["namamapel"] }}</td>
                     <td align="center" style="page-break-inside: avoid;" rowspan="{{ $nilai }}">{{ $item["nilai"] }}</td>
                     @if ($item["agama"]==true && $item['ketAgama'] != "Islam")
                         <td style="page-break-inside: avoid;" class="fontku2">{{ empty($item["catatanAgama"])?'-':$item["catatanAgama"] }}</td>
