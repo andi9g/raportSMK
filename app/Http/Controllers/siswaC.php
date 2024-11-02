@@ -19,14 +19,22 @@ class siswaC extends Controller
      */
     public function index(Request $request)
     {
+        $idkelas = empty($request->kelas)?"":$request->kelas;
         $keyword = empty($request->keyword)?"":$request->keyword;
         $siswa = siswaM::where("nama", "like", "%$keyword%")
+        ->whereHas("kelas", function ($query) use ($idkelas){
+            if (!empty($idkelas)) {
+                $query->where("namakelas", $idkelas);
+            }
+        })
         ->orderBy("idjurusan", "ASC")
         ->orderBy("nama", "asc")
         ->paginate(15);
 
         $kelas = kelasM::get();
         $jurusan = jurusanM::get();
+
+        // $idkelas = $request->idkelas;
 
         $siswa->appends($request->all());
 
@@ -35,6 +43,7 @@ class siswaC extends Controller
             "siswa" => $siswa,
             "kelas" => $kelas,
             "jurusan" => $jurusan,
+            "idkelas" => $idkelas,
         ]);
     }
 

@@ -1,5 +1,5 @@
 @php
-    $posisi = empty(Auth::user()->identitas->posisi)?"":Auth::user()->identitas->posisi; 
+    $posisi = empty(Auth::user()->identitas->posisi)?"":Auth::user()->identitas->posisi;
 
 @endphp
 <!DOCTYPE html>
@@ -192,14 +192,24 @@
             </a>
           </li>
 
-          
-            
+
+
           <li class="nav-item">
             <hr class="bg-secondary">
           </li>
           @endif
-          
-         
+
+          @if ($posisi == "walikelas")
+          <li class="nav-item">
+            <a href="{{ url('kelolasiswa', []) }}" class="nav-link @yield('kelolasiswa')">
+              <i class="nav-icon fas fa-users"></i>
+              <p>
+                Data Siswa
+              </p>
+            </a>
+          </li>
+          @endif
+
           <li class="nav-item">
             <a href="{{ url('raport', []) }}" class="nav-link @yield('warnaraport')">
               <i class="nav-icon fas fa-book"></i>
@@ -221,9 +231,31 @@
 
           @if ($posisi == "admin")
             <li class="nav-item">
+                <hr class="bg-secondary">
+            </li>
+
+            <li class="nav-item">
+                <a href="{{ url('walikelasAdmin', []) }}" class="nav-link @yield('walikelasAdmin')">
+                  <i class="nav-icon fas fa-users"></i>
+                  <p>
+                    Wali Kelas
+                  </p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="{{ url('kenaikankelas', []) }}" class="nav-link @yield('kenaikankelasActive')">
+                  <i class="nav-icon fas fa-arrow-up"></i>
+                  <p>
+                    Kenaikan Kelas
+                  </p>
+                </a>
+              </li>
+
+            <li class="nav-item">
               <hr class="bg-secondary">
             </li>
-            
+
             <li class="nav-item">
               <a href="#" class="nav-link @yield('warnapengaturan')">
                   <i class="nav-icon fas fa-wrench"></i>
@@ -246,7 +278,7 @@
                         <p>Extrakulikuler</p>
                     </a>
                 </li>
-                  
+
               </ul>
           </li>
           @endif

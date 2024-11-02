@@ -40,7 +40,7 @@
                 </div>
                 <form action="{{ route('siswa.store') }}" method="post">
                     @csrf
-                
+
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="nisn">NISN</label>
@@ -65,7 +65,7 @@
                             <select id="kelas" class="form-control" name="idkelas">
                                 @foreach ($kelas as $i)
                                 <option value="{{ $i->idkelas }}">{{ $i->namakelas }}</option>
-                                    
+
                                 @endforeach
                             </select>
                         </div>
@@ -75,7 +75,7 @@
                             <select id="jurusan" class="form-control" name="idjurusan">
                                 @foreach ($jurusan as $i)
                                 <option value="{{ $i->idjurusan }}">{{ $i->jurusan }}</option>
-                                    
+
                                 @endforeach
                             </select>
                         </div>
@@ -99,19 +99,19 @@
                                 @php
                                     $agama = [
                                         "Islam",
-                                        "Kristen Protestan", 
-                                        "Kristen Katolik", 
-                                        "Hindu", 
-                                        "Buddha", 
+                                        "Kristen Protestan",
+                                        "Kristen Katolik",
+                                        "Hindu",
+                                        "Buddha",
                                         "Khonghucu"
                                     ];
-                                @endphp 
+                                @endphp
                                 @foreach ($agama as $a)
                                     <option value="{{ $a }}" >{{ $a }}</option>
                                 @endforeach
                             </select>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="namaayah">Nama Ayah</label>
                             <input id="namaayah" class="form-control" type="text"  name="namaayah">
@@ -203,23 +203,41 @@
         <div class="card card-outline card-secondary">
             <div class="card-header">
                 <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-4">
                         <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#tambahsiswa">Tambah Siswa</button>
 
                         <button class="btn btn-secondary" type="button" data-toggle="modal" data-target="#import">Import</button>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-8">
                         <form action="{{ url()->current() }}">
-                            <div class="input-group">
-                                <input class="form-control" type="text" name="keyword" placeholder="cari nama" aria-label="cari nama siswa" aria-describedby="cari" value="{{ $keyword }}">
-                                <div class="input-group-append">
-                                    <button type="submit" class="input-group-text" id="cari">
-                                        <i class="fa fa-search"></i> Cari
-                                    </button >
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class='form-group'>
+                                    <select name='kelas' id='forkelas' onchange="submit()" class='form-control'>
+                                        <option value="">Semua Kelas</option>
+                                        @foreach ($kelas as $item)
+                                            <option value="{{ $item->namakelas }}" @if ($idkelas == $item->namakelas)
+                                                selected
+                                            @endif>{{ $item->namakelas }}</option>
+                                        @endforeach
+                                    <select>
                                 </div>
                             </div>
-                        
-                        </form>
+                            <div class="col-md-6">
+
+                                    <div class="input-group">
+                                        <input class="form-control" type="text" name="keyword" placeholder="cari nama" aria-label="cari nama siswa" aria-describedby="cari" value="{{ $keyword }}">
+                                        <div class="input-group-append">
+                                            <button type="submit" class="input-group-text" id="cari">
+                                                <i class="fa fa-search"></i> Cari
+                                            </button >
+                                        </div>
+                                    </div>
+
+                            </div>
+
+                        </div>
+                    </form>
                     </div>
                 </div>
             </div>
@@ -240,7 +258,7 @@
                                 <td width="5px">{{ $loop->iteration + $siswa->firstItem() - 1 }}</td>
                                 <td>{{ $item->nama }}</td>
                                 <td>{{ $item->kelas->namakelas." ".$item->jurusan->jurusan }}</td>
-                                
+
 
                                 <td>
                                     <form action="{{ route('siswa.destroy', [$item->idsiswa]) }}" method="post" class="d-inline">
@@ -250,19 +268,19 @@
                                             <i class="fa fa-trash"></i>Hapus
                                         </button>
                                     </form>
-                                    
+
 
                                     <button class="badge border-0 py-1 px-2 badge-primary text-center" type="button" data-toggle="modal" data-target="#edit{{ $item->idsiswa }}">
                                         <i class="fa fa-edit"></i>
                                         Ubah
                                     </button>
 
-                                   
+
                                 </td>
                             </tr>
 
-                            
-                                
+
+
                             @endforeach
                         </tbody>
                     </table>
@@ -275,11 +293,11 @@
                 </div>
             </div>
         </div>
-        
+
     </div>
 
     @foreach ($siswa as $item)
-    
+
         <div id="edit{{ $item->idsiswa }}" class="modal fade" tabindex="-99999" role="dialog" aria-labelledby="editsiswa" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -292,7 +310,7 @@
                     <form action="{{ route('siswa.update', [$item->idsiswa]) }}" method="post">
                         @csrf
                         @method("PUT")
-                    
+
                         <div class="modal-body">
                             <div class="form-group">
                                 <label for="nisn">NISN</label>
@@ -314,11 +332,11 @@
                                     <option value="{{ $i->idkelas }}" @if ($item->idkelas == $i->idkelas)
                                         selected
                                     @endif>{{ $i->namakelas }}</option>
-                                        
+
                                     @endforeach
                                 </select>
                             </div>
-    
+
                             <div class="form-group">
                                 <label for="jurusan">jurusan</label>
                                 <select id="jurusan" class="form-control" name="idjurusan">
@@ -326,7 +344,7 @@
                                     <option value="{{ $i->idjurusan }}" @if ($item->idjurusan == $i->idjurusan)
                                         selected
                                     @endif>{{ $i->jurusan }}</option>
-                                        
+
                                     @endforeach
                                 </select>
                             </div>
@@ -359,13 +377,13 @@
                                     @php
                                         $agama = [
                                             "Islam",
-                                            "Kristen Protestan", 
-                                            "Kristen Katolik", 
-                                            "Hindu", 
-                                            "Buddha", 
+                                            "Kristen Protestan",
+                                            "Kristen Katolik",
+                                            "Hindu",
+                                            "Buddha",
                                             "Khonghucu"
                                         ];
-                                    @endphp 
+                                    @endphp
                                     @foreach ($agama as $a)
                                         <option value="{{ $a }}" @if ($item->agama == $a)
                                             selected
@@ -373,7 +391,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label for="namaayah">Nama Ayah</label>
                                 <input id="namaayah" class="form-control" type="text" value="{{ $item->namaayah }}" name="namaayah">

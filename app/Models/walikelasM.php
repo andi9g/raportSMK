@@ -24,10 +24,10 @@ class walikelasM extends Model
 
     public function identitas()
     {
-        return $this->hasOne(identitasM::class, "ididentitas", "ididentitas");
+        return $this->belongsTo(identitasM::class, "ididentitas", "ididentitas");
     }
 
-    
+
 
 
 }

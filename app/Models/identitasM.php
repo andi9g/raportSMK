@@ -22,7 +22,7 @@ class identitasM extends Model
 
     public function user()
     {
-        return $this->hasOne(User::class, "iduser", "iduser");
+        return $this->belongsTo(User::class, "iduser", "iduser");
     }
 
 }

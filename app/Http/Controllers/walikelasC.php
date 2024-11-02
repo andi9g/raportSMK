@@ -8,8 +8,7 @@ use App\Models\identitasM;
 use App\Models\User;
 use App\Models\jurusanM;
 use App\Models\kelasM;
-use Auth;
-
+use Illuminate\Support\Facades\Auth;
 
 class walikelasC extends Controller
 {
@@ -44,4 +43,4 @@ class walikelasC extends Controller
         return redirect('home')->with("welcome");
     }
 }
-   
+

@@ -14,15 +14,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/', function(){
-    return redirect('login');
-});
+
 
 // Route::get('pdf', 'startController@pdf');
 
 // Route::get('siswa/export/', 'startController@export');
 
+Route::get('/', function(){
+    return redirect('login');
+});
+
 Auth::routes();
+
 
 Route::middleware(['auth'])->group(function () {
     //ubah passsword
@@ -38,6 +41,13 @@ Route::middleware(['GerbangIdentitas', 'GerbangCekWaliKelas'])->group(function (
 
 
     Route::middleware(['GerbangAdmin'])->group(function () {
+
+        //kenaikan kelas
+        Route::resource("kenaikankelas", "kenaikankelasC");
+
+        //walikelas
+        Route::resource('walikelasAdmin', "walikelasAC");
+
         //pengaturan p5
         Route::resource('pengaturanp5', "pengaturanp5C");
         Route::resource('kordinator', "kordinatorp5C");
@@ -133,6 +143,9 @@ Route::middleware(['GerbangIdentitas', 'GerbangCekWaliKelas'])->group(function (
 
     //Menu_cetakraport
     Route::middleware(['GerbangWalikelas'])->group(function () {
+        //kelola siswa
+        Route::resource('kelolasiswa', "kelolasiswaC");
+
         Route::get("cetakraport/{iddetailraport}", "cetakraportC@index")->name("raport.view");
         Route::get("cetak/{idsiswa}/cover", "cetakraportC@cover")->name("cetak.cover");
         Route::get("cetak/{idsiswa}/nilai/{iddetailraport}", "cetakraportC@nilai")->name("cetak.nilai");
