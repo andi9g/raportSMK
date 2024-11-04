@@ -11,6 +11,7 @@
                 <div class="row mb-2">
                     <div class="col-md-8"></div>
                     <div class="col-md-4">
+                        <form action="{{ url()->current() }}">
                         <div class="input-group">
                             <input class="form-control" type="text" name="keyword" placeholder="masukan nama" aria-label="masukan nama" aria-describedby="keyword">
                             <div class="input-group-append">
@@ -19,6 +20,7 @@
                                 </button>
                             </div>
                         </div>
+                        </form>
                     </div>
                 </div>
 
