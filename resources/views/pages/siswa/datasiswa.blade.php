@@ -211,7 +211,7 @@
                     <div class="col-md-8">
                         <form action="{{ url()->current() }}">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class='form-group'>
                                     <select name='kelas' id='forkelas' onchange="submit()" class='form-control'>
                                         <option value="">Semua Kelas</option>
@@ -219,6 +219,18 @@
                                             <option value="{{ $item->namakelas }}" @if ($idkelas == $item->namakelas)
                                                 selected
                                             @endif>{{ $item->namakelas }}</option>
+                                        @endforeach
+                                    <select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class='form-group'>
+                                    <select name='keyjurusan' id='forkeyjurusan' onchange="submit()" class='form-control'>
+                                        <option value="">Semua Kelas</option>
+                                        @foreach ($jurusan as $item)
+                                            <option value="{{ $item->namajurusan }}" @if ($keyjurusan == $item->namajurusan)
+                                                selected
+                                            @endif>{{ $item->namajurusan }}</option>
                                         @endforeach
                                     <select>
                                 </div>

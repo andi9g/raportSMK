@@ -21,10 +21,16 @@ class siswaC extends Controller
     {
         $idkelas = empty($request->kelas)?"":$request->kelas;
         $keyword = empty($request->keyword)?"":$request->keyword;
+        $keyjurusan = empty($request->keyjurusan)?"":$request->keyjurusan;
         $siswa = siswaM::where("nama", "like", "%$keyword%")
         ->whereHas("kelas", function ($query) use ($idkelas){
             if (!empty($idkelas)) {
                 $query->where("namakelas", $idkelas);
+            }
+        })
+        ->whereHas("jurusan", function ($query) use ($keyjurusan){
+            if (!empty($keyjurusan)) {
+                $query->where("jurusan", $keyjurusan);
             }
         })
         ->orderBy("idjurusan", "ASC")
@@ -44,6 +50,7 @@ class siswaC extends Controller
             "kelas" => $kelas,
             "jurusan" => $jurusan,
             "idkelas" => $idkelas,
+            "keyjurusan" => $keyjurusan,
         ]);
     }
 
