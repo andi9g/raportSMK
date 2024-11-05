@@ -226,7 +226,7 @@
                             <div class="col-md-3">
                                 <div class='form-group'>
                                     <select name='keyjurusan' id='forkeyjurusan' onchange="submit()" class='form-control'>
-                                        <option value="">Semua Kelas</option>
+                                        <option value="">Semua Jurusan</option>
                                         @foreach ($jurusan as $item)
                                             <option value="{{ $item->jurusan }}" @if ($keyjurusan == $item->jurusan)
                                                 selected
