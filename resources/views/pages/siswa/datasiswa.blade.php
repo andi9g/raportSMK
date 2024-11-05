@@ -228,9 +228,9 @@
                                     <select name='keyjurusan' id='forkeyjurusan' onchange="submit()" class='form-control'>
                                         <option value="">Semua Kelas</option>
                                         @foreach ($jurusan as $item)
-                                            <option value="{{ $item->namajurusan }}" @if ($keyjurusan == $item->namajurusan)
+                                            <option value="{{ $item->jurusan }}" @if ($keyjurusan == $item->jurusan)
                                                 selected
-                                            @endif>{{ $item->namajurusan }}</option>
+                                            @endif>{{ $item->jurusan }}</option>
                                         @endforeach
                                     <select>
                                 </div>
