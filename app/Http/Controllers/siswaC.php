@@ -33,7 +33,7 @@ class siswaC extends Controller
                 $query->where("jurusan", $keyjurusan);
             }
         })
-        ->orderBy("idjurusan", "ASC")
+        ->orderBy("nama", "ASC")
         ->orderBy("nama", "asc")
         ->paginate(15);
 
