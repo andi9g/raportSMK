@@ -40,7 +40,7 @@ class siswaC extends Controller
 
         siswaM::where("idkelas", 2)
         ->where("created_at", "like", "2023-10%")
-        ->update("idkelas", 3);
+        ->update(["idkelas" => 3]);
 
         $kelas = kelasM::get();
         $jurusan = jurusanM::get();
