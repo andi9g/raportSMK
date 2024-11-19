@@ -271,7 +271,6 @@
                                 <td width="5px">{{ $loop->iteration + $siswa->firstItem() - 1 }}</td>
                                 <td>{{ $item->nama }}</td>
                                 <td>{{ $item->kelas->namakelas." ".$item->jurusan->jurusan }}</td>
-                                <td>{{ $item->created_at }}</td>
 
                                 <td>
                                     <form action="{{ route('siswa.destroy', [$item->idsiswa]) }}" method="post" class="d-inline">

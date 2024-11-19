@@ -33,19 +33,9 @@ class siswaC extends Controller
                 $query->where("jurusan", $keyjurusan);
             }
         })
-        // ->where("created_at", "like", "2023-10%")
         ->orderBy("nama", "ASC")
         ->orderBy("nama", "asc")
         ->paginate(15);
-
-        siswaM::where("idkelas", 3)
-        ->update(["idkelas" => 10]);
-
-        siswaM::where("idkelas", 2)
-        ->update(["idkelas" => 3]);
-
-        siswaM::where("idkelas", 10)
-        ->update(["idkelas" => 2]);
 
         $kelas = kelasM::get();
         $jurusan = jurusanM::get();
