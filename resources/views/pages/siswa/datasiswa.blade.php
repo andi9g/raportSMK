@@ -261,7 +261,6 @@
                             <th>No</th>
                             <th>Nama Siswa</th>
                             <th>Rombel</th>
-                            <th>tanggal</th>
                             <th>Aksi</th>
                         </thead>
 
