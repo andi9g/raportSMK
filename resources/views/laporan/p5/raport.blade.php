@@ -92,7 +92,7 @@
 
         body {
             font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-            margin-top: 120px;
+            /* margin-top: 120px; */
         }
 
         .justify {
@@ -101,18 +101,18 @@
         .text-bold {
             font-weight: bold;
         }
-        header {
+        /* header {
             position: fixed;
             top: 0;
             left: 0px;
             right: 0px;
             height: 50px;
-        }
+        } */
 
     </style>
 </head>
 <body>
-    <header>
+
         <table width="100%" class="myfont tableku" style="margin: -13px auto">
             <tr>
                 <td>
@@ -186,7 +186,7 @@
             </tr>
         </table>
 
-    </header>
+
 
     @php
         $bilangan = ["nomor", "satu", "dua", "tiga", "empat", "lima", "enam", "tujuh", "delapan", "sembilan", "sepuluh"];
@@ -349,7 +349,6 @@
         </tr>
     </table>
 
-    <br>
     <table width="100%">
         <tr>
             <td style="page-break-before: always;">

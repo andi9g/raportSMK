@@ -31,7 +31,7 @@ KELOLA {{ strtoupper($judul) }}
                             @endforeach
                         </select>
                     </div>
-    
+
                     <div class="form-group">
                         <label>Mata Pelajaran</label>
                         <select required name="idmapel" class="form-control select2mapel" style="width: 100%;">
@@ -41,7 +41,7 @@ KELOLA {{ strtoupper($judul) }}
                             @endforeach
                         </select>
                     </div>
-    
+
                     <div class="form-group">
                         <label>Mata Pelajaran</label>
                         <select required name="idjurusan" class="form-control select2jurusan" style="width: 100%;">
@@ -72,7 +72,7 @@ KELOLA {{ strtoupper($judul) }}
                         <span class="fa-tras"></span>
                         <b>Tambah Data</b>
                     </button>
-                </div>    
+                </div>
                 <div class="col-md-4">
                     <form action="{{ url()->current() }}">
                         <div class="input-group">
@@ -83,10 +83,10 @@ KELOLA {{ strtoupper($judul) }}
                                 </button >
                             </div>
                         </div>
-                    
+
                     </form>
                 </div>
-            </div>        
+            </div>
 
         </div>
 
@@ -138,8 +138,8 @@ KELOLA {{ strtoupper($judul) }}
 
                                         <br>
 
-                                        
-                                        
+
+
                                     </p>
                                     <p>Jika menekan tombol setuju maka semua penilaian di dalamnya akan hilang.</p>
                                 </div>
@@ -159,7 +159,7 @@ KELOLA {{ strtoupper($judul) }}
                             </div>
                         </div>
                     </div>
-                        
+
                     @endforeach
                 </tbody>
             </table>

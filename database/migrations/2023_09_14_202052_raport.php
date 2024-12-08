@@ -43,7 +43,7 @@ class Raport extends Migration
         Schema::create('mapel', function (Blueprint $table) {
             $table->bigIncrements('idmapel');
             $table->string("namamapel");
-            $table->enum("ket", ["umum", "kejuruan"]);
+            $table->enum("ket", ["umum", "kejuruan", "pilihan"]);
             $table->timestamps();
         });
 

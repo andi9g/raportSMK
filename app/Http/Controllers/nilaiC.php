@@ -11,8 +11,11 @@ use App\Models\detailraportM;
 use App\Models\catatanM;
 use App\Models\ujianM;
 use App\Models\kehadiranM;
+use App\Models\kelasM;
 use Illuminate\Http\Request;
-use Auth;
+use Illuminate\Support\Facades\Auth;
+
+// use Auth;
 
 class nilaiC extends Controller
 {
@@ -28,7 +31,7 @@ class nilaiC extends Controller
             $detailraport = detailraportM::join("raport", "raport.idraport", "detailraport.idraport")
             ->join("mapel", "mapel.idmapel", "detailraport.idmapel")
             ->where("detailraport.iddetailraport", $iddetailraport)
-            ->select("detailraport.*", "raport.namaraport", "mapel.namamapel", "mapel.idmapel")
+            ->select("detailraport.*", "raport.namaraport", "mapel.namamapel", "mapel.idmapel", "mapel.ket")
             ->first();
 
             $idkelas = $detailraport->idkelas;
@@ -42,17 +45,36 @@ class nilaiC extends Controller
             ->where("iduser", $iduser)
             ->get();
 
+            $datakelas = kelasM::get();
+
             $jmlelemen = elemenM::where("iddetailraport", $iddetailraport)
             ->where("iduser", $iduser)
             ->get();
 
             $keyword = empty($request->keyword)?"":$request->keyword;
+            $kelas = empty($request->kelas)?"":$request->kelas;
 
-            $siswa = siswaM::where("idjurusan", $idjurusan)
-            ->where("idkelas", $idkelas)
-            ->where("nama", "like", "%$keyword%")
-            ->orderBy("nama", "asc")
-            ->get();
+            if($detailraport->ket == "pilihan") {
+                $siswa = siswaM::where("idjurusan", $idjurusan)
+                // ->where("idkelas", $idkelas)
+                ->whereHas("kelas", function ($query) use ($kelas) {
+                    if(!empty($kelas)) {
+                        $query->where("namakelas", $kelas);
+                    }
+                })
+                ->where("nama", "like", "%$keyword%")
+                ->orderBy("nama", "asc")
+                ->paginate(10);
+
+            }else {
+                $siswa = siswaM::where("idjurusan", $idjurusan)
+                ->where("idkelas", $idkelas)
+                ->where("nama", "like", "%$keyword%")
+                ->orderBy("nama", "asc")
+                ->paginate(10);
+            }
+
+            $siswa->appends($request->all());
 
             return view("pages.nilai.nilai", [
                 "iddetailraport" => $iddetailraport,
@@ -65,6 +87,9 @@ class nilaiC extends Controller
                 "elemen" => $elemen,
                 "iduser" => $iduser,
                 "jmlelemen" => $jmlelemen,
+                "kelas" => $kelas,
+                "detailraport" => $detailraport,
+                "datakelas" => $datakelas,
             ]);
 
         } catch (\Throwable $th) {

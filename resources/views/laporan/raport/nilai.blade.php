@@ -298,7 +298,7 @@
                     }
                 @endphp
 
-                @if ($item["ket"]=="kejuruan")
+                @if ($item["ket"]=="kejuruan" || $item["ket"]=="pilihan")
                 <tr>
                     <td align="center">{{ $loop->iteration }}</td>
                     <td>{{ $item["namamapel"] }}</td>

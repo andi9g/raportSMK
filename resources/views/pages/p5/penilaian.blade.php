@@ -119,7 +119,7 @@
                 </div>
 
                 <div class="card-footer">
-                    <a href="{{ url('raportp5', [$idraportp5]) }}" class="btn btn-danger btn-block my-0 rounded-0">Kembali Halaman Sebelumnya</a>
+                    <a href="{{ url('raportp5', [$idraportp5]) }}?page={{ $pages }}" class="btn btn-danger btn-block my-0 rounded-0">Kembali Halaman Sebelumnya</a>
                 </div>
 
             </div>

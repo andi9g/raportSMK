@@ -49,10 +49,10 @@
                                             <button type="submit" class="badge badge-danger border-0 py-1 px-1" onclick="return confirm('Yakin ingin menghapus elemen?')">
                                                 <i class="fa fa-trash"></i>
                                             </button>
-            
+
                                         </form>
 
-                                        
+
                                     </td>
                                 </tr>
                             </table>
@@ -71,7 +71,7 @@
                                 <form action="{{ route('elemen.edit', [$item->idelemen]) }}" method="post">
                                     @csrf
                                     @method('PUT')
-                                
+
                                     <div class="modal-body">
                                         <div class="form-group">
                                             <label for="elemen">Target Pembelajaran</label>
@@ -87,8 +87,8 @@
                     </div>
 
                     @endforeach
-                    
-                    
+
+
                 </div>
             </div>
         </div>
@@ -96,31 +96,52 @@
             <div class="card mt-0">
                 <div class="card-header">
                     <div class="row">
-                        <div class="col-md-8">
+                        <div class="col-md-4">
                             <a class="btn btn-secondary mb-2 px-4" target="_blank" href="{{ route('cetak.detailraport', [$iddetailraport]) }}" >
                                 <b>
-                                    <i class="fa fa-print"></i> 
+                                    <i class="fa fa-print"></i>
                                     Cetak Data</b>
                             </a>
-                        </div>    
-                        <div class="col-md-4">
+                        </div>
+                        <div class="col-md-8">
                             <form action="{{ url()->current() }}">
-                                <div class="input-group">
-                                    <input class="form-control" type="text" name="keyword" placeholder="cari nama" aria-label="cari nama" aria-describedby="cari" value="{{ $keyword }}">
-                                    <div class="input-group-append">
-                                        <button type="submit" class="input-group-text" id="cari">
-                                            <i class="fa fa-search"></i> Cari
-                                        </button >
+                            <div class="row">
+                                <div class="col-md-4">
+                                    @if ($detailraport->ket == "pilihan")
+                                    <div class='form-group my-0 py-0'>
+                                        <select name="kelas" onchange="submit()" class='form-control'>
+                                            <option value=''>Semua Kelas</option>
+                                            @foreach ($datakelas as $dk)
+                                                <option value="{{ $dk->namakelas }}" @if ($dk->namakelas == $kelas)
+                                                    selected
+                                                @endif>{{ $dk->namakelas }}</option>
+                                            @endforeach
+                                        <select>
                                     </div>
+
+                                    @endif
                                 </div>
-                            
+
+                                <div class="col-md-8">
+
+                                    <div class="input-group">
+                                        <input class="form-control" type="text" name="keyword" placeholder="cari nama" aria-label="cari nama" aria-describedby="cari" value="{{ $keyword }}">
+                                        <div class="input-group-append">
+                                            <button type="submit" class="input-group-text" id="cari">
+                                                <i class="fa fa-search"></i> Cari
+                                            </button >
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
                             </form>
                         </div>
-                    </div>        
-        
+                    </div>
+
                 </div>
-        
-                
+
+
                 <div class="card-body mt-0">
                     <div class="table-responsive">
                         <table class="table table-striped table-hover table-bordered m-0 table-sm">
@@ -133,14 +154,14 @@
                                 <th>Ujian</th>
                                 <th>Catatan</th>
                             </thead>
-            
+
                             <tbody>
                                 @foreach ($siswa as $item)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td class="text-bold">{{ strtoupper($item->nama) }}</td>
                                     <td>{{ $item->kelas->namakelas." ".$item->jurusan->jurusan }}</td>
-                                    
+
                                     <td class="text-center">
                                         @php
                                             $catatan = DB::table("catatan")->where("idsiswa", $item->idsiswa)
@@ -156,7 +177,7 @@
                                     </td>
                                     @php
                                         $nilaisiswa = DB::table("nilairaport")->join("elemen", "elemen.idelemen", "nilairaport.idelemen")->where("nilairaport.idsiswa", $item->idsiswa)->where("nilairaport.iddetailraport", $iddetailraport)->count();
-                                        
+
                                         $ujian = DB::table("ujian")->where("idsiswa", $item->idsiswa)
                                         ->where("idraport", $idraport)
                                         ->where("idmapel", $idmapel)
@@ -165,24 +186,24 @@
                                     @if ($ujian==0)
                                         @php
                                             $warnanilai2 = "bg-danger";
-                                        @endphp    
+                                        @endphp
                                     @else
                                         @php
                                             $warnanilai2 = "bg-success";
-                                        @endphp  
+                                        @endphp
                                     @endif
-    
-                                    @if(count($jmlelemen) == $nilaisiswa) 
+
+                                    @if(count($jmlelemen) == $nilaisiswa)
                                         @if (count($jmlelemen) == 0)
                                         @php
                                             $warnanilai1 = "bg-danger";
                                         @endphp
-                                        @else 
+                                        @else
                                             @php
                                                 $warnanilai1 = "bg-success";
                                             @endphp
                                         @endif
-                                    @else 
+                                    @else
                                     @php
                                         $warnanilai1 = "bg-danger";
                                     @endphp
@@ -196,17 +217,20 @@
                                     <td>
                                         <button class="btn btn-warning btn-xs my-0" type="button" data-toggle="modal" data-target="#catatan{{ $item->idsiswa }}"><b>CATATAN</b></button>
                                     </td>
-    
+
                                 </tr>
-                                    
+
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
                 </div>
+                <div class="card-footer">
+                    {{ $siswa->links("vendor.pagination.bootstrap-4") }}
+                </div>
             </div>
         </div>
-        
+
     </div>
 
 </div>
@@ -258,7 +282,7 @@
 
                 <form action="{{ route('nilai.ujian', [$idraport]) }}" method="post">
                     @csrf
-                
+
                 <div class="modal-body">
                     <p class="text-md">
 
@@ -286,8 +310,8 @@
                         <label for="ujianlisan">Nilai Non-Tes</label>
                         <input id="ujianlisan" class="form-control" type="number" onchange="changeHandler(this)" onkeyup="changeHandler(this)" name="nonlisan" value="{{ empty($ujian->nonlisan)?0:$ujian->nonlisan }}">
                     </div>
-                    
-                    
+
+
                 </div>
                 <div class="modal-footer text-right">
                     <button type="submit" class="btn btn-success px-4">
@@ -314,7 +338,7 @@
                     @csrf
                     <div class="modal-body">
                         <input type="text" name="idsiswa" value="{{ $item->idsiswa }}" hidden>
-    
+
                         @foreach ($elemen as $e)
                             @php
                                 $datanilai = DB::table("nilairaport")->where("idelemen", $e->idelemen)
@@ -329,15 +353,15 @@
                                 <label for="inputan{{ $e->idelemen }}" style="font-weight: normal"><i>{{ $e->elemen }}</i></label>
                                 <input id="inputan{{ $e->idelemen }}" class="form-control" type="number" onchange="changeHandler(this)" onkeyup="changeHandler(this)" name="elemen{{ $e->idelemen }}" placeholder="masukan nilai" value="{{$nilai}}">
                             </div>
-    
-                            
+
+
                         @endforeach
-    
+
                     </div>
                     <div class="modal-footer text-right">
                         <button type="submit" class="btn btn-success px-4">
                             <b>
-                                BERI NILAI 
+                                BERI NILAI
                             </b>
                         </button>
                     </div>
@@ -347,7 +371,7 @@
     </div>
 
 
-    
+
     <div id="catatan{{ $item->idsiswa }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">

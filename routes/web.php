@@ -101,7 +101,7 @@ Route::middleware(['GerbangIdentitas', 'GerbangCekWaliKelas'])->group(function (
         Route::put("raportp5/{idraportp5}/ubahproject", "raportp5C@ubahprojectp5")->name("ubah.project.p5");
 
         //NILAI
-        Route::get("raportp5/{idraportp5}/nilai/{nisn}", "raportp5C@formnilai")->name("nilai.raport.p5");
+        Route::get("raportp5/{idraportp5}/nilai/{nisn}/{pages}", "raportp5C@formnilai")->name("nilai.raport.p5");
         Route::post("raportp5/{nisn}/nilai/{idketeranganp5}", "raportp5C@nilai")->name("kirim.nilai.p5");
 
 

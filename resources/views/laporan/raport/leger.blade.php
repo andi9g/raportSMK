@@ -204,7 +204,7 @@
                     @endif
                 @endforeach
                 @foreach ($item["mapel"] as $mapel)
-                    @if ($mapel->mapel->ket == "kejuruan")
+                    @if ($mapel->mapel->ket == "kejuruan" || $mapel->mapel->ket == "pilihan")
                         <th><p class="vertical-th">{{ $mapel->mapel->namamapel }}</p></th>
                     @endif
                 @endforeach

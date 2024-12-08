@@ -50,6 +50,7 @@
                             <select id="ket" class="form-control" name="ket">
                                 <option value="umum">Umum</option>
                                 <option value="kejuruan">Kejuruan</option>
+                                <option value="pilihan">Pilihan</option>
                             </select>
                         </div>
                     </div>
@@ -82,7 +83,7 @@
                                     </button >
                                 </div>
                             </div>
-                        
+
                         </form>
                     </div>
                 </div>
@@ -104,7 +105,7 @@
                                 <td width="5px">{{ $loop->iteration + $mapel->firstItem() - 1 }}</td>
                                 <td>{{ $item->namamapel }}</td>
                                 <td>{{ $item->ket }}</td>
-                                
+
 
                                 <td>
                                     <form action="{{ route('mapel.destroy', [$item->idmapel]) }}" method="post" class="d-inline">
@@ -114,14 +115,14 @@
                                             <i class="fa fa-trash"></i>Hapus
                                         </button>
                                     </form>
-                                    
+
 
                                     <button class="badge border-0 py-1 badge-primary" type="button" data-toggle="modal" data-target="#edit{{ $item->idmapel }}">
                                         <i class="fa fa-edit"></i>
                                         Ubah
                                     </button>
 
-                                   
+
                                 </td>
                             </tr>
 
@@ -151,6 +152,9 @@
                                                         <option value="kejuruan" @if ($item->ket=="kejuruan")
                                                             selected
                                                         @endif>Kejuruan</option>
+                                                        <option value="pilihan" @if ($item->ket=="pilihan")
+                                                            selected
+                                                        @endif>Pilihan</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -163,7 +167,7 @@
                                     </div>
                                 </div>
                             </div>
-                                
+
                             @endforeach
                         </tbody>
                     </table>
@@ -176,7 +180,7 @@
                 </div>
             </div>
         </div>
-        
-    </div>   
+
+    </div>
 
 @endsection

@@ -27,6 +27,8 @@ class raportp5C extends Controller
             $posisi = Auth::user()->identitas->posisi;
             $iduser = Auth::user()->iduser;
 
+            $pages = empty($request->page)?1:$request->page;
+
 
             if($posisi == "admin") {
                 $siswa = siswaM::where("nama", "like", "%$keyword%")
@@ -87,6 +89,7 @@ class raportp5C extends Controller
                 "idraportp5" => $idraportp5,
                 "raportp5" => $raportp5,
                 "totalHitung" => $totalHitung,
+                "pages" => $pages,
             ]);
 
         // }catch(\Throwable $th){
@@ -95,9 +98,11 @@ class raportp5C extends Controller
     }
 
 
-    public function formnilai(Request $request, $idraportp5, $nisn)
+    public function formnilai(Request $request, $idraportp5, $nisn, $pages)
     {
         $nisn = sprintf("%010s", $nisn);
+
+        $pages = empty($pages)?1:$pages;
 
         $siswa = siswaM::where("nisn", $nisn)->first();
 
@@ -112,6 +117,7 @@ class raportp5C extends Controller
             "siswa" => $siswa,
             "temap5" => $temap5,
             "keteranganp5" => $keteranganp5,
+            "pages" => $pages,
         ]);
     }
 

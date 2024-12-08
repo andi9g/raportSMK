@@ -624,7 +624,7 @@ class raportC extends Controller
             ]);
             $pdf->setPaper('a4', 'landscape');
 
-            return $pdf->stream("asdasd.pdf");
+            return $pdf->stream("Leger.pdf");
 
 
 
