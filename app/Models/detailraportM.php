@@ -18,6 +18,11 @@ class detailraportM extends Model
         return $this->hasOne(raportM::class, "idraport", "idraport");
     }
 
+    public function nilairaport()
+    {
+        return $this->hasOne(nilairaportM::class, "iddetailraport", "iddetailraport");
+    }
+
     public function mapel()
     {
         return $this->hasOne(mapelM::class, "idmapel", "idmapel");

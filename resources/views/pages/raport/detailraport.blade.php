@@ -50,7 +50,9 @@ KELOLA {{ strtoupper($judul) }}
                                 <option value="{{ $j->idjurusan }}">[{{ $j->jurusan }}] - {{ $j->namajurusan }}</option>
                             @endforeach
                         </select>
+                        <small><font class="text-red"><i>Jika mapel pilihan silahkan pilih jurusan mapel pilihan</i></font></small>
                     </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-success">TAMBAH DATA</button>
@@ -106,7 +108,9 @@ KELOLA {{ strtoupper($judul) }}
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $item->mapel->namamapel }}</td>
-                        <td>{{ $item->jurusan->jurusan }}</td>
+                        <td>{{ $item->jurusan->jurusan }}
+                            <button class="badge py-1 border-0 badge-info" type="button" data-toggle="modal" data-target="#editjurusandetail{{ $item->iddetailraport }}"><i class="fa fa-edit"></i></button>
+                        </td>
                         <td>{{ $item->kelas->namakelas }}</td>
                         <td>
                             <a href="{{ url('nilairaport', [$item->iddetailraport]) }}" class="btn btn-success btn-block"><b>KELOLA NILAI</b></a>
@@ -123,6 +127,39 @@ KELOLA {{ strtoupper($judul) }}
                             </button>
                         </td>
                     </tr>
+
+                    <div id="editjurusandetail{{ $item->iddetailraport }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title-22222222" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="my-modal-title-22222222">Ubah Jurusan</h5>
+                                    <button class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form action="{{ route('detailraport.ubah.jurusan', [$item->iddetailraport]) }}" method="post">
+                                    @csrf
+                                    <div class="modal-body">
+                                        <div class='form-group'>
+                                            <label for='forjurusan' class='text-capitalize'>Jurusan</label>
+                                            <select name='jurusan' id='forjurusan' class='form-control'>
+                                                <option value=''>Pilih</option>
+                                                @foreach ($jurusan as $jr)
+                                                    <option value="{{ $jr->idjurusan }}" @if ($jr->idjurusan == $item->idjurusan)
+                                                        selected
+                                                    @endif>{{ $jr->jurusan }}</option>
+                                                @endforeach
+                                            <select>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer text-right">
+                                        <button type="submit" class="btn btn-success">Ubah</button>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
 
                     <div id="hapusdetailraport{{ $item->iddetailraport }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="hapusdetailraport{{ $item->iddetailraport }}" aria-hidden="true">
                         <div class="modal-dialog" role="document">

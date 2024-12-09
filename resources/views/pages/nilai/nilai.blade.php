@@ -107,19 +107,19 @@
                             <form action="{{ url()->current() }}">
                             <div class="row">
                                 <div class="col-md-4">
-                                    @if ($detailraport->ket == "pilihan")
+                                    {{-- @if ($detailraport->ket == "pilihan")
                                     <div class='form-group my-0 py-0'>
-                                        <select name="kelas" onchange="submit()" class='form-control'>
-                                            <option value=''>Semua Kelas</option>
-                                            @foreach ($datakelas as $dk)
-                                                <option value="{{ $dk->namakelas }}" @if ($dk->namakelas == $kelas)
+                                        <select name="jurusan" onchange="submit()" class='form-control'>
+                                            <option value=''>Semua Jurusan</option>
+                                            @foreach ($dataJurusan as $dj)
+                                                <option value="{{ $dj->jurusan }}" @if ($dj->jurusan == $jurusan)
                                                     selected
-                                                @endif>{{ $dk->namakelas }}</option>
+                                                @endif>{{ $dj->jurusan }}</option>
                                             @endforeach
                                         <select>
                                     </div>
 
-                                    @endif
+                                    @endif --}}
                                 </div>
 
                                 <div class="col-md-8">

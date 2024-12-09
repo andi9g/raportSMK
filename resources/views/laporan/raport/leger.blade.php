@@ -256,6 +256,10 @@
         </tbody>
 
     </table>
+    <font color="red">
+        <i>Nilai LEGER untuk kelas XI tidak dengan penilaian <b>Mata Pelajaran Pilihan</b></i>
+    </font>
+
 
     <table width="100%">
         <tr>

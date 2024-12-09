@@ -9,6 +9,7 @@ use App\Models\elemenM;
 use App\Models\subelemenM;
 use App\Models\detailraportM;
 use App\Models\catatanM;
+use App\Models\jurusanM;
 use App\Models\ujianM;
 use App\Models\kehadiranM;
 use App\Models\kelasM;
@@ -45,34 +46,21 @@ class nilaiC extends Controller
             ->where("iduser", $iduser)
             ->get();
 
-            $datakelas = kelasM::get();
+            $dataJurusan = jurusanM::get();
 
             $jmlelemen = elemenM::where("iddetailraport", $iddetailraport)
             ->where("iduser", $iduser)
             ->get();
 
             $keyword = empty($request->keyword)?"":$request->keyword;
-            $kelas = empty($request->kelas)?"":$request->kelas;
+            $jurusan = empty($request->jurusan)?"":$request->jurusan;
 
-            if($detailraport->ket == "pilihan") {
-                $siswa = siswaM::where("idjurusan", $idjurusan)
-                // ->where("idkelas", $idkelas)
-                ->whereHas("kelas", function ($query) use ($kelas) {
-                    if(!empty($kelas)) {
-                        $query->where("namakelas", $kelas);
-                    }
-                })
-                ->where("nama", "like", "%$keyword%")
-                ->orderBy("nama", "asc")
-                ->paginate(10);
 
-            }else {
-                $siswa = siswaM::where("idjurusan", $idjurusan)
-                ->where("idkelas", $idkelas)
-                ->where("nama", "like", "%$keyword%")
-                ->orderBy("nama", "asc")
-                ->paginate(10);
-            }
+            $siswa = siswaM::where("idjurusan", $idjurusan)
+            ->where("idkelas", $idkelas)
+            ->where("nama", "like", "%$keyword%")
+            ->orderBy("nama", "asc")
+            ->paginate(10);
 
             $siswa->appends($request->all());
 
@@ -87,9 +75,9 @@ class nilaiC extends Controller
                 "elemen" => $elemen,
                 "iduser" => $iduser,
                 "jmlelemen" => $jmlelemen,
-                "kelas" => $kelas,
+                "jurusan" => $jurusan,
                 "detailraport" => $detailraport,
-                "datakelas" => $datakelas,
+                "dataJurusan" => $dataJurusan,
             ]);
 
         } catch (\Throwable $th) {

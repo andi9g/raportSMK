@@ -207,6 +207,43 @@ class raportC extends Controller
 
     }
 
+    public function ubahjurusan(Request $request, $iddetailraport)
+    {
+        $request->validate([
+            "jurusan" => "required",
+        ]);
+
+        try{
+            $jurusan = $request->jurusan;
+            $data = detailraportM::where("iddetailraport", $iddetailraport)->first();
+            $idmapel = $data->idmapel;
+            $idjurusan = $data->idjurusan;
+            $iduser = $data->iduser;
+            $idraport = $data->idraport;
+
+            $cek = detailraportM::where("idjurusan", $jurusan)
+            ->where("idmapel", $idmapel)
+            ->where("iduser", $iduser)
+            ->where("idraport", $idraport)
+            ->count();
+
+            if($cek == 0) {
+                $data->update([
+                    "idjurusan" => $jurusan,
+                ]);
+                return redirect()->back()->with('success', 'Update Berhasil');
+            }else {
+                return redirect()->back()->with('error', 'Jurusan telah ada');
+            }
+
+
+        }catch(\Throwable $th){
+            return redirect()->back()->with('toast_error', 'Terjadi kesalahan');
+        }
+
+    }
+
+
     public function cetak(Request $request, $iddetailraport)
     {
         try {
@@ -485,6 +522,9 @@ class raportC extends Controller
 
                 $mapel = detailraportM::where("idraport", $idraport)->select("idmapel")
                 ->where("idjurusan", $jur->idjurusan)
+                ->whereHas("mapel", function ($query) {
+                    $query->where("ket", "!=", "pilihan");
+                })
                 ->where('idkelas', $idkelas)->groupBy("idmapel")->get();
 
                 $hasil = [];

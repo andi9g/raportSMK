@@ -27,7 +27,7 @@ class nilairaportM extends Model
     {
         return $this->hasOne(detailraportM::class, "iddetailraport", "iddetailraport");
     }
-    
+
     public function elemen()
     {
         return $this->hasOne(elemenM::class, "idelemen", "idelemen");
