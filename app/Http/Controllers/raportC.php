@@ -243,6 +243,61 @@ class raportC extends Controller
 
     }
 
+    public function duplikat(Request $request, $iddetailraport)
+    {
+        $request->validate([
+            "jurusan" => "required",
+        ]);
+
+        // try{
+            $iduser = Auth::user()->iduser;
+            $jurusan = $request->jurusan;
+            $data = detailraportM::where("iddetailraport", $iddetailraport)->first();
+            $idmapel = $data->idmapel;
+            $idjurusan = $data->idjurusan;
+            $iduser = $data->iduser;
+            $idraport = $data->idraport;
+
+            $elemen = elemenM::where("iddetailraport", $iddetailraport)->get();
+
+
+
+            $cek = detailraportM::where("idjurusan", $jurusan)
+            ->where("idmapel", $idmapel)
+            ->where("iduser", $iduser)
+            ->where("idraport", $idraport)
+            ->count();
+
+            if($cek == 0) {
+                $data = $data->toArray();
+                unset($data["iddetailraport"]);
+                $data["idjurusan"] = $jurusan;
+                $data["iduser"] = $iduser;
+                $new = detailraportM::create($data);
+                $iddetailraport = $new->iddetailraport;
+
+                foreach ($elemen as $e) {
+                    $elm = $e->toArray();
+                    unset($elm["idelemen"]);
+                    $elm["iduser"] = $iduser;
+                    $elm["iddetailraport"] = $iddetailraport;
+
+                    elemenM::create($elm);
+                }
+
+                return redirect()->back()->with('success', 'Update Berhasil');
+            }else {
+                return redirect()->back()->with('error', 'Data sudah ada atau telah di duplikat');
+            }
+
+
+        // }catch(\Throwable $th){
+        //     return redirect()->back()->with('toast_error', 'Terjadi kesalahan');
+        // }
+
+    }
+
+
 
     public function cetak(Request $request, $iddetailraport)
     {

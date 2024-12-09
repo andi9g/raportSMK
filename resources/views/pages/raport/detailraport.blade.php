@@ -125,8 +125,42 @@ KELOLA {{ strtoupper($judul) }}
                             <button class="badge py-1 border-0 w-100 badge-danger" type="button" data-toggle="modal" data-target="#hapusdetailraport{{ $item->iddetailraport }}">
                                 <i class="fa fa-trash"></i>
                             </button>
+                            <button class="badge py-1 border-0 w-100 badge-primary" type="button" data-toggle="modal" data-target="#copydetailraport{{ $item->iddetailraport }}"><i class="fa fa-copy"></i> Duplikat </button>
                         </td>
                     </tr>
+
+                    <div id="copydetailraport{{ $item->iddetailraport }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title-333333" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="my-modal-title-333333">Duplikat Mapel</h5>
+                                    <button class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form action="{{ route('detailraport.ubah.duplikat', [$item->iddetailraport]) }}" method="post">
+                                    @csrf
+                                    <div class="modal-body">
+                                        <div class='form-group'>
+                                            <label for='forjurusan' class='text-capitalize'>Jurusan</label>
+                                            <select name='jurusan' id='forjurusan' class='form-control'>
+                                                <option value=''>Pilih</option>
+                                                @foreach ($jurusan as $jr)
+                                                    <option value="{{ $jr->idjurusan }}" @if ($jr->idjurusan == $item->idjurusan)
+                                                        selected
+                                                    @endif>{{ $jr->jurusan }}</option>
+                                                @endforeach
+                                            <select>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer text-right">
+                                        <button type="submit" class="btn btn-success">Ubah</button>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
 
                     <div id="editjurusandetail{{ $item->iddetailraport }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title-22222222" aria-hidden="true">
                         <div class="modal-dialog" role="document">
