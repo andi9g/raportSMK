@@ -58,6 +58,16 @@
                             <input id="fase" class="form-control text-uppercase" type="text" name="fase" placeholder="contoh: E, F...">
                         </div>
 
+                        <div class='form-group'>
+                            <label for='forkelas' required class='text-capitalize'>Kelas</label>
+                            <select name='idkelas' id='forkelas' class='form-control'>
+                                <option value=''>Pilih</option>
+                                @foreach ($kelas as $k)
+                                    <option value="{{ $k->idkelas }}">{{ $k->namakelas }}</option>
+                                @endforeach
+                            <select>
+                        </div>
+
                         <div class="form-group">
                             <label for="tanggal">Tanggal Penerimaan Raport </label>
                             <input id="tanggal" class="form-control text-uppercase" type="date" name="tanggal" placeholder="">
@@ -198,6 +208,18 @@
                                                         <input id="fase" class="form-control text-uppercase" type="text" name="fase" placeholder="contoh: E, F..." value="{{ $item->fase }}">
                                                     </div>
 
+                                                    <div class='form-group'>
+                                                        <label for='forkelas' required class='text-capitalize'>Kelas</label>
+                                                        <select name='idkelas' id='forkelas' class='form-control'>
+                                                            <option value=''>Pilih</option>
+                                                            @foreach ($kelas as $k)
+                                                                <option value="{{ $k->idkelas }}" @if ($k->idkelas == $item->idkelas)
+                                                                    selected
+                                                                @endif  >{{ $k->namakelas }}</option>
+                                                            @endforeach
+                                                        <select>
+                                                    </div>
+
                                                     <div class="form-group">
                                                         <label for="tanggal">Tanggal Penerimaan Raport </label>
                                                         <input id="tanggal" class="form-control text-uppercase" type="date" name="tanggal" placeholder="" value="{{ $item->tanggal }}">
@@ -223,6 +245,7 @@
                                 <li>SEMESTER {{ strtoupper($item->semester) }}</li>
                                 <li>{{ $item->tahun }}</li>
                                 <li>Fase {{ $item->fase }}</li>
+                                <li>Kelas <b>{{ $item->kelas->namakelas??"NULL" }}</b></li>
                             </ul>
                         </div>
                         <div class="card-footer">

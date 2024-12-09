@@ -12,6 +12,11 @@ class raportM extends Model
     protected $primaryKey = 'idraport';
     protected $guarded = [];
     protected $connection = "mysql";
-    
-    
+
+    public function kelas()
+    {
+        return $this->hasOne(kelasM::class, 'idkelas','idkelas');
+    }
+
+
 }
