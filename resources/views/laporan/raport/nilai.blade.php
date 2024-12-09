@@ -156,7 +156,7 @@
                     <tr>
                         <td valign="top" nowrap>Kelas</td>
                         <td valign="top" width="1px">:&nbsp;&nbsp;</td>
-                        <td valign="top">{{ $siswa->kelas->namakelas." ".$siswa->jurusan->jurusan }}</td>
+                        <td valign="top">{{ $detail->kelas->namakelas." ".$siswa->jurusan->jurusan }}</td>
                     </tr>
                     <tr>
                         <td valign="top" nowrap>Fase</td>
