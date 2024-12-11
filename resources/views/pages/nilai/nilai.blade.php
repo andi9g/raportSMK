@@ -158,7 +158,7 @@
                             <tbody>
                                 @foreach ($siswa as $item)
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $loop->iteration + $siswa->firstItem() - 1 }}</td>
                                     <td class="text-bold">{{ strtoupper($item->nama) }}</td>
                                     <td>{{ $item->kelas->namakelas." ".$item->jurusan->jurusan }}</td>
 
