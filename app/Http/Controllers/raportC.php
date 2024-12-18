@@ -243,6 +243,41 @@ class raportC extends Controller
 
     }
 
+    public function ubahnamamapel(Request $request, $iddetailraport)
+    {
+        $request->validate([
+            "idmapel" => "required",
+        ]);
+
+        try{
+            $idmapel = $request->idmapel;
+            $data = detailraportM::where("iddetailraport", $iddetailraport)->first();
+            $idjurusan = $data->idjurusan;
+            $iduser = $data->iduser;
+            $idraport = $data->idraport;
+
+            $cek = detailraportM::where("idjurusan", $idjurusan)
+            ->where("idmapel", $idmapel)
+            ->where("iduser", $iduser)
+            ->where("idraport", $idraport)
+            ->count();
+
+            if($cek == 0) {
+                $data->update([
+                    "idmapel" => $idmapel,
+                ]);
+                return redirect()->back()->with('success', 'Update Berhasil');
+            }else {
+                return redirect()->back()->with('error', 'Jurusan telah ada');
+            }
+
+
+        }catch(\Throwable $th){
+            return redirect()->back()->with('toast_error', 'Terjadi kesalahan');
+        }
+
+    }
+
     public function duplikat(Request $request, $iddetailraport)
     {
         $request->validate([

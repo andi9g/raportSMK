@@ -107,7 +107,9 @@ KELOLA {{ strtoupper($judul) }}
                     @foreach ($detailraport as $item)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $item->mapel->namamapel }}</td>
+                        <td>{{ $item->mapel->namamapel }}
+                            <button class="badge py-1 border-0 badge-info" type="button" data-toggle="modal" data-target="#editnamamapel{{ $item->iddetailraport }}"><i class="fa fa-edit"></i></button>
+                        </td>
                         <td>{{ $item->jurusan->jurusan }}
                             <button class="badge py-1 border-0 badge-info" type="button" data-toggle="modal" data-target="#editjurusandetail{{ $item->iddetailraport }}"><i class="fa fa-edit"></i></button>
                         </td>
@@ -155,6 +157,40 @@ KELOLA {{ strtoupper($judul) }}
                                     </div>
                                     <div class="modal-footer text-right">
                                         <button type="submit" class="btn btn-success">Ubah</button>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="editnamamapel{{ $item->iddetailraport }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="my-modal-title">Ubah Mapel</h5>
+                                    <button class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form action="{{ route('detailraport.ubah.namamapel', [$item->iddetailraport]) }}" method="post">
+                                    @csrf
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label>Mata Pelajaran</label>
+                                            <select required name="idmapel" class="form-control" style="width: 100%;">
+                                                <option selected disabled><b>PILIH MAPEL</b></option>
+                                                @foreach ($mapel as $m)
+                                                    <option value="{{ $m->idmapel }}" @if ($m->idmapel == $item->idmapel)
+                                                        selected
+                                                    @endif>{{ $m->namamapel }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                    <div class="modal-footer text-left">
+                                        <button type="submit" class="btn btn-danger">YA</button>
                                     </div>
 
                                 </form>

@@ -130,6 +130,7 @@ Route::middleware(['GerbangIdentitas', 'GerbangCekWaliKelas'])->group(function (
     Route::post("detailraport/{iddetailraport}/hapus", "raportC@hapus")->name("hapus.detailraport");
     Route::get("cetak/detailraport/{iddetailraport}", "raportC@cetak")->name("cetak.detailraport");
     Route::post("detailraport/{iddetailraport}/ubah", "raportC@ubahjurusan")->name("detailraport.ubah.jurusan");
+    Route::post("detailraport/{iddetailraport}/ubahnamamapel", "raportC@ubahnamamapel")->name("detailraport.ubah.namamapel");
     Route::post("detailraport/{iddetailraport}/duplikat", "raportC@duplikat")->name("detailraport.ubah.duplikat");
 
     //penilaian
