@@ -140,6 +140,7 @@ Route::middleware(['GerbangIdentitas', 'GerbangCekWaliKelas'])->group(function (
     Route::post("nilaisiswa/{iddetailraport}", "nilaiC@nilai")->name("nilai.siswa");
     Route::post("catatan/{iddetailraport}", "nilaiC@catatan")->name("tambah.catatan");
     Route::post("ujian/{idraport}", "nilaiC@ujian")->name("nilai.ujian");
+    Route::post("hapus/nilairaport", "nilaiC@hapusnilairaport")->name("hapus.nilairaport.siswa");
 
 
 

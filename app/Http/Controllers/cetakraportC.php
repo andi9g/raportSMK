@@ -212,7 +212,6 @@ class cetakraportC extends Controller
 
             if(round($nilai) < 65) {
                 $tidaklolos++;
-
             }
 
 

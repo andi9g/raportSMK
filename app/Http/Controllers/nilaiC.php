@@ -230,6 +230,37 @@ class nilaiC extends Controller
 
     }
 
+    public function hapusnilairaport(Request $request) {
+        try{
+            $iddetailraport = $request->iddetailraport;
+            $idmapel = $request->idmapel;
+            $idsiswa = $request->idsiswa;
+            $idraport = $request->idraport;
+
+            $elemens = elemenM::where("iddetailraport", $iddetailraport)->get();
+
+            foreach ($elemens as $elemen) {
+                nilairaportM::where("iddetailraport", $iddetailraport)
+                ->where("idsiswa", $idsiswa)
+                ->where("idelemen", $elemen->idelemen)->delete();
+            }
+
+            ujianM::where("idsiswa",$idsiswa)
+            ->where("idmapel", $idmapel)
+            ->where("idraport", $idraport)->delete();
+
+            catatanM::where("idsiswa",$idsiswa)
+            ->where("idmapel", $idmapel)
+            ->where("iddetailraport", $iddetailraport)->delete();
+
+
+            return redirect()->back()->with('success', 'Success');
+
+        }catch(\Throwable $th){
+            return redirect()->back()->with('toast_error', 'Terjadi kesalahan');
+        }
+    }
+
 
     public function nilai(Request $request, $iddetailraport)
     {

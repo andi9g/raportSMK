@@ -153,6 +153,7 @@
                                 <th>Nilai</th>
                                 <th>Ujian</th>
                                 <th>Catatan</th>
+                                <th>Hapus</th>
                             </thead>
 
                             <tbody>
@@ -217,6 +218,9 @@
                                     <td>
                                         <button class="btn btn-warning btn-xs my-0" type="button" data-toggle="modal" data-target="#catatan{{ $item->idsiswa }}"><b>CATATAN</b></button>
                                     </td>
+                                    <td class="text-center">
+                                        <button class="badge badge-danger border-0 bagde-btn py-1" type="button" data-toggle="modal" data-target="#hapuspenilaian{{ $item->idsiswa }}"><i class="fa fa-trash"></i></button>
+                                    </td>
 
                                 </tr>
 
@@ -269,6 +273,45 @@
 
 
 @foreach ($siswa as $item)
+
+    <div id="hapuspenilaian{{ $item->idsiswa }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="my-modal-title">Hapus</h5>
+                    <button class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="{{ route('hapus.nilairaport.siswa') }}" method="post">
+                    @csrf
+                    <div class="modal-body text-center">
+                        <input type="text" name="iddetailraport" value="{{ $iddetailraport }}" hidden>
+                        <input type="text" name="idsiswa" value="{{ $item->idsiswa }}" hidden>
+                        <input type="text" name="idmapel" value="{{ $idmapel }}" hidden>
+                        <input type="text" name="idraport" value="{{ $idraport }}" hidden>
+
+                        <div class="text-danger">
+                            <h4 class="my-0 py-0">
+                                Yakin ingin dihapus?
+                            </h4>
+                            <br>
+                            <i>Dengan menekan ya Maka penilaian akan dihapus</i>
+                        </div>
+                    </div>
+                    <div class="modal-footer text-right">
+                        <button class="btn btn-secondary" data-dismiss="modal" aria-label="Close">
+                            Back
+                        </button>
+                        <button class="btn btn-danger text-bold" type="submit">
+                            YA
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
 
     <div id="ujian{{ $item->idsiswa }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="ujian{{ $item->idsiswa }}" aria-hidden="true">
         <div class="modal-dialog" role="document">
