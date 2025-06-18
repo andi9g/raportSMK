@@ -1,3 +1,7 @@
+@php
+    $nomor = ["pertama", "pertama", "kedua", "ketiga", "keempat", "kelima"];
+@endphp
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -158,7 +162,7 @@
                         <tr>
                             <td valign="top" nowrap>Kelas</td>
                             <td valign="top" width="1px">:&nbsp;&nbsp;</td>
-                            <td valign="top">{{ $siswa->kelas->namakelas." ".$siswa->jurusan->jurusan }}</td>
+                            <td valign="top">{{ $detail->kelas->namakelas." ".$siswa->jurusan->jurusan }}</td>
                         </tr>
                         <tr>
                             <td valign="top" nowrap>Fase</td>
@@ -197,7 +201,7 @@
             <td style="padding: 8px 15px">
                 @foreach ($data as $item)
                 <p style="font-weight: bold;">Projek {{ $loop->iteration }} | Tema : {{ $item['tema'] }}</p>
-                <p class="justify">Projek ini adalah projek pertama dikelas {{ $siswa->kelas->namakelas }}. projek ini diharapkan membangun {{ $bilangan[count($item['dimensi'])] }} dimensi Profil Pelajar Pancasila, yakni
+                <p class="justify">Projek ini adalah projek {{ $nomor[$detail->nomor] }} dikelas {{ $detail->kelas->namakelas }}. projek ini diharapkan membangun {{ $bilangan[count($item['dimensi'])] }} dimensi Profil Pelajar Pancasila, yakni
 
                 @foreach ($item['dimensi'] as $d)
                     @php

@@ -10,6 +10,8 @@ use App\Models\subdimensip5M;
 use App\Models\penilaianp5M;
 use App\Models\raportp5M;
 use App\Models\User;
+use App\Models\kelasM;
+use App\Models\jurusanM;
 use App\Models\judulp5M;
 use App\Models\sekolahM;
 use App\Models\siswaM;
@@ -26,6 +28,10 @@ class raportp5C extends Controller
             $keyword = empty($request->keyword)?'':$request->keyword;
             $posisi = Auth::user()->identitas->posisi;
             $iduser = Auth::user()->iduser;
+            $idjurusan = "1";
+            $idkelas = "1";
+
+            $raportp5 = raportp5M::where("idraportp5", $idraportp5)->first();
 
             $pages = empty($request->page)?1:$request->page;
 
@@ -37,6 +43,8 @@ class raportp5C extends Controller
             }else if($posisi == "walikelas"){
                 $idkelas = Auth::user()->identitas->walikelas->idkelas;
                 $idjurusan = Auth::user()->identitas->walikelas->idjurusan;
+
+
 
                 $siswa = siswaM::where("idkelas", $idkelas)
                 ->where("idjurusan", $idjurusan)
@@ -77,7 +85,8 @@ class raportp5C extends Controller
             // $totalHitung = $total->temap5->where("idraportp5", $idraportp5)->first()->dimensip5->subdimensip5->count();
 
             $project = judulp5M::where("idraportp5", $idraportp5)
-            ->where("iduser", $iduser)
+            ->where("idkelas", $raportp5->idkelas)
+            ->where("idjurusan", $idjurusan)
             ->first();
             // dd($project);
 
@@ -198,7 +207,7 @@ class raportp5C extends Controller
             ->first();
 
             $judulp5 = judulp5M::where("idjurusan", $idjurusan)
-            ->where("idkelas", $idkelas)
+            ->where("idkelas", $raportp5->idkelas)
             ->where("idraportp5", $idraportp5)
             ->orderBy("idjudulp5", "desc")
             ->first()->judulp5 ?? "Belum Memiliki Judul";
@@ -333,6 +342,9 @@ class raportp5C extends Controller
         $posisi = Auth::user()->identitas->posisi;
         $iduser = Auth::user()->identitas->iduser;
 
+        $dataKelas = kelasM::get();
+        $dataJurusan = jurusanM::get();
+
         $idkelas = "";
         $idjurusan = "";
         if($posisi == "admin") {
@@ -342,11 +354,15 @@ class raportp5C extends Controller
 
             $idkelas = Auth::user()->identitasp5->idkelas;
             $idjurusan = Auth::user()->identitasp5->idjurusan;
-            $raportp5 = raportp5M::orderBy("idraportp5", 'DESC')->where("ket", "!=", 0)->paginate(15);
+            $raportp5 = raportp5M::orderBy("idraportp5", 'DESC')->where("ket", "!=", 0)
+            ->where("ket", 1)
+            ->get();
         }else if($posisi="walikelas") {
             $idkelas = Auth::user()->identitas->walikelas->idkelas;
             $idjurusan = Auth::user()->identitas->walikelas->idjurusan;
-            $raportp5 = raportp5M::orderBy("idraportp5", 'DESC')->where("ket", "!=", 0)->paginate(15);
+            $raportp5 = raportp5M::orderBy("idraportp5", 'DESC')->where("ket", "!=", 0)
+            ->where("ket", 1)
+            ->get();
         }
 
         return view("pages.p5.raport", [
@@ -355,21 +371,57 @@ class raportp5C extends Controller
             "raportp5" => $raportp5,
             "idkelas" => $idkelas,
             "idjurusan" => $idjurusan,
+
+            "dataKelas" => $dataKelas,
+            "dataJurusan" => $dataJurusan,
         ]);
     }
+
+    public function editraportp5(Request $request, $idraportp5)
+    {
+        $raportp5 = raportp5M::where("idraportp5", $idraportp5)->first();
+
+        $data = $request->only(["tema", "idkelas", "tahun", "nomor", "semester"]);
+        $data["fase"] = ($data["idkelas"]==1)?"E":"F";
+        // dd($data);
+
+        $raportp5->update($data);
+
+        return redirect()->back()->with('success', 'Success');
+
+    }
+    public function openraportp5(Request $request, $idraportp5)
+    {
+        $raportp5 = raportp5M::where("idraportp5", $idraportp5)->first();
+
+        $index = 1;
+        if($raportp5->ket == 1) {
+            $index = 0;
+        }
+
+        $raportp5->update([
+            "ket" => $index,
+        ]);
+
+        return redirect()->back()->with('success', 'Success');
+    }
+
 
     public function tambah(Request $request)
     {
         $request->validate([
             'tahun' => 'required',
             'semester' => 'required',
-            'fase' => 'required',
             'tema' => 'required',
+            'idkelas' => 'required',
+            'nomor' => 'required',
         ]);
 
 
         try{
             $data = $request->all();
+            $data["fase"] = ($data["idkelas"]==1)?"E":"F";
+            dd($data);
 
             raportp5M::create($data);
 

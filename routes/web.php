@@ -91,6 +91,10 @@ Route::middleware(['GerbangIdentitas', 'GerbangCekWaliKelas'])->group(function (
         Route::delete("p5/subdimensip5/{idsubdimensip5}/hapus", "raportp5C@hapussubdimensip5")->name("hapus.subdimensip5");
 
 
+        //fitur baru raport p5
+        Route::post("openraportp5/{idraportp5}", "raportp5C@openraportp5")->name("buka.raportp5");
+        Route::post("editraportp5/{idraportp5}", "raportp5C@editraportp5")->name("edit.raportp5");
+
     });
 
     Route::middleware(['GerbangKordinator'])->group(function () {
@@ -105,8 +109,7 @@ Route::middleware(['GerbangIdentitas', 'GerbangCekWaliKelas'])->group(function (
         Route::post("raportp5/{nisn}/nilai/{idketeranganp5}", "raportp5C@nilai")->name("kirim.nilai.p5");
 
 
-        //cetak
-        Route::get("raportp5/{idraportp5}/cetak/{nisn}", "raportp5C@cetak")->name("cetak.raport.p5");
+
     });
 
     //rapor
@@ -160,6 +163,10 @@ Route::middleware(['GerbangIdentitas', 'GerbangCekWaliKelas'])->group(function (
 
         Route::get("ranking/{idraport}/cetak", "raportC@ranking")->name("ranking.raport");
         Route::get("leger/{idraport}/cetak", "raportC@leger")->name("leger.raport");
+
+
+        //cetak
+        Route::get("raportp5/{idraportp5}/cetak/{nisn}", "raportp5C@cetak")->name("cetak.raport.p5");
 
     });
 
