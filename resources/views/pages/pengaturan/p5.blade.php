@@ -66,7 +66,7 @@
                         <select id="identitas" required class="form-control select2identitas" name="iduser">
                             <option>Pilih Kordinator</option>
                             @foreach ($identitas as $user)
-                                <option value="{{ $user->iduser }}">{{ $user->user->name ?? '-' }}</option>
+                                <option value="{{ $user->iduser }}">{{ $user->user->name ?? 'none' }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -257,7 +257,7 @@
                                                     @foreach ($identitas as $user)
                                                         <option value="{{ $user->iduser }}" @if ($item->iduser == $user->iduser)
                                                             selected
-                                                        @endif>{{ $user->user->name }}</option>
+                                                        @endif>{{ $user->user->name ?? 'none' }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
