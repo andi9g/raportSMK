@@ -20,7 +20,7 @@
                         <label for='forididentitas' class='text-capitalize'>Identitas Guru</label>
                         <select name='ididentitas' id='forididentitas' class='form-control'>
                             @foreach ($identitas as $item)
-                                <option value="{{ $item->ididentitas }}">{{ $item->user->name }}</option>
+                                <option value="{{ $item->ididentitas }}">{{ $item->user->name ?? "-" }}</option>
                             @endforeach
                         <select>
                     </div>
