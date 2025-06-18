@@ -66,7 +66,7 @@
                         <select id="identitas" required class="form-control select2identitas" name="iduser">
                             <option>Pilih Kordinator</option>
                             @foreach ($identitas as $user)
-                                <option value="{{ $user->iduser }}">{{ $user->user->name }}</option>
+                                <option value="{{ $user->iduser }}">{{ $user->user->name ?? '-' }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -90,7 +90,7 @@
                             @endforeach
                         </select>
                     </div>
-                    
+
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-success">Tambah Data Keterangan</button>
@@ -113,7 +113,7 @@
                 <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#tambahketerangan">
                     Tambah Keterangan Penilaian
                 </button>
-    
+
                 <table class="table table-hover table-striped table-sm">
                     <thead>
                         <tr>
@@ -137,12 +137,12 @@
                                      @csrf
                                      @method('DELETE')
                                      <button type='submit' class='badge py-1 badge-danger border-0' onclick="return confirm('Yakin ingin di hapus?')">
-                                         <i class="fa fa-trash"></i> 
+                                         <i class="fa fa-trash"></i>
                                      </button>
                                 </form>
                             </td>
                         </tr>
-                            
+
 
                         <div id="editketeranganp5{{ $item->idketeranganp5 }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title" aria-hidden="true">
                             <div class="modal-dialog" role="document">
@@ -161,12 +161,12 @@
                                                 <label class="text-capitalize" for="inisial">Inisial Keterangan</label>
                                                 <input id="inisial" placeholder="MB" class="form-control" type="text" name="inisialp5" value="{{ $item->inisialp5 }}">
                                             </div>
-                        
+
                                             <div class="form-group">
                                                 <label class="text-capitalize" for="keterangan">keterangan P5</label>
                                                 <input id="keterangan" placeholder="Mulai Berkembang" class="form-control" type="text" name="keteranganp5" value="{{ $item->keteranganp5 }}">
                                             </div>
-                        
+
                                             <div class="form-group">
                                                 <label for="deskripsi">Deskripsi</label>
                                                 <textarea id="deskripsi" class="form-control" name="deskripsi" rows="3" placeholder="Peserta didik mulai mengembangkan kemampuan namun masih belum ajek">{{ $item->deskripsi }}</textarea>
@@ -176,7 +176,7 @@
                                                 <label class="text-capitalize" for="index">Urutan</label>
                                                 <input id="index" class="form-control" type="number" value="{{ $item->index }}"  name="index">
                                             </div>
-                        
+
                                         </div>
                                         <div class="modal-footer">
                                             <button type="submit" class="btn btn-success">Update Data Keterangan</button>
@@ -188,7 +188,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                
+
             </div>
         </div>
     </div>
@@ -205,7 +205,7 @@
                 <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#tambahkordinatorp5">
                     Tambah Kordinator P5
                 </button>
-    
+
                 <table class="table table-hover table-striped table-sm">
                     <thead>
                         <tr>
@@ -230,12 +230,12 @@
                                     @csrf
                                     @method('DELETE')
                                     <button type='submit' class='badge py-1 badge-danger border-0' onclick="return confirm('Yakin ingin di hapus?')">
-                                        <i class="fa fa-trash"></i> 
+                                        <i class="fa fa-trash"></i>
                                     </button>
                                </form>
                             </td>
                         </tr>
-                            
+
 
                         <div id="editidentitasp5{{ $item->ididentitasp5 }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title" aria-hidden="true">
                             <div class="modal-dialog" role="document">
@@ -261,7 +261,7 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                        
+
                                             <div class="form-group">
                                                 <label for="kelas">Kelas</label>
                                                 <select id="kelas" required class="form-control" name="idkelas">
@@ -273,7 +273,7 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                        
+
                                             <div class="form-group">
                                                 <label for="jurusan">jurusan</label>
                                                 <select id="jurusan" required class="form-control" name="idjurusan">
@@ -285,7 +285,7 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                        
+
                                         </div>
                                         <div class="modal-footer">
                                             <button type="submit" class="btn btn-success">Update Data Keterangan</button>
@@ -297,7 +297,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                
+
             </div>
             </div>
 
@@ -317,7 +317,7 @@
 
 
 
-        
+
     </script>
     @foreach ($identitasp5 as $item)
     <script>

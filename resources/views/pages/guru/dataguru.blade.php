@@ -49,7 +49,7 @@
                             <label for="username">Username</label>
                             <input id="username" class="form-control" type="text" name="username">
                         </div>
-    
+
                         <div class="form-group">
                             <label for="password">Password</label>
                             <input id="password" class="form-control" type="password" name="password">
@@ -84,7 +84,7 @@
                                     </button >
                                 </div>
                             </div>
-                        
+
                         </form>
 
                     </div>
@@ -97,6 +97,7 @@
                         <thead>
                             <th>No</th>
                             <th>Nama</th>
+                            <th>Email</th>
                             <th>Username</th>
                             <th>Password</th>
                             <th>Aksi</th>
@@ -107,6 +108,7 @@
                             <tr>
                                 <td width="5px">{{ $loop->iteration + $guru->firstItem() - 1 }}</td>
                                 <td>{{ $item->name }}</td>
+                                <td>{{ $item->identitas->email ?? "-" }}</td>
                                 <td>{{ $item->username }}</td>
                                 <td>
                                     @if (Hash::check("guru2023", $item->password))
@@ -124,7 +126,7 @@
                                             <i class="fa fa-trash"></i>Hapus
                                         </button>
                                     </form>
-                                    
+
 
                                     <button class="badge border-0 py-1 badge-primary" type="button" data-toggle="modal" data-target="#edit{{ $item->iduser }}">
                                         <i class="fa fa-edit"></i>
@@ -171,7 +173,7 @@
                                     </div>
                                 </div>
                             </div>
-                                
+
                             @endforeach
                         </tbody>
                     </table>
@@ -184,7 +186,7 @@
                 </div>
             </div>
         </div>
-        
-    </div>   
+
+    </div>
 
 @endsection
