@@ -25,7 +25,7 @@
                         <select id="identitas" required class="form-control" name="iduser">
                             <option>Pilih Pembina</option>
                             @foreach ($identitas as $user)
-                                <option value="{{ $user->iduser }}">{{ $user->user->name }}</option>
+                                <option value="{{ $user->iduser }}">{{ $user->user->name ?? "noname" }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -42,7 +42,7 @@
                             <option value="khusus">Khusus</option>
                         </select>
                     </div>
-                    
+
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-success">Tambah Data Keterangan</button>
@@ -60,7 +60,7 @@
         <div class="card">
             <div class="card-header">
                 <h4 class="my-0 py-0 text-uppercase text-bold">
-                    Pembina 
+                    Pembina
                 </h4>
             </div>
 
@@ -68,7 +68,7 @@
                 <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#tambahpembinaex">
                     Tambah Pembina
                 </button>
-    
+
                 <table class="table table-hover table-striped table-sm">
                     <thead>
                         <tr>
@@ -95,12 +95,12 @@
                                     @csrf
                                     @method('DELETE')
                                     <button type='submit' class='badge py-1 badge-danger border-0' onclick="return confirm('Yakin ingin di hapus?')">
-                                        <i class="fa fa-trash"></i> 
+                                        <i class="fa fa-trash"></i>
                                     </button>
                                </form>
                             </td>
                         </tr>
-                            
+
 
                         <div id="editidentitas{{ $item->idpembinaex }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title" aria-hidden="true">
                             <div class="modal-dialog" role="document">
@@ -122,11 +122,11 @@
                                                     @foreach ($identitas as $user)
                                                         <option value="{{ $user->iduser }}" @if ($item->iduser == $user->iduser)
                                                             selected
-                                                        @endif>{{ $user->user->name }}</option>
+                                                        @endif>{{ $user->user->name ?? "noname" }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
-                        
+
                                             <div class="form-group">
                                                 <label for="namaex">Nama Extrakulikuler</label>
                                                 <input id="namaex" class="form-control" type="text" placeholder="Pramuka/Paskibra/Music" name="namaex" value="{{ $item->namaex }}">
@@ -143,7 +143,7 @@
                                                     @endif>Khusus</option>
                                                 </select>
                                             </div>
-                        
+
                                         </div>
                                         <div class="modal-footer">
                                             <button type="submit" class="btn btn-success">Update Data Keterangan</button>
@@ -155,7 +155,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                
+
             </div>
             </div>
 
@@ -175,7 +175,7 @@
 
 
 
-        
+
     </script>
     @foreach ($identitas as $item)
     <script>
