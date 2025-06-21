@@ -58,6 +58,10 @@ class raportp5C extends Controller
                         $idkelas = $identitasp5->idkelas;
                         $idjurusan = $identitasp5->idjurusan;
 
+                        if(!($idkelas == $raportp5->idkelas)) {
+                            return redirect('raportp5')->with('warning', 'Maaf, bukan rana anda');
+                        }
+
                         $siswa = siswaM::where("idkelas", $idkelas)
                         ->where("idjurusan", $idjurusan)
                         ->where("nama", "like", "%$keyword%")
@@ -76,6 +80,10 @@ class raportp5C extends Controller
                 $identitasp5 = identitasp5M::where("iduser", Auth::user()->iduser)->first();
                 $idkelas = $identitasp5->idkelas;
                 $idjurusan = $identitasp5->idjurusan;
+
+                if(!($idkelas == $raportp5->idkelas)) {
+                    return redirect('raportp5')->with('warning', 'Maaf, bukan rana anda');
+                }
 
                 $siswa = siswaM::where("idkelas", $idkelas)
                 ->where("idjurusan", $idjurusan)
