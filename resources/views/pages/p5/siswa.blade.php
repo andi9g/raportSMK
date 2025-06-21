@@ -78,7 +78,9 @@
                             <th>Rombel</th>
                             <th>Ket</th>
                             <th>Nilai</th>
-                            @if (!empty(Auth::user()->identitas->walikelas))
+                            @if (!empty($akun->identitas->walikelas) &&
+                            $akun->identitas->walikelas->kelas->idkelas == $idkelas &&
+                            $akun->identitas->walikelas->jurusan->idjurusan == $idjurusan)
                             <th>Cetak</th>
                             @endif
                         </tr>
