@@ -149,6 +149,8 @@ class cetakraportC extends Controller
             //nilai
             $agama = false;
             $agamaData = mapelM::where("namamapel", "like", "%agama%")->get();
+
+
             foreach ($agamaData as $ag) {
                 if($ag->idmapel == $nr->idmapel) {
                     $agama = true;
@@ -159,6 +161,7 @@ class cetakraportC extends Controller
             $n1 = 0;
             $catatanBaik = "";
             $catatanBuruk = "";
+
             foreach ($nilai2 as $nilai) {
                 $n1 = $n1 + $nilai->nilai;
 
@@ -175,6 +178,8 @@ class cetakraportC extends Controller
                         $catatanBaik = $catatanBaik.", ".strtolower($nilai->elemen);
                     }
                 }
+
+
             }
             $catatanBaik = $catatanBaik;
             $catatanBuruk = $catatanBuruk;
@@ -188,7 +193,12 @@ class cetakraportC extends Controller
             ->select("catatan.catatan")->get();
             $catatanAgama = "";
             foreach ($catatan as $cat) {
-                $catatanAgama = ucfirst(strtolower($cat->catatan));
+
+                if($nilai < 70) {
+                    $catatanAgama = "Perlu ditingkatkan dalam ".ucfirst(strtolower($cat->catatan));
+                }else {
+                    $catatanAgama = "Menunjukan penguasaan yang baik dalam ".ucfirst(strtolower($cat->catatan));
+                }
             }
 
             $ujian = ujianM::where("idraport", $idraport)

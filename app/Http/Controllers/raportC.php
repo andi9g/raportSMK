@@ -634,14 +634,18 @@ class raportC extends Controller
                         }else {
                             $umum = $umum + 1;
                         }
+                        $ceknamamapel = $m->mapel->namamapel;
 
                         $idmapel = $m->idmapel;
                         $detailraport = detailraportM::where("idraport", $idraport)->where("idmapel", $m->idmapel)
                         ->where('idjurusan', $jur->idjurusan)
                         ->where('idkelas', $idkelas)
+                        ->orderBy("iddetailraport", "desc")
                         ->get();
                         // dd($detailraport->toArray());
                         $i = 1;
+
+
 
                         $tampung = 0;
                         $tampung2 = [];
@@ -651,6 +655,10 @@ class raportC extends Controller
                             ->where("nilairaport.iddetailraport", $dr->iddetailraport)
                             ->where("nilairaport.idsiswa", $s->idsiswa)
                             ->get();
+
+
+
+
 
                             // dd($nilairaport);
                             foreach ($nilairaport as $n) {
@@ -665,13 +673,20 @@ class raportC extends Controller
 
 
 
+
                         }
+
+
 
                         if($tampung != 0) {
                             $general = round($tampung / count($tampung2));
                         }else {
                             $general = $tampung;
                         }
+
+                        // if($ceknamamapel == "Pendidikan Agama & Budipekerti") {
+                        //     dd($general);
+                        // }
 
 
 

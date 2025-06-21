@@ -110,7 +110,12 @@
                             <td>
                                 <a href="{{ route('nilai.raport.p5', [$idraportp5,$item->nisn, $pages]) }}" class="btn btn-success btn-block btn-sm rounded-0 text-bold">NILAI</a>
                             </td>
-                            @if (!empty(Auth::user()->identitas->walikelas))
+                            @php
+                                $akun = Auth::user();
+                            @endphp
+                            @if (!empty($akun->identitas->walikelas) &&
+                            $akun->identitas->walikelas->kelas->idkelas == $idkelas &&
+                            $akun->identitas->walikelas->jurusan->idjurusan == $idjurusan)
                             <td>
                                     <a href="{{ route('cetak.raport.p5', [$idraportp5,$item->nisn, $pages]) }}" target="_blank" class="btn btn-secondary btn-block btn-sm">
                                         <i class="fa fa-print"></i> CETAK

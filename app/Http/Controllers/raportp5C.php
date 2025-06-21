@@ -43,14 +43,35 @@ class raportp5C extends Controller
             }else if($posisi == "walikelas"){
                 $idkelas = Auth::user()->identitas->walikelas->idkelas;
                 $idjurusan = Auth::user()->identitas->walikelas->idjurusan;
+                $identitasp5 = identitasp5M::where("iduser", Auth::user()->iduser)->first();
 
+                if(!is_null($identitasp5)) {
+                    $idkelas2 = $identitasp5->idkelas;
+                    $idjurusan2 = $identitasp5->idjurusan;
+                    if($idkelas == $idkelas2 && $idjurusan == $idjurusan2) {
+                        $siswa = siswaM::where("idkelas", $idkelas)
+                        ->where("idjurusan", $idjurusan)
+                        ->where("nama", "like", "%$keyword%")
+                        ->orderBy("nama", "asc")
+                        ->paginate(20);
+                    }else {
+                        $idkelas = $identitasp5->idkelas;
+                        $idjurusan = $identitasp5->idjurusan;
 
+                        $siswa = siswaM::where("idkelas", $idkelas)
+                        ->where("idjurusan", $idjurusan)
+                        ->where("nama", "like", "%$keyword%")
+                        ->orderBy("nama", "asc")
+                        ->paginate(20);
+                    }
+                }else {
+                    $siswa = siswaM::where("idkelas", $idkelas)
+                    ->where("idjurusan", $idjurusan)
+                    ->where("nama", "like", "%$keyword%")
+                    ->orderBy("nama", "asc")
+                    ->paginate(20);
 
-                $siswa = siswaM::where("idkelas", $idkelas)
-                ->where("idjurusan", $idjurusan)
-                ->where("nama", "like", "%$keyword%")
-                ->orderBy("nama", "asc")
-                ->paginate(20);
+                }
             }else {
                 $identitasp5 = identitasp5M::where("iduser", Auth::user()->iduser)->first();
                 $idkelas = $identitasp5->idkelas;
@@ -90,6 +111,7 @@ class raportp5C extends Controller
             ->first();
             // dd($project);
 
+            // dd($idkelas);
 
             return view("pages.p5.siswa", [
                 "keyword" => $keyword,
@@ -99,6 +121,9 @@ class raportp5C extends Controller
                 "raportp5" => $raportp5,
                 "totalHitung" => $totalHitung,
                 "pages" => $pages,
+
+                "idkelas" => $idkelas,
+                "idjurusan" => $idjurusan,
             ]);
 
         // }catch(\Throwable $th){
@@ -193,6 +218,7 @@ class raportp5C extends Controller
             ];
 
             }
+
 
 
 
