@@ -191,14 +191,10 @@ class cetakraportC extends Controller
             ->where("catatan.idmapel", $nr->idmapel)
             ->where("catatan.idsiswa", $idsiswa)
             ->select("catatan.catatan")->get();
+
             $catatanAgama = "";
             foreach ($catatan as $cat) {
-
-                if($nilai < 70) {
-                    $catatanAgama = "Perlu ditingkatkan dalam ".ucfirst(strtolower($cat->catatan));
-                }else {
-                    $catatanAgama = "Menunjukan penguasaan yang baik dalam ".ucfirst(strtolower($cat->catatan));
-                }
+                $catatanAgama = ucfirst(strtolower($cat->catatan));
             }
 
             $ujian = ujianM::where("idraport", $idraport)
