@@ -78,9 +78,7 @@
                             <th>Rombel</th>
                             <th>Ket</th>
                             <th>Nilai</th>
-                            @if (!empty($akun->identitas->walikelas) &&
-                            $akun->identitas->walikelas->kelas->idkelas == $idkelas &&
-                            $akun->identitas->walikelas->jurusan->idjurusan == $idjurusan)
+                            @if (!empty($akun->identitas->walikelas))
                             <th>Cetak</th>
                             @endif
                         </tr>
@@ -115,9 +113,7 @@
                             @php
                                 $akun = Auth::user();
                             @endphp
-                            @if (!empty($akun->identitas->walikelas) &&
-                            $akun->identitas->walikelas->kelas->idkelas == $idkelas &&
-                            $akun->identitas->walikelas->jurusan->idjurusan == $idjurusan)
+                            @if (!empty($akun->identitas->walikelas))
                             <td>
                                     <a href="{{ route('cetak.raport.p5', [$idraportp5,$item->nisn, $pages]) }}" target="_blank" class="btn btn-secondary btn-block btn-sm">
                                         <i class="fa fa-print"></i> CETAK
