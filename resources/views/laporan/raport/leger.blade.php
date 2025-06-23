@@ -290,7 +290,7 @@
             <td style="">
                 <br>
                 <p class="pku">
-                    Gunung Kijang, {{ \Carbon\Carbon::parse(date('Y-m-d'))->isoFormat("DD MMMM YY") }} <br>
+                    Gunung Kijang, {{ \Carbon\Carbon::parse(date($raport->tanggal))->isoFormat("DD MMMM YY") }} <br>
                     Wali Kelas {{ $item["kelas"] }} {{ $item["jurusan"] }}
                     <br>
                     <br>

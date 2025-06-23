@@ -766,7 +766,7 @@ class raportC extends Controller
 
             $pdf = PDF::loadView("laporan.raport.leger", [
                 "data" => $output,
-                // "mapel" => $mapel,
+                "raport" => $raport,
                 // "elemen" => $elemen,
             ]);
             $pdf->setPaper('a4', 'landscape');
