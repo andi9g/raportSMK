@@ -213,6 +213,11 @@
 
         <tbody>
             @foreach ($item["data"] as $siswa)
+                @php
+                    $keterangan = "";
+                    $n_umum = 0;
+                    $n_kejuruan = 0;
+                @endphp
                 <tr>
                     <td align="center">
                         {{ $loop->iteration }}
@@ -223,12 +228,20 @@
                     <td>{{ $siswa["nisn"] }}</td>
                     @foreach ($siswa["data"] as $mapel)
                         @if ($mapel["ket"] == "umum")
-                            @if ($mapel['hasil'] < 65)
+                            @if ($mapel['hasil'] < 60)
                             <td align="center" style="color:red">{{ $mapel["hasil"]}}</td>
                             @else
                             <td align="center">{{ $mapel["hasil"]}}</td>
                             @endif
                         @endif
+
+                        @php
+                            if($mapel["ket"] == "umum") {
+                                if($mapel["hasil"] < 60) {
+                                    $n_umum++;
+                                }
+                            }
+                        @endphp
 
                     @endforeach
                     @foreach ($siswa["data"] as $mapel)
@@ -240,14 +253,24 @@
                             @endif
                         @endif
 
+                         @php
+                            if($mapel["ket"] == "kejuruan") {
+                                if($mapel["hasil"] < 65) {
+                                    $n_kejuruan++;
+                                }
+                            }
+                        @endphp
+
                     @endforeach
                     <td align="center">{{ $siswa["jumlahnilai"] }}</td>
                     <td align="center">{{ $siswa["ratarata"] }}</td>
                     <td>
-                        @if ($siswa["ratarata"] > 63)
-                            LULUS
-                        @else
+                        @if ($n_umum >= 3)
                             TIDAK LULUS
+                        @elseif($n_kejuruan > 0)
+                            TIDAK LULUS
+                        @else
+                            LULUS
                         @endif
                     </td>
 

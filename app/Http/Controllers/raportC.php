@@ -731,6 +731,8 @@ class raportC extends Controller
                         "jumlahnilai" => round($jumlahnilai),
                     ];
 
+                    // dd($hasil);
+
 
                 }
 
