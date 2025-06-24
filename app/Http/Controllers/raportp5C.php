@@ -45,37 +45,37 @@ class raportp5C extends Controller
                 $idjurusan = Auth::user()->identitas->walikelas->idjurusan;
                 $identitasp5 = identitasp5M::where("iduser", Auth::user()->iduser)->first();
 
-                if(!is_null($identitasp5)) {
-                    $idkelas2 = $identitasp5->idkelas;
-                    $idjurusan2 = $identitasp5->idjurusan;
-                    if($idkelas == $idkelas2 && $idjurusan == $idjurusan2) {
-                        $siswa = siswaM::where("idkelas", $idkelas)
-                        ->where("idjurusan", $idjurusan)
-                        ->where("nama", "like", "%$keyword%")
-                        ->orderBy("nama", "asc")
-                        ->paginate(20);
-                    }else {
-                        $idkelas = $identitasp5->idkelas;
-                        $idjurusan = $identitasp5->idjurusan;
+                // if(!is_null($identitasp5)) {
+                //     $idkelas2 = $identitasp5->idkelas;
+                //     $idjurusan2 = $identitasp5->idjurusan;
+                //     if($idkelas == $idkelas2 && $idjurusan == $idjurusan2) {
+                //         $siswa = siswaM::where("idkelas", $idkelas)
+                //         ->where("idjurusan", $idjurusan)
+                //         ->where("nama", "like", "%$keyword%")
+                //         ->orderBy("nama", "asc")
+                //         ->paginate(20);
+                //     }else {
+                //         $idkelas = $identitasp5->idkelas;
+                //         $idjurusan = $identitasp5->idjurusan;
 
-                        if(!($idkelas == $raportp5->idkelas)) {
-                            return redirect('raportp5')->with('warning', 'Maaf, bukan rana anda');
-                        }
+                //         if(!($idkelas == $raportp5->idkelas)) {
+                //             return redirect('raportp5')->with('warning', 'Maaf, bukan rana anda');
+                //         }
 
-                        $siswa = siswaM::where("idkelas", $idkelas)
-                        ->where("idjurusan", $idjurusan)
-                        ->where("nama", "like", "%$keyword%")
-                        ->orderBy("nama", "asc")
-                        ->paginate(20);
-                    }
-                }else {
+                //         $siswa = siswaM::where("idkelas", $idkelas)
+                //         ->where("idjurusan", $idjurusan)
+                //         ->where("nama", "like", "%$keyword%")
+                //         ->orderBy("nama", "asc")
+                //         ->paginate(20);
+                //     }
+                // }else {
                     $siswa = siswaM::where("idkelas", $idkelas)
                     ->where("idjurusan", $idjurusan)
                     ->where("nama", "like", "%$keyword%")
                     ->orderBy("nama", "asc")
                     ->paginate(20);
 
-                }
+                // }
             }else {
                 $identitasp5 = identitasp5M::where("iduser", Auth::user()->iduser)->first();
                 $idkelas = $identitasp5->idkelas;
