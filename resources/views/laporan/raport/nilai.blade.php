@@ -462,7 +462,7 @@
                                     <b>
                                         @if ($tidaklolos >= 3 || $tidaklolos2 > 0)
                                         <font style="color:red">
-                                            {{ $tidaklolos2 }}
+                                            TINGGAL KELAS
                                         </font>
                                         @else
                                         <font style="color:green">
