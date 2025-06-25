@@ -220,9 +220,16 @@ class cetakraportC extends Controller
                 }
             }
 
-            if(round($nilai) < 65) {
-                $tidaklolos++;
+            if($nr->mapel->ket == "umum") {
+                if(round($nilai) < 60) {
+                    $tidaklolos++;
+                }
+            }else {
+                if(round($nilai) < 65) {
+                    $tidaklolos++;
+                }
             }
+
 
 
             $mapel[$nr->idmapel] = [
