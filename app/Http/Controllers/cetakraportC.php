@@ -136,6 +136,7 @@ class cetakraportC extends Controller
         // $mapel = [];
         // $guru = "";
         $tidaklolos = 0;
+        $tidaklolos2 = 0;
         foreach ($nilairaport as $nr) {
             $nilai2 = nilairaportM::join("detailraport", "detailraport.iddetailraport", "nilairaport.iddetailraport")
             ->join("mapel", "mapel.idmapel", "detailraport.idmapel")
@@ -226,7 +227,7 @@ class cetakraportC extends Controller
                 }
             }else {
                 if(round($nilai) < 65) {
-                    $tidaklolos++;
+                    $tidaklolos2++;
                 }
             }
 
@@ -240,7 +241,6 @@ class cetakraportC extends Controller
                 "catatan" => $catatanBuruk,
                 "agama" => $agama,
                 "catatanAgama" => $catatanAgama,
-                "ketAgama" => $siswa->agama,
                 "ketAgama" => $siswa->agama,
             ];
 
@@ -262,6 +262,7 @@ class cetakraportC extends Controller
             "mapel" => $mapel,
             "extrakulikuler" => $extrakulikuler,
             "tidaklolos" => $tidaklolos,
+            "tidaklolos2" => $tidaklolos2,
         ]);
 
         return $pdf->stream("cover_".str_replace(" ", "", $siswa->nama).".pdf");

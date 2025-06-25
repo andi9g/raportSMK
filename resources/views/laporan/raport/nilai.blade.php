@@ -460,7 +460,7 @@
                             <td style="padding: 8px auto">
                                 <center>
                                     <b>
-                                        @if ($tidaklolos >= 3)
+                                        @if ($tidaklolos >= 3 || $tidaklolos2 > 0)
                                         <font style="color:red">
                                             TINGGAL KELAS
                                         </font>
