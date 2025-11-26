@@ -21,7 +21,7 @@ class SiswaImport implements ToModel, WithHeadingRow
         $cek = siswaM::where("nisn", $nisn);
 
         $rombel = explode(" ", $row["rombel"]);
-        $kelas = kelasM::where("namakelas", $rombel[0])->first()->idkelas;
+        $kelas = kelasM::where("namakelas", "X")->first()->idkelas;
 
         if($rombel[1] == "TKJ") {
             $jurusan = "TJKT";
