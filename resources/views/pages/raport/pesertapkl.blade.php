@@ -6,7 +6,7 @@
 @section('content')
 @section("header")
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-@livewireStyles
+<livewire:styles />
 @endsection
 
 <div class="container-fluid">
@@ -50,5 +50,5 @@ window.addEventListener('swal', event => {
     });
 });
 </script>
-@livewireScripts
+<livewire:scripts />
 @endsection
