@@ -25,7 +25,8 @@ class siswaC extends Controller
         $siswa = siswaM::where("nama", "like", "%$keyword%")
         ->whereHas("kelas", function ($query) use ($idkelas){
             if (!empty($idkelas)) {
-                $query->where("namakelas", $idkelas);
+                $query->where("namakelas", $idkelas)
+                ->where("idkelas", "!=", 4);
             }
         })
         ->whereHas("jurusan", function ($query) use ($keyjurusan){

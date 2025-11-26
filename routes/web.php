@@ -95,6 +95,30 @@ Route::middleware(['GerbangIdentitas', 'GerbangCekWaliKelas'])->group(function (
         Route::post("openraportp5/{idraportp5}", "raportp5C@openraportp5")->name("buka.raportp5");
         Route::post("editraportp5/{idraportp5}", "raportp5C@editraportp5")->name("edit.raportp5");
 
+
+        //Praktek Kerja Lapangan (PKL)
+        Route::resource('pembimbingpkl', "pembimbingpklC");
+        Route::resource('cppkl', "pengaturanpklC");
+        Route::post("elemencppkl/tambah", "pengaturanpklC@tambahelemen")->name("tambah.elemen");
+        Route::put("elemencppkl/ubah/{idelemencppkl}", "pengaturanpklC@ubahelemen")->name("ubah.elemen");
+        Route::delete("elemencppkl/hapus/{idelemencppkl}", "pengaturanpklC@hapuselemen")->name("hapus.elemen");
+
+        Route::post('raporpkl/tambah', "raporpklC@store")->name("raporpkl.store");
+        Route::put('raporpkl/ubah/{idpkl}', "raporpklC@update")->name("raporpkl.update");
+        Route::delete('raporpkl/hapus/{idpkl}', "raporpklC@destroy")->name("raporpkl.destroy");
+
+        //ttd pkl
+        Route::get("ttdpkl/{idpkl}", "raporpklC@ttd")->name("ttd.pkl");
+        Route::post("ttdpkl/{idpkl}/walikelas/tambah", "raporpklC@tambahwalikelas")->name("tambahttd.walikelas");
+        Route::delete("ttdpkl/{idwalikelaspkl}/walikelas/hapus", "raporpklC@hapuswalikelas")->name("hapusttd.walikelas");
+       
+        Route::post("ttdpkl/{idpkl}/kepalasekolah/tambah", "raporpklC@tambahkepalasekolah")->name("tambahttd.kepalasekolah");
+        Route::delete("ttdpkl/{idkepalasekolahpkl}/kepalasekolah/hapus", "raporpklC@hapuskepalasekolah")->name("hapusttd.kepalasekolah");
+       
+        Route::post("ttdpkl/{idpkl}/kajur/tambah", "raporpklC@tambahkajur")->name("tambahttd.kajur");
+        Route::delete("ttdpkl/{idkajurpkl}/kajur/hapus", "raporpklC@hapuskajur")->name("hapusttd.kajur");
+        
+
     });
 
     Route::middleware(['GerbangKordinator'])->group(function () {
@@ -147,6 +171,10 @@ Route::middleware(['GerbangIdentitas', 'GerbangCekWaliKelas'])->group(function (
     Route::post("hapus/nilairaport", "nilaiC@hapusnilairaport")->name("hapus.nilairaport.siswa");
 
 
+    //raport pkl
+    Route::get('raporpkl', "raporpklC@index")->name("raporpkl.index");
+    Route::get('pesertapkl/{idpkl}', "pesertapklC@index")->name("pesertapkl.index");
+    Route::get('cetakraporpkl/{idpesertapkl}', "pesertapklC@cetak")->name("pesertapkl.cetak");
 
 
     //Menu_cetakraport

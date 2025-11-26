@@ -610,15 +610,19 @@ class raportC extends Controller
                 ->where("idjurusan", $idjurusan)->get();
 
 
-                $mapel = detailraportM::where("idraport", $idraport)->select("idmapel")
-                ->where("idjurusan", $jur->idjurusan)
-                ->whereHas("mapel", function ($query) {
-                    $query->where("ket", "!=", "pilihan");
-                })
-                ->where('idkelas', $idkelas)->groupBy("idmapel")->get();
 
+
+                // dd($mapel);
                 $hasil = [];
                 foreach ($siswa as $s) {
+
+                    $mapel = detailraportM::where("idraport", $idraport)->select("idmapel")
+                    ->where("idjurusan", $jur->idjurusan)
+                    ->whereHas("mapel", function ($query) {
+                        $query->where("ket", "!=", "pilihan");
+                    })
+                    ->where('idkelas', $idkelas)->groupBy("idmapel")->get();
+
                     $idsiswa = $s->idsiswa;
 
 

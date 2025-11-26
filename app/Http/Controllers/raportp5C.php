@@ -267,6 +267,11 @@ class raportp5C extends Controller
 
     }
 
+
+   
+
+
+
     public function nilai(Request $request, $nisn, $idketeranganp5)
     {
         $nisn = sprintf("%010s", $nisn);

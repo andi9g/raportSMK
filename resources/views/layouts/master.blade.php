@@ -36,6 +36,49 @@
   <link rel="stylesheet" href="{{ url('plugins/select2/css/select2.min.css', []) }}">
   <link rel="stylesheet" href="{{ url('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css', []) }}">
   @yield('header')
+  <style type="text/css">
+    .search-container {
+        position: relative;
+    }
+    .search-input {
+        height: 50px;
+        border-radius: 30px;
+        padding-left: 35px;
+        border: none;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .search-icon {
+        position: absolute;
+        top: 50%;
+        left: 15px;
+        transform: translateY(-50%);
+        color: #888;
+    }
+
+    #overlay {
+      background-color: rgba(255,255,255,0.7);
+      display: none;
+      position: absolute;
+      bottom: 0;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 999;
+    }
+
+    #overlay.show {
+      display: block;
+    }
+
+    #overlay-container {
+      align-items: center;
+      justify-content: center;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+  </style>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed text-sm">
 
@@ -158,6 +201,12 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
+
+          <li class="nav-header mt-2">
+                DATA UTAMA
+                <hr class="m-0 p-0 bg-secondary">
+            </li>
+
           <li class="nav-item">
             <a href="{{ url('home', []) }}" class="nav-link @yield('warnahome')">
               <i class="nav-icon fas fa-home"></i>
@@ -196,9 +245,10 @@
 
 
 
-          <li class="nav-item">
-            <hr class="bg-secondary">
-          </li>
+          <li class="nav-header mt-2">
+                KELOLA RAPOR SEKOLAH
+                <hr class="m-0 p-0 bg-secondary">
+            </li>
           @endif
 
           @if ($posisi == "walikelas")
@@ -216,7 +266,7 @@
             <a href="{{ url('raport', []) }}" class="nav-link @yield('warnaraport')">
               <i class="nav-icon fas fa-book"></i>
               <p>
-                Raport
+                Rapor
               </p>
             </a>
           </li>
@@ -225,15 +275,24 @@
             <a href="{{ url('raportp5', []) }}" class="nav-link @yield('warnaraportp5')">
               <i class="nav-icon fas fa-book"></i>
               <p>
-                Raport P5
+                Rapor P5
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ url('raporpkl', []) }}" class="nav-link @yield('warnaraportpkl')">
+              <i class="nav-icon fas fa-book"></i>
+              <p>
+                Rapor PKL
               </p>
             </a>
           </li>
 
 
           @if ($posisi == "admin")
-            <li class="nav-item">
-                <hr class="bg-secondary">
+            <li class="nav-header mt-2">
+                KELOLA AKSES
+                <hr class="m-0 p-0 bg-secondary">
             </li>
 
             <li class="nav-item">
@@ -254,11 +313,21 @@
                 </a>
               </li>
 
-            <li class="nav-item">
-              <hr class="bg-secondary">
+              <li class="nav-item">
+                <a href="{{ url('pembimbingpkl', []) }}" class="nav-link @yield('pembimbingpklActive')">
+                  <i class="nav-icon fas fa-user"></i>
+                  <p>
+                    Pembimbing PKL
+                  </p>
+                </a>
+              </li>
+
+            <li class="nav-header mt-2">
+                KELOLA PENGATURAN
+                <hr class="m-0 p-0 bg-secondary">
             </li>
 
-            <li class="nav-item">
+            <li class="nav-item @yield('openpengaturan')">
               <a href="#" class="nav-link @yield('warnapengaturan')">
                   <i class="nav-icon fas fa-wrench"></i>
                   <p>
@@ -266,18 +335,24 @@
                       <i class="right fas fa-angle-left"></i>
                   </p>
               </a>
-              <ul class="nav nav-treeview" style="display: none;">
-                  <li class="nav-item">
+              <ul class="nav nav-treeview" style="display: none;display:@yield('openpengaturanblock')">
+                <li class="nav-item">
                       <a href="{{ url('pengaturanp5', []) }}" class="nav-link @yield('warnapengaturanp5')">
                           <i class="far fa-circle nav-icon"></i>
                           <p>Pengaturan P5</p>
                       </a>
-                  </li>
+                </li>
 
-                  <li class="nav-item">
+                <li class="nav-item">
                     <a href="{{ url('pengaturanextrakulikuler', []) }}" class="nav-link @yield('warnapengaturanextrakulikuler')">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Extrakulikuler</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url('cppkl', []) }}" class="nav-link @yield('warnapengaturancppkl')">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Pengaturan PKL</p>
                     </a>
                 </li>
 
@@ -369,6 +444,7 @@
 <!-- AdminLTE App -->
 <script src="{{ url('dist/js/adminlte.js')}}"></script>
 @yield('script')
+@yield('footer')
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{ url('dist/js/pages/dashboard.js')}}"></script>
 @include('sweetalert::alert')
