@@ -32,49 +32,52 @@ class pesertaPkl implements ToModel
 
         $cek = pesertapklM::where("idpkl", $this->idpkl)->where("nisn", $row[2]);
         if($cek->count() > 0) {
+            $idpesertapkl = null;
             foreach($cek->get() as $key) {
                 $idpesertapkl = $key->idpesertapkl;
-                $pesertapkl = pesertapklM::findOrFail($idpesertapkl);
+                $pesertapkl = pesertapklM::where("idpesertapkl", $idpesertapkl)->first();
                 $pesertapkl->update([
                     'nisn' => sprintf("%010s", (string)$row[2]),
                     'tempatpkl' => $row[4],
                     'pembimbingdudi' => $row[5],
                     'jabatan' => $row[6],
                 ]);
-                // dd($pesertapkl->tempatpkl);
-                 
-                
+                // dd($pesertapkl->tempatpkl);  
             }
 
             $i = 7;
-                $cp = cppklM::orderBy("index", "ASC")->get();
-                foreach($cp as $key) {
-                    $elemen = elemencppklM::where("idcppkl", $key->idcppkl)->orderBy("idelemencppkl", "ASC")->get();
-                    foreach($elemen as $key2) {
-                        $nilai = nilaipklM::findOrFail($idpesertapkl);
-                        $nilai->update([
-                            'idelemencppkl' => $key2->idelemencppkl,
-                            'nilai' => $row[$i],
-                        ]);
-                        $i++;
-                    }
+            $cp = cppklM::orderBy("index", "ASC")->get();
+            // dd($cp);
+            foreach($cp as $key) {
+                $elemen = elemencppklM::where("idcppkl", $key->idcppkl)->orderBy("idelemencppkl", "ASC")->get();
+                
+                foreach($elemen as $key2) {
+                    $nilai = nilaipklM::where("idpesertapkl", $idpesertapkl)->first();
+                    $nilai->update([
+                        'idelemencppkl' => $key2->idelemencppkl,
+                        'nilai' => $row[$i],
+                    ]);
+                    $i++;
                 }
+            }
+
+            $catatanpkl = catatanpklM::where("idpesertapkl", $idpesertapkl)->first();
+            $catatanpkl->update([
+                'catatanpkl' => $row[23],
+            ]);
 
                  
 
-                $kehadiranpkl = kehadiranpklM::findOrFail($idpesertapkl);
-                $kehadiranpkl->update([
-                    'sakit' => $row[24],
-                    'izin' => $row[25],
-                    'alfa' => $row[26],
-                ]);
+            $kehadiranpkl = kehadiranpklM::where("idpesertapkl", $idpesertapkl)->first();
+            $kehadiranpkl->update([
+                'sakit' => $row[24],
+                'izin' => $row[25],
+                'alfa' => $row[26],
+            ]);
                 
-                $catatanpkl = catatanpklM::findOrFail($idpesertapkl);
-                $catatanpkl->update([
-                    'catatanpkl' => $row[23],
-                ]);
+           
 
-                return $pesertapkl;
+            return $pesertapkl;
                   
         }else {
             $pesertapkl = pesertapklM::create([
