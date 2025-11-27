@@ -116,7 +116,7 @@
                     <td>{{ $item->pembimbingdudi }}</td>
                     <td>{{ $item->tempatpkl }}</td>
                     <td>
-                        <button class='btn btn-primary' wire:click='openModal({{ $item->idpesertapkl }})'><i class="fa fa-eye"></i></button>
+                        <button class='btn btn-primary' wire:click='openModal({{ $item->idpesertapkl }})'><i class="fa fa-eye">Ubah Detail</i></button>
                     </td>
                     <td>
                         <a href="{{ route('pesertapkl.cetak', [$item->idpesertapkl]) }}" target="_blank" class="btn btn-secondary btn-block">Cetak Rapor</a>
