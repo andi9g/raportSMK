@@ -211,7 +211,7 @@ class raporpklC extends Controller
         
         
         try{
-            $data = $request->only("idkelas", "tahunajaran", "status", "tanggalmulai", "tanggalselesai");
+            $data = $request->only("idkelas", "tahunajaran", "status", "tanggalmulai", "tanggalselesai", "tanggalcetak");
         
             $update = pklM::where("idpkl", $idpkl)->update($data);
             if($update) {
