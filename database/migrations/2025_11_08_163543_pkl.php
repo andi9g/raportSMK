@@ -60,6 +60,7 @@ class Pkl extends Migration
             $table->boolean('status');
             $table->date('tanggalmulai');
             $table->date('tanggalselesai');
+            $table->date('tanggalcetak');
             $table->timestamps();
         });
 

@@ -10,7 +10,7 @@ class pklM extends Model
     use HasFactory;
     protected $table = 'pkl';
     protected $primaryKey = 'idpkl';
-    protected $fillable = ["idpkl", "idkelas", "tahunajaran", "status", "tanggalmulai", "tanggalselesai"];
+    protected $fillable = ["idpkl", "idkelas", "tahunajaran", "status", "tanggalmulai", "tanggalselesai", "tanggalcetak"];
 
     public function pesertapkl()
     {

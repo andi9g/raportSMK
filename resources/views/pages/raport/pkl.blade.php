@@ -62,6 +62,10 @@
                                     <label for='fortanggalselesai' class='text-capitalize'>Tanggal Selesai</label>
                                     <input type='date' name='tanggalselesai' id='fortanggalselesai' class='form-control' placeholder='masukan namaplaceholder'>
                                 </div>
+                                <div class='form-group'>
+                                    <label for='fortanggalcetak' class='text-capitalize'>Tanggal Selesai</label>
+                                    <input type='date' name='tanggalcetak' id='fortanggalcetak' class='form-control' placeholder='masukan namaplaceholder'>
+                                </div>
 
                                 
                             </div>
@@ -172,6 +176,10 @@
                         <div class='form-group'>
                             <label for='fortanggalselesai' class='text-capitalize'>Tanggal Selesai</label>
                             <input type='date' name='tanggalselesai' id='fortanggalselesai' value="{!! $item->tanggalselesai !!}" class='form-control' placeholder='masukan namaplaceholder'>
+                        </div>
+                        <div class='form-group'>
+                            <label for='fortanggalcetak' class='text-capitalize'>Tanggal Cetak</label>
+                            <input type='date' name='tanggalcetak' id='fortanggalcetak' value="{!! $item->tanggalcetak !!}" class='form-control' placeholder='masukan namaplaceholder'>
                         </div>
 
                         

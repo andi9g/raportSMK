@@ -174,7 +174,7 @@
                      <tr>
                         <td width="33%"></td>
                         <td width="33%"></td>
-                        <td width="33%">Gunung Kijang, {{ \Carbon\Carbon::parse($pkl->tanggalselesai)->isoFormat(" DD MMMM YYYY") }}</td>
+                        <td width="33%">Gunung Kijang, {{ \Carbon\Carbon::parse($pkl->tanggalcetak)->isoFormat(" DD MMMM YYYY") }}</td>
                     </tr>
                     <tr valign="top">
                         <td>
