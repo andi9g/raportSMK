@@ -74,7 +74,7 @@
         <tr>
             <td style="width:30%;">Program Keahlian</td>
             <td width="5px">:</td>
-            <td style="font-weight: bold">{{ ucwords(strtolower($identitas["namajurusan"])) }}</td>
+            <td style="font-weight: bold">{{ ucwords(strtolower($identitas["namaprogram"])) }}</td>
         </tr>
         <tr>
             <td style="width:30%;">Konsentrasi Keahlian</td>
