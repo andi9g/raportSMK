@@ -36,6 +36,7 @@ class pesertaPkl implements ToModel
             foreach($cek->get() as $key) {
                 $idpesertapkl = $key->idpesertapkl;
                 $pesertapkl = pesertapklM::where("idpesertapkl", $idpesertapkl)->first();
+                // dd($pesertapkl);
                 $pesertapkl->update([
                     'nisn' => sprintf("%010s", (string)$row[2]),
                     'tempatpkl' => $row[4],
@@ -50,13 +51,30 @@ class pesertaPkl implements ToModel
             // dd($cp);
             foreach($cp as $key) {
                 $elemen = elemencppklM::where("idcppkl", $key->idcppkl)->orderBy("idelemencppkl", "ASC")->get();
-                
                 foreach($elemen as $key2) {
-                    $nilai = nilaipklM::where("idpesertapkl", $idpesertapkl)->first();
-                    $nilai->update([
-                        'idelemencppkl' => $key2->idelemencppkl,
-                        'nilai' => $row[$i],
-                    ]);
+                    $nilai = nilaipklM::where("idelemencppkl", $key2->idelemencppkl)->where("idpesertapkl", $idpesertapkl);
+                    if($nilai->count()  > 1) {
+                        $nilai->delete();
+                        nilaipklM::create([
+                            'idpesertapkl' => $pesertapkl->idpesertapkl,
+                            'idelemencppkl' => $key2->idelemencppkl,
+                            'nilai' => $row[$i],
+                        ]);
+                    }
+
+                    if($nilai->count()  == 0) {
+                        nilaipklM::create([
+                            'idpesertapkl' => $pesertapkl->idpesertapkl,
+                            'idelemencppkl' => $key2->idelemencppkl,
+                            'nilai' => $row[$i],
+                        ]);
+                    }else {
+                        $nilai->first()->update([
+                            'idelemencppkl' => $key2->idelemencppkl,
+                            'nilai' => $row[$i],
+                        ]);
+                    }
+                    
                     $i++;
                 }
             }
