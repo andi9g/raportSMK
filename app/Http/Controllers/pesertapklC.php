@@ -89,6 +89,7 @@ class pesertapklC extends Controller
             "kelas" => $siswa->kelas->namakelas,
             "jurusan" => $siswa->jurusan->jurusan,
             "namajurusan" => $siswa->jurusan->namajurusan,
+            "namakonsentrasi" => $siswa->jurusan->namakonsentrasi ?? "null",
             "tempatpkl" => $pesertapkl->tempatpkl,
             "pembimbingdudi" => $pesertapkl->pembimbingdudi,
             "jabatan" => $pesertapkl->jabatan,

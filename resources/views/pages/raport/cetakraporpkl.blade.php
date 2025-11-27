@@ -79,7 +79,7 @@
         <tr>
             <td style="width:30%;">Konsentrasi Keahlian</td>
             <td width="5px">:</td>
-            <td style="font-weight: bold">{{ ucwords(strtolower($identitas["namajurusan"])) }}</td>
+            <td style="font-weight: bold">{{ ucwords(strtolower($identitas["namakonsentrasi"])) }}</td>
         </tr>
         <tr>
             <td style="width:30%;">Tempat PKL</td>
@@ -295,7 +295,7 @@
                 <table width="100%">
                     <tr valign="top">
                         <td width="50%">
-                            <p style="margin:0;padding:0">Mengetahui:</p>
+                            <p style="margin:0;padding:0">Mengetahui</p>
                             <p style="margin:0;padding:0">Kepala Sekolah SMK Negeri 1 Gunung Kijang</p>
                             <br>
                             <br>
