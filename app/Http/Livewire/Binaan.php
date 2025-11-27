@@ -93,7 +93,7 @@ class Binaan extends Component
         
         $catatanpkl = catatanpklM::where("idpesertapkl", $idpesertapkl)->first();
 
-        $client = new Client('AIzaSyCmEDeBIuOo2wjMCkjpMHg7p_xkyuEPHjU');
+        $client = new Client(env('KEY_GEMINI'));
         $response = $client->generativeModel("gemini-2.5-flash")
         ->generateContent(
             new TextPart("buatkan saya deskripsi ringkas sesuai dari pesan dibawah, namun jadikan deskripsi < dari 150 karakter"),
