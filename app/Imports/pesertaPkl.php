@@ -79,10 +79,10 @@ class pesertaPkl implements ToModel
                 }
             }
 
-            $catatanpkl = catatanpklM::where("idpesertapkl", $idpesertapkl)->first();
-            $catatanpkl->update([
-                'catatanpkl' => $row[23],
-            ]);
+            // $catatanpkl = catatanpklM::where("idpesertapkl", $idpesertapkl)->first();
+            // $catatanpkl->update([
+            //     'catatanpkl' => $row[23],
+            // ]);
 
                  
 
