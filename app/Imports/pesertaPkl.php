@@ -54,6 +54,9 @@ class pesertaPkl implements ToModel
                 foreach($elemen as $key2) {
                     $nilai = nilaipklM::where("idelemencppkl", $key2->idelemencppkl)->where("idpesertapkl", $idpesertapkl);
                     if($nilai->count()  > 1) {
+                        if($key2->idelemencppkl == "16") {
+                            dd("jumpa". $key2->count());
+                        }
                         $nilai->delete();
                         nilaipklM::create([
                             'idpesertapkl' => $pesertapkl->idpesertapkl,
@@ -67,6 +70,7 @@ class pesertaPkl implements ToModel
                             'nilai' => $row[$i],
                         ]);
                     }else {
+                        dd($key2->idelemencppkl);
                         $nilai->first()->update([
                             'idelemencppkl' => $key2->idelemencppkl,
                             'nilai' => $row[$i],
