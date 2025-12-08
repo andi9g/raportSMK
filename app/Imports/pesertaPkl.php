@@ -31,6 +31,19 @@ class pesertaPkl implements ToModel
         // $pesertapkl = null;
 
         $cek = pesertapklM::where("idpkl", $this->idpkl)->where("nisn", $row[2]);
+        if($cek->count() > 1) {
+            if($row[2] == "3083311244") {
+                $idakhir = $cek->orderBy("idpesertapkl", "desc")->select("idpesertapkl")->first()->toArray();
+                $datalama =  pesertapklM::where("idpkl", $this->idpkl)->where("nisn", $row[2])->where("idpesertapkl", "!=", $idakhir);
+                foreach ($datalama->get() as $item) {
+                    nilaipklM::where("idpesertapkl", $item->idpesertapkl)->delete();
+                    catatanpklM::where("idpesertapkl", $item->idpesertapkl)->delete();
+                    kehadiranpklM::where("idpesertapkl", $item->idpesertapkl)->delete();
+                }
+                $datalama->delete();
+            }
+        }
+        $cek = pesertapklM::where("idpkl", $this->idpkl)->where("nisn", $row[2]);
         if($cek->count() > 0) {
             $idpesertapkl = null;
             foreach($cek->get() as $key) {
@@ -54,9 +67,6 @@ class pesertaPkl implements ToModel
                 foreach($elemen as $key2) {
                     $nilai = nilaipklM::where("idelemencppkl", $key2->idelemencppkl)->where("idpesertapkl", $idpesertapkl);
                     if($nilai->count()  > 1) {
-                        if($key2->idelemencppkl == "16") {
-                            dd("jumpa". $key2->count());
-                        }
                         $nilai->delete();
                         nilaipklM::create([
                             'idpesertapkl' => $pesertapkl->idpesertapkl,
@@ -70,7 +80,6 @@ class pesertaPkl implements ToModel
                             'nilai' => $row[$i],
                         ]);
                     }else {
-                        dd($key2->idelemencppkl);
                         $nilai->first()->update([
                             'idelemencppkl' => $key2->idelemencppkl,
                             'nilai' => $row[$i],
@@ -81,10 +90,10 @@ class pesertaPkl implements ToModel
                 }
             }
 
-            // $catatanpkl = catatanpklM::where("idpesertapkl", $idpesertapkl)->first();
-            // $catatanpkl->update([
-            //     'catatanpkl' => $row[23],
-            // ]);
+            $catatanpkl = catatanpklM::where("idpesertapkl", $idpesertapkl)->first();
+            $catatanpkl->update([
+                'catatanpkl' => $row[23],
+            ]);
 
                  
 
