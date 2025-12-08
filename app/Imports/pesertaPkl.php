@@ -97,12 +97,12 @@ class pesertaPkl implements ToModel
 
                  
 
-            $kehadiranpkl = kehadiranpklM::where("idpesertapkl", $idpesertapkl)->first();
-            $kehadiranpkl->update([
-                'sakit' => $row[24],
-                'izin' => $row[25],
-                'alfa' => $row[26],
-            ]);
+            // $kehadiranpkl = kehadiranpklM::where("idpesertapkl", $idpesertapkl)->first();
+            // $kehadiranpkl->update([
+            //     'sakit' => $row[24],
+            //     'izin' => $row[25],
+            //     'alfa' => $row[26],
+            // ]);
                 
            
 

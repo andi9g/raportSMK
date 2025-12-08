@@ -74,12 +74,12 @@
         <tr>
             <td style="width:30%;">Program Keahlian</td>
             <td width="5px">:</td>
-            <td style="font-weight: bold">{{ ucwords(strtolower($identitas["namaprogram"])) }}</td>
+            <td style="font-weight: bold">{{ str_replace("Dan", "dan", ucwords(strtolower($identitas["namaprogram"]))) }}</td>
         </tr>
         <tr>
             <td style="width:30%;">Konsentrasi Keahlian</td>
             <td width="5px">:</td>
-            <td style="font-weight: bold">{{ ucwords(strtolower($identitas["namakonsentrasi"])) }}</td>
+            <td style="font-weight: bold">{{ str_replace("Dan", "dan", ucwords(strtolower($identitas["namakonsentrasi"]))) }}</td>
         </tr>
         <tr>
             <td style="width:30%;">Tempat PKL</td>
