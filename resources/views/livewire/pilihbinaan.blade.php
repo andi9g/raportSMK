@@ -80,7 +80,7 @@
 
 <div class="row">
   <div class="col-md pt-2">
-   @if (Auth::user()->name="admin")
+   @if (Auth::user()->username=="admin")
    <button class="btn btn-warning btn-lg" wire:click="openModal">IMPORT PESERTA</button>
    @endif  
   </div>
