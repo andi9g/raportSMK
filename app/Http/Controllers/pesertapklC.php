@@ -124,8 +124,7 @@ class pesertapklC extends Controller
                 ->first();
 
                 if(empty($nilaipkl->nilai)) {
-                    // dd("terjadi Error");
-                    dd($idpesertapkl." ".$elemen->idelemencppkl);
+                    dd("terjadi Error");
                 }
                 $nilaielemen = $nilaielemen + $nilaipkl->nilai;
 

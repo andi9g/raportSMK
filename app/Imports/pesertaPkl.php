@@ -60,9 +60,7 @@ class pesertaPkl implements ToModel
                             'idelemencppkl' => $key2->idelemencppkl,
                             'nilai' => $row[$i],
                         ]);
-                    }
-
-                    if($nilai->count()  == 0) {
+                    }else if($nilai->count()  == 0) {
                         nilaipklM::create([
                             'idpesertapkl' => $pesertapkl->idpesertapkl,
                             'idelemencppkl' => $key2->idelemencppkl,
