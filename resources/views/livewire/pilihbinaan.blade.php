@@ -80,11 +80,9 @@
 
 <div class="row">
   <div class="col-md pt-2">
-   
-    <button class="btn btn-warning btn-lg" wire:click="openModal">IMPORT PESERTA</button>
-
-   
-    
+   @if (Auth::user()->name="admin")
+   <button class="btn btn-warning btn-lg" wire:click="openModal">IMPORT PESERTA</button>
+   @endif  
   </div>
   <div class="col-md"></div>
   <div class="col-md text-right pt-2">
