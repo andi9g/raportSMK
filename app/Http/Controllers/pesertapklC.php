@@ -197,6 +197,15 @@ class pesertapklC extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    public function hapuspembimbing(Request $request, $idpesertapkl)
+    {
+        pesertapklM::where("idpesertapkl", $idpesertapkl)
+        ->update([
+            "iduser" => null,
+        ]);
+
+        return redirect()->back()->with('warning', 'Data telah dikembalikan');
+    }
     public function store(Request $request)
     {
         //

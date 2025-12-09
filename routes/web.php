@@ -175,6 +175,7 @@ Route::middleware(['GerbangIdentitas', 'GerbangCekWaliKelas'])->group(function (
     Route::get('raporpkl', "raporpklC@index")->name("raporpkl.index");
     Route::get('pesertapkl/{idpkl}', "pesertapklC@index")->name("pesertapkl.index");
     Route::get('cetakraporpkl/{idpesertapkl}', "pesertapklC@cetak")->name("pesertapkl.cetak");
+    Route::delete('hapuspembimbingpkl/{idpesertapkl}', "pesertapklC@hapuspembimbing")->name("pesertapkl.hapus.pembimbing");
 
 
     //Menu_cetakraport

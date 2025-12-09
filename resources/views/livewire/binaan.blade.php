@@ -116,7 +116,17 @@
                     <td>{{ $item->pembimbingdudi }}</td>
                     <td>{{ $item->tempatpkl }}</td>
                     <td>
-                        <button class='btn btn-primary' wire:click='openModal({{ $item->idpesertapkl }})'><i class="fa fa-eye">Ubah Detail</i></button>
+                        <button class='btn btn-primary ' wire:click='openModal({{ $item->idpesertapkl }})'>
+                            <i class="fa fa-eye"></i> Ubah Detail 
+                        </button>
+                        <form action='{{ route('pesertapkl.hapus.pembimbing', [$item->idpesertapkl]) }}' method='post' class='d-inline'>
+                             @csrf
+                             @method('DELETE')
+                             <button type='submit' class='btn btn-danger' onclick="return confirm('dengan menekan tombol ya maka data ini akan dikembalikan')">
+                                 <i class="fa fa-trash"></i> Kembalikan Data 
+                             </button>
+                        </form>
+
                     </td>
                     <td>
                         <a href="{{ route('pesertapkl.cetak', [$item->idpesertapkl]) }}" target="_blank" class="btn btn-secondary btn-block">Cetak Rapor</a>
