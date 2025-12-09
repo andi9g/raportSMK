@@ -53,6 +53,10 @@
             <label for='forjabatan' class='text-capitalize'>Jabatan</label>
             <input type='text' name='jabatan' id='forjabatan' class='form-control' wire:model.defer="dataEditor.jabatan" placeholder='masukan namaplaceholder'>
         </div>
+        <div class='form-group'>
+            <label for='fortempatpkl' class='text-capitalize'>tempatpkl</label>
+            <input type='text' name='tempatpkl' id='fortempatpkl' class='form-control' wire:model.defer="dataEditor.tempatpkl" placeholder='masukan namaplaceholder'>
+        </div>
 
         
         

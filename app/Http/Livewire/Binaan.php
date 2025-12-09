@@ -71,6 +71,7 @@ class Binaan extends Component
             "nama" => $pesertapkl->siswa->nama ?? '',
             "pembimbingdudi" => $pesertapkl->pembimbingdudi ?? '',
             "jabatan" => $pesertapkl->jabatan ?? '',
+            "tempatpkl" => $pesertapkl->tempatpkl ?? '',
             "sakit" => $kehadiranpkl->sakit ?? 0,
             "izin" => $kehadiranpkl->izin ?? 0,
             "alfa" => $kehadiranpkl->alfa ?? 0,
@@ -117,6 +118,7 @@ class Binaan extends Component
 
         $pesertapkl->pembimbingdudi = $this->dataEditor['pembimbingdudi'] ?? $pesertapkl->pembimbingdudi;
         $pesertapkl->jabatan = $this->dataEditor['jabatan'] ?? $pesertapkl->jabatan;
+        $pesertapkl->tempatpkl = $this->dataEditor['tempatpkl'] ?? $pesertapkl->tempatpkl;
         $pesertapkl->save();
 
         $kehadiranpkl->sakit = (int) ($this->dataEditor['sakit'] ?? $kehadiranpkl->sakit ?? 0);
