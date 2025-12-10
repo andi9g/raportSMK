@@ -256,6 +256,7 @@ class raportp5C extends Controller
                 "identitasp5" => $identitasp5,
             ]);
 
+            
 
             return $pdf->stream("Raport_P5_".$siswa->nama.".pdf");
 
@@ -420,7 +421,7 @@ class raportp5C extends Controller
     {
         $raportp5 = raportp5M::where("idraportp5", $idraportp5)->first();
 
-        $data = $request->only(["tema", "idkelas", "tahun", "nomor", "semester"]);
+        $data = $request->only(["tema", "idkelas", "tahun", "nomor", "semester", "dimensi"]);
         $data["fase"] = ($data["idkelas"]==1)?"E":"F";
         // dd($data);
 
@@ -453,6 +454,7 @@ class raportp5C extends Controller
             'semester' => 'required',
             'tema' => 'required',
             'idkelas' => 'required',
+            'dimensi' => 'required',
             'nomor' => 'required',
         ]);
 
@@ -460,7 +462,7 @@ class raportp5C extends Controller
         try{
             $data = $request->all();
             $data["fase"] = ($data["idkelas"]==1)?"E":"F";
-            dd($data);
+            // dd($data);
 
             raportp5M::create($data);
 

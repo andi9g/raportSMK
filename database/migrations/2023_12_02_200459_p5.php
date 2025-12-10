@@ -40,6 +40,7 @@ class P5 extends Migration
             $table->enum("semester", ["ganjil", "genap"]);
             $table->char("fase", 2);
             $table->String("tema");
+            $table->enum("dimensi", ["p5", "pm"])->nullable();
             $table->boolean("ket")->default(1);
             $table->timestamps();
         });

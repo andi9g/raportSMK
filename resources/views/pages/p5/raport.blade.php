@@ -52,6 +52,14 @@
                         </div>
 
                         <div class='form-group'>
+                            <label for='fordimensi' class='text-capitalize'>Dimensi</label>
+                            <select name='dimensi' id='fordimensi' class='form-control'>
+                                <option value='p5'>P5</option>
+                                <option value='pm'>pm</option>
+                            <select>
+                        </div>
+
+                        <div class='form-group'>
                             <label for='fornomor' class='text-capitalize'>Project ke</label>
                             <input type='number' name='nomor' id='fornomor' value="1" class='form-control' placeholder='masukan namaplaceholder'>
                         </div>
@@ -152,6 +160,18 @@
                                                                 selected
                                                             @endif>{{ $dk->namakelas }}</option>
                                                         @endforeach
+                                                    <select>
+                                                </div>
+
+                                                <div class='form-group'>
+                                                    <label for='fordimensi' class='text-capitalize'>Dimensi</label>
+                                                    <select name='dimensi' id='fordimensi' class='form-control'>
+                                                        <option value='p5' @if ($item->dimensi == "p5")
+                                                            selected
+                                                        @endif>P5</option>
+                                                        <option value='pm' @if ($item->dimensi == "pm")
+                                                            selected
+                                                        @endif>PM</option>
                                                     <select>
                                                 </div>
 

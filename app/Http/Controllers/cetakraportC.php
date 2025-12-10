@@ -212,12 +212,22 @@ class cetakraportC extends Controller
                 $lisan = $ujian->lisan;
                 $nonlisan = $ujian->nonlisan;
 
-                if($lisan == 0 || $nonlisan == 0) {
-                    $nilaiujian = $lisan + $nonlisan;
-                    $nilai = ($nilai + $nilaiujian) / 2;
+                if($detail->kategori == "new") {
+                    if($lisan == 0 || $nonlisan == 0) {
+                        $nilaiujian = $lisan + $nonlisan;
+                        $nilai = ($nilai*0.8) + ($nilaiujian*0.2);
+                    }else {
+                        $nilaiujian = (($lisan + $nonlisan) / 2) * 0.2;
+                        $nilai = ($nilai*0.8) + $nilaiujian;
+                    }
                 }else {
-                    $nilaiujian = ($lisan + $nonlisan) / 2;
-                    $nilai = ($nilai + $nilaiujian) / 2;
+                    if($lisan == 0 || $nonlisan == 0) {
+                        $nilaiujian = $lisan + $nonlisan;
+                        $nilai = ($nilai + $nilaiujian) / 2;
+                    }else {
+                        $nilaiujian = ($lisan + $nonlisan) / 2;
+                        $nilai = ($nilai + $nilaiujian) / 2;
+                    }
                 }
             }
 

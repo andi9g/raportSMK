@@ -82,6 +82,14 @@
                                 @endforeach
                             </select>
                         </div>
+
+                        <div class='form-group'>
+                            <label for='forkategori' class='text-capitalize'>Kategori (persentase)</label>
+                            <select name='kategori' id='forkategori' class='form-control'>
+                                <option value='old'>Old</option>
+                                <option value='new'>new</option>
+                            <select>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-success">Tambah Data</button>
@@ -223,6 +231,18 @@
                                                     <div class="form-group">
                                                         <label for="tanggal">Tanggal Penerimaan Raport </label>
                                                         <input id="tanggal" class="form-control text-uppercase" type="date" name="tanggal" placeholder="" value="{{ $item->tanggal }}">
+                                                    </div>
+
+                                                    <div class='form-group'>
+                                                        <label for='forkategori' class='text-capitalize'>Kategori (persentase)</label>
+                                                        <select name='kategori' id='forkategori' class='form-control'>
+                                                            <option value='old' @if ($item->kategori == "old")
+                                                                selected
+                                                            @endif>Old</option>
+                                                            <option value='new'@if ($item->kategori == "new")
+                                                                selected
+                                                            @endif>new</option>
+                                                        <select>
                                                     </div>
 
 

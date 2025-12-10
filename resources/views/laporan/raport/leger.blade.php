@@ -131,7 +131,7 @@
 </head>
 <body>
 
-    @foreach ($data as $item)
+   
     <table width="100%" class="noborder">
         <tr>
             <td width="80px">
@@ -156,10 +156,10 @@
 
     <table width="100%">
         <tr>
-            <td class="tdku" align="center"><b>LEGER PENILAIAN {{ $item["judul"] }}</b></td>
+            <td class="tdku" align="center"><b>LEGER PENILAIAN {{ strtoupper($raport->namaraport) }}</b></td>
         </tr>
         <tr>
-            <td class="tdku" align="center"><b>TAHUN PELAJARAN {{ $item["tahun"] }}</b></td>
+            <td class="tdku" align="center"><b>TAHUN PELAJARAN {{ $raport->tahun." / ".($raport->tahun + 1) }}</b></td>
         </tr>
     </table>
 
@@ -167,17 +167,17 @@
         <tr>
             <td class="tdku" width="70px">KELAS</td>
             <td class="tdku"> : &nbsp;</td>
-            <td class="tdku">{{ $item["kelas"] }}</td>
+            <td class="tdku">{{ $raport->kelas->kelas }}</td>
         </tr>
         <tr>
             <td class="tdku">JURUSAN</td>
             <td class="tdku"> : &nbsp;</td>
-            <td class="tdku">{{ $item["namajurusan"]." (".$item["jurusan"].")" }}</td>
+            <td class="tdku">{{ $raport->namajurusan }}</td>
         </tr>
     </table>
 
 
-    <table border="1" class="@if ($item['jumlahmapel'] > 10)
+    <table border="1" class="@if (count($data->first()['mapel']) > 10)
         tableku2
     @else
         tableku
@@ -187,87 +187,78 @@
                 <th rowspan="3" width="5px" align="center">No</th>
                 <th rowspan="3" nowrap>NAMA PESERTA</th>
                 <th rowspan="3">NISN</th>
-                <th colspan="{{ $item['jumlahmapel'] }}">NILAI</th>
+                <th colspan="{{ $kejuruan + $umum }}">NILAI</th>
                 <th rowspan="3" ><p class="vertical-th">Jumlah Nilai</p></th>
                 <th rowspan="3" ><p class="vertical-th">Nilai Rata-rata</p></th>
                 <th rowspan="3" ><p class="vertical-th">Ket Lulus/Tidak Lulus</p></th>
             </tr>
             <tr>
-                <th colspan="{{ $item['umum'] }}">Kelompok A</th>
-                <th colspan="{{ $item['kejuruan'] }}">Kelompok B</th>
+                <th colspan="{{ $umum }}">Kelompok A</th>
+                <th colspan="{{ $kejuruan }}">Kelompok B</th>
             </tr>
             <tr>
-                @foreach ($item["mapel"] as $mapel)
-                    @if ($mapel->mapel->ket == "umum")
-                        <th><p class="vertical-th" >{{ $mapel->mapel->namamapel }}</p></th>
+                @foreach ($data->first()["mapel"] as $mapel)
+                    @if ($mapel["ket"] == "umum")
+                        <th><p class="vertical-th" >{{ $mapel["namamapel"] }}</p></th>
 
                     @endif
                 @endforeach
-                @foreach ($item["mapel"] as $mapel)
-                    @if ($mapel->mapel->ket == "kejuruan" || $mapel->mapel->ket == "pilihan")
-                        <th><p class="vertical-th">{{ $mapel->mapel->namamapel }}</p></th>
+                @foreach ($data->first()["mapel"] as $mapel)
+                    @if ($mapel["ket"] == "kejuruan" || $mapel["ket"] == "pilihan")
+                        <th><p class="vertical-th">{{ $mapel["namamapel"] }}</p></th>
                     @endif
                 @endforeach
             </tr>
         </thead>
 
         <tbody>
-            @foreach ($item["data"] as $siswa)
-                @php
-                    $keterangan = "";
-                    $n_umum = 0;
-                    $n_kejuruan = 0;
-                @endphp
+            @foreach ($data as $siswa)
                 <tr>
                     <td align="center">
                         {{ $loop->iteration }}
                     </td>
                     <td nowrap >
-                        {{ ucwords(strtolower($siswa['namasiswa'])) }}
+                        {{ ucwords(strtolower($siswa['siswa'])) }}
                     </td>
                     <td>{{ $siswa["nisn"] }}</td>
-                    @foreach ($siswa["data"] as $mapel)
+                    @php
+                        $ket = 0;
+                        $ket2 = 0;
+                    @endphp
+                    @foreach ($siswa["mapel"] as $mapel)
                         @if ($mapel["ket"] == "umum")
-                            @if ($mapel['hasil'] < 60)
-                            <td align="center" style="color:red">{{ $mapel["hasil"]}}</td>
+                            @if ($mapel['nilai'] < 60)
+                            <td align="center" style="color:red">{{ $mapel["nilai"]}}</td>
+                            @php
+                                $ket++;
+                            @endphp
                             @else
-                            <td align="center">{{ $mapel["hasil"]}}</td>
+                            <td align="center">{{ $mapel["nilai"]}}</td>
                             @endif
                         @endif
 
-                        @php
-                            if($mapel["ket"] == "umum") {
-                                if($mapel["hasil"] < 60) {
-                                    $n_umum++;
-                                }
-                            }
-                        @endphp
 
                     @endforeach
-                    @foreach ($siswa["data"] as $mapel)
+                    @foreach ($siswa["mapel"] as $mapel)
                         @if ($mapel["ket"] == "kejuruan")
-                            @if ($mapel['hasil'] < 65)
-                            <td align="center" style="color:red">{{ $mapel["hasil"]}}</td>
+                            @if ($mapel['nilai'] < 65)
+                            <td align="center" style="color:red">{{ $mapel["nilai"]}}</td>
+                            @php
+                                $ket2++;
+                            @endphp
                             @else
-                            <td align="center">{{ $mapel["hasil"]}}</td>
+                            <td align="center">{{ $mapel["nilai"]}}</td>
                             @endif
                         @endif
 
-                         @php
-                            if($mapel["ket"] == "kejuruan") {
-                                if($mapel["hasil"] < 65) {
-                                    $n_kejuruan++;
-                                }
-                            }
-                        @endphp
 
                     @endforeach
-                    <td align="center">{{ $siswa["jumlahnilai"] }}</td>
+                    <td align="center">{{ $siswa["hasil"] }}</td>
                     <td align="center">{{ $siswa["ratarata"] }}</td>
                     <td>
-                        @if ($n_umum >= 3)
+                        @if ($ket > 3)
                             TIDAK LULUS
-                        @elseif($n_kejuruan > 0)
+                        @elseif($ket2 > 0)
                             TIDAK LULUS
                         @else
                             LULUS
@@ -284,7 +275,7 @@
     </font>
 
 
-    <table width="100%">
+    {{-- <table width="100%">
         <tr>
             <td width="65%"></td>
             <td style="">
@@ -312,11 +303,10 @@
             </td>
         </tr>
 
-    </table>
+    </table> --}}
 
     <div class="page-break"></div>
 
-    @endforeach
 
 
 

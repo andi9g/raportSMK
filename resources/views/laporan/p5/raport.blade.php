@@ -121,7 +121,15 @@
             <tr>
                 <td>
                     <center>
-                        <h4>RAPOR PROJEK PENGUATAN PROFIL PELAJAR PANCASILA</h4>
+                        <h4>
+                            RAPOR 
+                            @if ($detail->dimensi == "p5")
+                            PROJEK PENGUATAN PROFIL PELAJAR PANCASILA
+                            @else
+                            KOKURIKULER 
+                            @endif
+
+                        </h4>
                     </center>
 
                 </td>
@@ -200,8 +208,22 @@
         <tr>
             <td style="padding: 8px 15px">
                 @foreach ($data as $item)
-                <p style="font-weight: bold;">Projek {{ $loop->iteration }} | Tema : {{ $item['tema'] }}</p>
-                <p class="justify">Projek ini adalah projek {{ $nomor[$detail->nomor] }} dikelas {{ $detail->kelas->namakelas }}. projek ini diharapkan membangun {{ $bilangan[count($item['dimensi'])] }} dimensi Profil Pelajar Pancasila, yakni
+                <p style="font-weight: bold;">
+                    @if ($detail->dimensi == "p5")
+                    Projek {{ $loop->iteration }} | Tema : {{ $item['tema'] }}
+                    @else
+                    Tema : {{ $judulp5 }}
+                    @endif
+
+                
+                </p>
+                <p class="justify">Projek ini adalah projek {{ $nomor[$detail->nomor] }} dikelas {{ $detail->kelas->namakelas }}. projek ini diharapkan membangun {{ $bilangan[count($item['dimensi'])] }} dimensi 
+                    @if ($detail->dimensi == "p5")
+                    Profil Pelajar Pancasila,
+                    @else
+                    Profil Lulusan,
+                    @endif
+                    yakni
 
                 @foreach ($item['dimensi'] as $d)
                     @php
@@ -244,7 +266,12 @@
 
                 @endforeach
 
-                melalui projek <b>"{{ $judulp5 }}"</b>.
+                melalui projek 
+                @if ($detail->dimensi == "p5")
+                    <b>"{{ $judulp5 }}"</b>.
+                @else
+                    ini.
+                @endif
 
 
                 </p>
