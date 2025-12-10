@@ -60,6 +60,11 @@
                         </div>
 
                         <div class='form-group'>
+                            <label for='fortanggalraport' class='text-capitalize'>Tanggal Cetak</label>
+                            <input type='date' name='tanggalraport' id='fortanggalraport' class='form-control' placeholder='masukan namaplaceholder'>
+                        </div>
+
+                        <div class='form-group'>
                             <label for='fornomor' class='text-capitalize'>Project ke</label>
                             <input type='number' name='nomor' id='fornomor' value="1" class='form-control' placeholder='masukan namaplaceholder'>
                         </div>
@@ -173,6 +178,11 @@
                                                             selected
                                                         @endif>PM</option>
                                                     <select>
+                                                </div>
+
+                                                <div class='form-group'>
+                                                    <label for='fortanggalraport' class='text-capitalize'>Tanggal Cetak</label>
+                                                    <input type='date' name='tanggalraport' value="{{ $item->tanggalraport }}" id='fortanggalraport' class='form-control' placeholder='masukan namaplaceholder'>
                                                 </div>
 
 

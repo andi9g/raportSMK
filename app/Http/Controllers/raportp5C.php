@@ -421,7 +421,7 @@ class raportp5C extends Controller
     {
         $raportp5 = raportp5M::where("idraportp5", $idraportp5)->first();
 
-        $data = $request->only(["tema", "idkelas", "tahun", "nomor", "semester", "dimensi"]);
+        $data = $request->only(["tema", "idkelas", "tahun", "nomor", "semester", "dimensi", "tanggalraport"]);
         $data["fase"] = ($data["idkelas"]==1)?"E":"F";
         // dd($data);
 
@@ -455,6 +455,7 @@ class raportp5C extends Controller
             'tema' => 'required',
             'idkelas' => 'required',
             'dimensi' => 'required',
+            'tanggalraport' => 'required',
             'nomor' => 'required',
         ]);
 
