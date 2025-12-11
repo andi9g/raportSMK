@@ -8,6 +8,7 @@ use App\Models\identitasp5M;
 use App\Models\dimensip5M;
 use App\Models\subdimensip5M;
 use App\Models\penilaianp5M;
+use App\Models\walikelasM;
 use App\Models\raportp5M;
 use App\Models\User;
 use App\Models\kelasM;
@@ -337,15 +338,19 @@ class raportp5C extends Controller
 
     public function ubahprojectp5(Request $request, $idraportp5)
     {
-        try{
+        // try{
             $iduser = Auth::user()->iduser;
             $judulp5 = $request->judulp5;
 
-            $cek = judulp5M::where("idraportp5", $idraportp5)
-            ->where("iduser", $iduser);
+            $idkelas = Auth::user()->identitasp5->idkelas??walikelasM::where("ididentitas", Auth::user()->identitas->ididentitas)->first()->idkelas;
+            $idjurusan = Auth::user()->identitasp5->idjurusan??walikelasM::where("ididentitas", Auth::user()->identitas->ididentitas)->first()->idjurusan;
 
-            $idkelas = Auth::user()->identitasp5->idkelas;
-            $idjurusan = Auth::user()->identitasp5->idjurusan;
+            $cek = judulp5M::where("idraportp5", $idraportp5)
+            ->where("idkelas", $idkelas)
+            ->where("idjurusan", $idjurusan);
+
+
+            // dd($cek->count());
 
             if($cek->count() == 0) {
                 judulp5M::create([
@@ -356,7 +361,7 @@ class raportp5C extends Controller
                     "idraportp5" => $idraportp5,
                 ]);
             }else {
-                $cek->first()->update([
+                $cek->update([
                     "iduser" => $iduser,
                     "idkelas" => $idkelas,
                     "idjurusan" => $idjurusan,
@@ -367,9 +372,9 @@ class raportp5C extends Controller
 
             return redirect()->route("penilaian.raportp5", $idraportp5)->with("success", "Judul telah diupdate");
 
-        }catch(\Throwable $th){
-            return redirect()->back()->with('toast_error', 'Bukan hak admin');
-        }
+        // }catch(\Throwable $th){
+        //     return redirect()->back()->with('toast_error', 'Bukan hak admin');
+        // }
     }
     /**
      * Display a listing of the resource.
