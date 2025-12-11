@@ -221,7 +221,7 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $item->user->name ?? "" }}</td>
-                            <td>{{ $item->kelas->namakelas??""." ".$item->jurusan->jurusan??"" }}</td>
+                            <td>{{ ($item->kelas->namakelas??"")." ".($item->jurusan->jurusan??"") }}</td>
                             <td>
                                 <button class="badge py-1 border-0 badge-success" type="button" data-toggle="modal" data-target="#editidentitasp5{{ $item->ididentitasp5 }}">
                                     <i class="fa fa-edit"></i> Edit
