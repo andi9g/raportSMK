@@ -27,7 +27,7 @@ class raportp5C extends Controller
     {
         // try{
             $keyword = empty($request->keyword)?'':$request->keyword;
-            $posisi = Auth::user()->identitas->posisi;
+            $posisi = empty($request->koordinator)?Auth::user()->identitas->posisi:$request->koordinator;
             $iduser = Auth::user()->iduser;
             $idjurusan = "1";
             $idkelas = "1";
@@ -41,35 +41,15 @@ class raportp5C extends Controller
                 $siswa = siswaM::where("nama", "like", "%$keyword%")
                 ->orderBy("nama", "asc")
                 ->paginate(20);
+                $project = judulp5M::where("idraportp5", $idraportp5)
+            ->where("idkelas", $raportp5->idkelas)
+            ->where("idjurusan", $idjurusan)
+            ->first();
             }else if($posisi == "walikelas"){
                 $idkelas = Auth::user()->identitas->walikelas->idkelas;
                 $idjurusan = Auth::user()->identitas->walikelas->idjurusan;
                 $identitasp5 = identitasp5M::where("iduser", Auth::user()->iduser)->first();
 
-                // if(!is_null($identitasp5)) {
-                //     $idkelas2 = $identitasp5->idkelas;
-                //     $idjurusan2 = $identitasp5->idjurusan;
-                //     if($idkelas == $idkelas2 && $idjurusan == $idjurusan2) {
-                //         $siswa = siswaM::where("idkelas", $idkelas)
-                //         ->where("idjurusan", $idjurusan)
-                //         ->where("nama", "like", "%$keyword%")
-                //         ->orderBy("nama", "asc")
-                //         ->paginate(20);
-                //     }else {
-                //         $idkelas = $identitasp5->idkelas;
-                //         $idjurusan = $identitasp5->idjurusan;
-
-                //         if(!($idkelas == $raportp5->idkelas)) {
-                //             return redirect('raportp5')->with('warning', 'Maaf, bukan rana anda');
-                //         }
-
-                //         $siswa = siswaM::where("idkelas", $idkelas)
-                //         ->where("idjurusan", $idjurusan)
-                //         ->where("nama", "like", "%$keyword%")
-                //         ->orderBy("nama", "asc")
-                //         ->paginate(20);
-                //     }
-                // }else {
                     $siswa = siswaM::where("idkelas", $idkelas)
                     ->where("idjurusan", $idjurusan)
                     ->where("nama", "like", "%$keyword%")
@@ -77,25 +57,47 @@ class raportp5C extends Controller
                     ->paginate(20);
 
                 // }
-            }else {
-                $identitasp5 = identitasp5M::where("iduser", Auth::user()->iduser)->first();
-                $idkelas = $identitasp5->idkelas;
-                $idjurusan = $identitasp5->idjurusan;
+                if($idkelas != $raportp5->idkelas) {
+                    return redirect("raportp5/".$idraportp5."?koordinator=true")->with('warning', 'Anda diarahkan keruang koordinator');
+                }
+                $project = judulp5M::where("idraportp5", $idraportp5)
+                ->where("idkelas", $raportp5->idkelas)
+                ->where("idjurusan", $idjurusan)
+                ->first();
 
-                if(!($idkelas == $raportp5->idkelas)) {
+                
+            }else {
+                $identitasp5 = identitasp5M::where("iduser", Auth::user()->iduser);
+                $idkelas = $identitasp5->select("idkelas")->get()->toArray();
+                $idjurusan = $identitasp5->select("idjurusan")->get()->toArray();
+
+                
+
+                if(empty(Auth::user()->identitasp5) ) {
+                    return redirect('raportp5')->with('warning', 'Maaf, bukan rana anda');
+                }else if((identitasp5M::where("iduser", Auth::user()->iduser)->first()->idkelas != $raportp5->idkelas)) {
                     return redirect('raportp5')->with('warning', 'Maaf, bukan rana anda');
                 }
 
-                $siswa = siswaM::where("idkelas", $idkelas)
-                ->where("idjurusan", $idjurusan)
+                $siswa = siswaM::whereIn("idkelas", $idkelas)
+                ->whereIn("idjurusan", $idjurusan)
                 ->where("nama", "like", "%$keyword%")
+                ->orderBy("idkelas", "asc")
+                ->orderBy("idjurusan", "asc")
                 ->orderBy("nama", "asc")
                 ->paginate(20);
+
+
+                $project = judulp5M::where("idraportp5", $idraportp5)
+                ->whereIn("idkelas", $idkelas)
+                ->whereIn("idjurusan", $idjurusan)
+                ->get();
+                // dd($project);
             }
 
             $raportp5 = raportp5M::where("idraportp5",$idraportp5)->first();
 
-            $siswa->appends($request->only(["limit", "keyword"]));
+            $siswa->appends($request->only(["limit", "keyword", "koordinator"]));
 
 
             $totalHitung = 0;
@@ -114,10 +116,7 @@ class raportp5C extends Controller
             // $dimensi = dimensip5M::where("idtemap5", $total->temap5->idtemap5)->get()->subdimensip5->count();
             // $totalHitung = $total->temap5->where("idraportp5", $idraportp5)->first()->dimensip5->subdimensip5->count();
 
-            $project = judulp5M::where("idraportp5", $idraportp5)
-            ->where("idkelas", $raportp5->idkelas)
-            ->where("idjurusan", $idjurusan)
-            ->first();
+            
             // dd($project);
 
             // dd($idkelas);
@@ -339,19 +338,61 @@ class raportp5C extends Controller
     public function ubahprojectp5(Request $request, $idraportp5)
     {
         // try{
+
+        if($request->koordinator == "true") {
+            $iduser = Auth::user()->iduser;
+
+            $identitasp5 = identitasp5M::where("iduser", Auth::user()->iduser)->get();
+
+            foreach ($identitasp5 as $item) {
+                $judulp5 = $request["judulp5".$item->ididentitasp5];
+        
+                $idkelas = $item->idkelas;
+                $idjurusan = $item->idjurusan;
+        
+                $cek = judulp5M::where("idraportp5", $idraportp5)
+                ->where("idkelas", $idkelas)
+                ->where("idjurusan", $idjurusan);
+                // dd($cek->first());
+        
+        
+                // dd($cek->count());
+        
+                if($cek->count() == 0) {
+                    judulp5M::create([
+                        "iduser" => $iduser,
+                        "idkelas" => $idkelas,
+                        "idjurusan" => $idjurusan,
+                        "judulp5" => $judulp5??"",
+                        "idraportp5" => $idraportp5,
+                    ]);
+                }else {
+                    $cek->update([
+                        "iduser" => $iduser,
+                        "idkelas" => $idkelas,
+                        "idjurusan" => $idjurusan,
+                        "judulp5" => $judulp5??"",
+                        "idraportp5" => $idraportp5,
+                    ]);
+                }
+                # code...
+            }
+
+            
+        }else {
             $iduser = Auth::user()->iduser;
             $judulp5 = $request->judulp5;
-
+    
             $idkelas = Auth::user()->identitasp5->idkelas??walikelasM::where("ididentitas", Auth::user()->identitas->ididentitas)->first()->idkelas;
             $idjurusan = Auth::user()->identitasp5->idjurusan??walikelasM::where("ididentitas", Auth::user()->identitas->ididentitas)->first()->idjurusan;
-
+    
             $cek = judulp5M::where("idraportp5", $idraportp5)
             ->where("idkelas", $idkelas)
             ->where("idjurusan", $idjurusan);
-
-
+    
+    
             // dd($cek->count());
-
+    
             if($cek->count() == 0) {
                 judulp5M::create([
                     "iduser" => $iduser,
@@ -369,8 +410,10 @@ class raportp5C extends Controller
                     "idraportp5" => $idraportp5,
                 ]);
             }
+        }
 
-            return redirect()->route("penilaian.raportp5", $idraportp5)->with("success", "Judul telah diupdate");
+
+            return redirect()->back()->with("success", "Judul telah diupdate");
 
         // }catch(\Throwable $th){
         //     return redirect()->back()->with('toast_error', 'Bukan hak admin');

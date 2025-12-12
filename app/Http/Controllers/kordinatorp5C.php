@@ -41,7 +41,7 @@ class kordinatorp5C extends Controller
             'idjurusan' => 'required',
         ]);
         try {
-
+            
             $data = $request->all();
 
             identitasp5M::create($data);

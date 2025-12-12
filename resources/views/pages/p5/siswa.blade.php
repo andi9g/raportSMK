@@ -17,12 +17,41 @@
             <form action="{{ route('ubah.project.p5', [$idraportp5]) }}" method="post">
                 @csrf
                 @method("PUT")
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="namaproject">Nama Project</label>
-                        <input id="namaproject" class="form-control" type="text" name="judulp5" value="{{ empty($project->judulp5)?'':$project->judulp5 }}">
+                @if (request("koordinator")=="true")
+                    @php
+                        $identitasp5 = App\Models\identitasp5M::where("iduser", Auth::user()->iduser)->get();
+                        // dd($identitasp5)
+                    @endphp
+                    <input type="hidden" name="koordinator" value="true">
+                    @foreach ($identitasp5 as $item)
+                    @php
+                        $tema = App\Models\judulp5M::where("iduser", $item->iduser)
+                        ->where("idkelas", $item->idkelas)
+                        ->where("idraportp5", $idraportp5)
+                        ->where("idjurusan", $item->idjurusan)->first()->judulp5??"";
+                    @endphp
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="namaproject">Tema {{ $item->kelas->namakelas." ".$item->jurusan->jurusan }}</label>
+                            <input id="namaproject" class="form-control" type="text" name="judulp5{{ $item->ididentitasp5 }}" value="{{ $tema }}">
+                        </div>
                     </div>
-                </div>
+                    @endforeach
+
+                    @else
+                    <input type="hidden" name="koordinator" value="false">
+
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="namaproject">Nama Project</label>
+                            <input id="namaproject" class="form-control" type="text" name="judulp5" value="{{ empty($project->judulp5)?'':$project->judulp5 }}">
+                        </div>
+                    </div>
+
+                @endif
+
+                
+
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-success">
                         Ubah Project
@@ -39,13 +68,35 @@
         <div class="card-header">
             <div class="row">
                 <div class="col-md-8">
-                    <h4 class="text-uppercase text-bold w-100 mb-0 p-0 d-inline">
-                        <u>
-                            "{{ empty($project->judulp5)?"Belum memiliki nama kegiatan":$project->judulp5 }}"
-                        </u>
-                    </h4>
+                    @if (request("koordinator")==true)
+                        @php
+                            $identitasp5 = App\Models\identitasp5M::where("iduser", Auth::user()->iduser)->get();
+                            // dd($identitasp5)
+                        @endphp
+                        @foreach ($identitasp5 as $item)
+                        @php
+                            $tema = App\Models\judulp5M::where("iduser", $item->iduser)
+                            ->where("idkelas", $item->idkelas)
+                            ->where("idraportp5", $idraportp5)
+                            ->where("idjurusan", $item->idjurusan)->first()->judulp5??"Belum memiliki nama kegiatan";
+                        @endphp
+                        <h5 class="text-uppercase text-bold w-100 mb-0 p-0 d-inline">
+                                "{{ "Kelas ".$item->kelas->namakelas." ".$item->jurusan->jurusan." : ".$tema }}"
+                        </h5><br>
+                        @endforeach
+
+                    @else
+                        <h4 class="text-uppercase text-bold w-100 mb-0 p-0 d-inline">
+                            <u>
+                                {{ empty($project->judulp5)?"Belum memiliki nama kegiatan":$project->judulp5 }}
+                            </u>
+                        </h4>
+                    @endif
+
                     &emsp;
-                    <button class="badge py-1 border-0 badge-primary d-inline" type="button" data-toggle="modal" data-target="#ubahproject">
+
+
+                    <button class="badge py-1 border-0 badge-primary d-inline px-5 py-2" type="button" data-toggle="modal" data-target="#ubahproject">
                         <i class="fa fa-edit"></i> Ubah
                     </button>
                 </div>
@@ -60,6 +111,7 @@
                                 </button>
                             </div>
                         </div>
+                        <input type="hidden" name="page" value="{{ request('page') }}">
 
                     </form>
                 </div>
@@ -68,7 +120,22 @@
 
         <div class="card-body">
             <div class="table-responsive">
-                <h5 class="text-right text-uppercase text-primary"><b>{{ $raportp5->tema }}</b></h5>
+                <div class="row my-2">
+                    <div class="col-6">
+                        @if (request("koordinator")==true)
+                            <a href="{{ url()->current() }}" class="btn btn-danger">SEBAGAI WALIKELAS</a>
+
+                            @else
+                            <form action="{{ url()->current() }}" method="get">
+                                <button type="submit" class="btn btn-success" value="true" name="koordinator">SEBAGAI KOORDINATOR</button>
+                                <input type="hidden" name="page" value="{{ request('page') }}">
+                            </form>
+                        @endif
+                    </div>
+                    <div class="col-6">
+                        <h5 class="text-right text-uppercase text-primary"><b>{{ $raportp5->tema }}</b></h5>
+                    </div>
+                </div>
                 <table class="table table-striped table-bordered ">
                     <thead>
                         <tr>
@@ -78,8 +145,8 @@
                             <th>Rombel</th>
                             <th>Ket</th>
                             <th>Nilai</th>
-                            @if (!empty($akun->identitas->walikelas))
-                            <th>Cetak</th>
+                            @if (!empty(Auth::user()->identitas->walikelas))
+                                <th>Cetak</th>
                             @endif
                         </tr>
                     </thead>
@@ -113,15 +180,16 @@
                             @php
                                 $akun = Auth::user();
                             @endphp
-                            @if (!empty($akun->identitas->walikelas))
                             <td>
+                                @if ($akun->identitas->walikelas->idkelas??"" == $item->idkelas)
                                     <a href="{{ route('cetak.raport.p5', [$idraportp5,$item->nisn, $pages]) }}" target="_blank" class="btn btn-secondary btn-block btn-sm">
                                         <i class="fa fa-print"></i> CETAK
                                     </a>
-
+                                @else
+                                    Bukan Walikelas
+                                @endif
                                 </td>
                             </tr>
-                            @endif
 
                         @endforeach
                     </tbody>
