@@ -31,6 +31,7 @@ class raportp5C extends Controller
             $iduser = Auth::user()->iduser;
             $idjurusan = "1";
             $idkelas = "1";
+            // dd($posisi);
 
             $raportp5 = raportp5M::where("idraportp5", $idraportp5)->first();
 
@@ -67,6 +68,9 @@ class raportp5C extends Controller
 
                 
             }else {
+                if(!$request->koordinator) {
+                    return redirect("raportp5/".$idraportp5."?koordinator=true")->with('warning', 'Anda diarahkan keruang koordinator');
+                }
                 $identitasp5 = identitasp5M::where("iduser", Auth::user()->iduser);
                 $idkelas = $identitasp5->select("idkelas")->get()->toArray();
                 $idjurusan = $identitasp5->select("idjurusan")->get()->toArray();
