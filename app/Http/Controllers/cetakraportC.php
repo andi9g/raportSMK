@@ -29,9 +29,9 @@ class cetakraportC extends Controller
      */
     public function index(Request $request, $idraport)
     {
-
+        $raport = raportM::where("idraport", $idraport)->first();
         $keyword = empty($request->keyword)?"":$request->keyword;
-        $kelas = empty($request->kelas)?"":$request->kelas;
+        $kelas = empty($request->kelas)?$raport->idkelas:$request->kelas;
         $jurusan = empty($request->jurusan)?"":$request->jurusan;
 
         $datajurusan = jurusanM::get();
