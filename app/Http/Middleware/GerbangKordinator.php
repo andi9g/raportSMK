@@ -22,7 +22,7 @@ class GerbangKordinator
         $posisi = Auth::user()->identitas->posisi;
         $identitas = identitasp5M::where("iduser", $iduser)->count();
 
-        if($identitas == 1 || ($posisi == "admin" || $posisi == "walikelas")) {
+        if($identitas >= 1 || ($posisi == "admin" || $posisi == "walikelas")) {
             return $next($request);
         }else {
             return redirect('home')->with("warning", "maaf anda bukan kordinator P5");

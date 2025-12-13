@@ -71,15 +71,15 @@ class raportp5C extends Controller
                 if(!$request->koordinator) {
                     return redirect("raportp5/".$idraportp5."?koordinator=true")->with('warning', 'Anda diarahkan keruang koordinator');
                 }
-                $identitasp5 = identitasp5M::where("iduser", Auth::user()->iduser);
+                $identitasp5 = identitasp5M::where("iduser", Auth::user()->iduser)->where("idkelas", $raportp5->idkelas);
                 $idkelas = $identitasp5->select("idkelas")->get()->toArray();
                 $idjurusan = $identitasp5->select("idjurusan")->get()->toArray();
 
-                
+                // dd(Auth::user()->identitasp5);
 
                 if(empty(Auth::user()->identitasp5) ) {
                     return redirect('raportp5')->with('warning', 'Maaf, bukan rana anda');
-                }else if((identitasp5M::where("iduser", Auth::user()->iduser)->first()->idkelas != $raportp5->idkelas)) {
+                }else if((identitasp5M::where("iduser", Auth::user()->iduser)->where("idkelas", $raportp5->idkelas)->first()->idkelas != $raportp5->idkelas)) {
                     return redirect('raportp5')->with('warning', 'Maaf, bukan rana anda');
                 }
 
@@ -342,11 +342,12 @@ class raportp5C extends Controller
     public function ubahprojectp5(Request $request, $idraportp5)
     {
         // try{
+        $raportp5 = raportp5M::where("idraportp5", $idraportp5)->first();
 
         if($request->koordinator == "true") {
             $iduser = Auth::user()->iduser;
 
-            $identitasp5 = identitasp5M::where("iduser", Auth::user()->iduser)->get();
+            $identitasp5 = identitasp5M::where("iduser", Auth::user()->iduser)->where("idkelas", $raportp5->idkelas)->get();
 
             foreach ($identitasp5 as $item) {
                 $judulp5 = $request["judulp5".$item->ididentitasp5];

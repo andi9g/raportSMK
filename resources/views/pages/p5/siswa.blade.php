@@ -19,7 +19,7 @@
                 @method("PUT")
                 @if (request("koordinator")=="true")
                     @php
-                        $identitasp5 = App\Models\identitasp5M::where("iduser", Auth::user()->iduser)->get();
+                        $identitasp5 = App\Models\identitasp5M::where("iduser", Auth::user()->iduser)->where("idkelas", $raportp5->idkelas)->get();
                         // dd($identitasp5)
                     @endphp
                     <input type="hidden" name="koordinator" value="true">
@@ -70,7 +70,7 @@
                 <div class="col-md-8">
                     @if (request("koordinator")==true)
                         @php
-                            $identitasp5 = App\Models\identitasp5M::where("iduser", Auth::user()->iduser)->get();
+                            $identitasp5 = App\Models\identitasp5M::where("iduser", Auth::user()->iduser)->where("idkelas", $raportp5->idkelas)->get();
                             // dd($identitasp5)
                         @endphp
                         @foreach ($identitasp5 as $item)
@@ -123,11 +123,11 @@
                 <div class="row my-2">
                     <div class="col-6">
                         @if (request("koordinator")==true)
-                            <a href="{{ url()->current() }}" class="btn btn-danger">SEBAGAI WALIKELAS</a>
+                            <a href="{{ url()->current() }}" class="btn btn-danger">PINDAH HALAMAN WALIKELAS</a>
 
                             @else
                             <form action="{{ url()->current() }}" method="get">
-                                <button type="submit" class="btn btn-success" value="true" name="koordinator">SEBAGAI KOORDINATOR</button>
+                                <button type="submit" class="btn btn-success" value="true" name="koordinator">PINDAH HALAMAN KOORDINATOR</button>
                                 <input type="hidden" name="page" value="{{ request('page') }}">
                             </form>
                         @endif
