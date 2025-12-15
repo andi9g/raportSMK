@@ -159,6 +159,7 @@ Route::middleware(['GerbangIdentitas', 'GerbangCekWaliKelas'])->group(function (
     Route::post("detailraport/{iddetailraport}/ubah", "raportC@ubahjurusan")->name("detailraport.ubah.jurusan");
     Route::post("detailraport/{iddetailraport}/ubahnamamapel", "raportC@ubahnamamapel")->name("detailraport.ubah.namamapel");
     Route::post("detailraport/{iddetailraport}/duplikat", "raportC@duplikat")->name("detailraport.ubah.duplikat");
+    Route::PUT("detailraport/{iddetailraport}/pindah", "raportC@pindah")->name("detailraport.pindah");
 
     //penilaian
     Route::get("nilairaport/{iddetailraport}", "nilaiC@index");

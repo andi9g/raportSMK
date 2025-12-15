@@ -128,8 +128,47 @@ KELOLA {{ strtoupper($judul) }}
                                 <i class="fa fa-trash"></i>
                             </button>
                             <button class="badge py-1 border-0 w-100 badge-primary" type="button" data-toggle="modal" data-target="#copydetailraport{{ $item->iddetailraport }}"><i class="fa fa-copy"></i> Duplikat </button>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="badge py-1 border-0 w-100 badge-info" data-toggle="modal" data-target="#pindahdata{{ $item->iddetailraport }}">
+                              PINDAH RAPOR
+                            </button>
+                            
+                            
                         </td>
                     </tr>
+
+                    <div class="modal fade" id="pindahdata{{ $item->iddetailraport }}" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">PIDAH RAPOR</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                </div>
+                                <form action="{{ route('detailraport.pindah', [$item->iddetailraport]) }}" method="post">
+                                    @csrf
+                                    @method("PUT")
+                                    <div class="modal-body">
+                                        <div class='form-group'>
+                                            <label for='foridraport' class='text-capitalize'>Posisi Rapor</label>
+                                            <select name='idraport' id='foridraport' class='form-control'>
+                                                @foreach ($raport as $rap)
+                                                    <option value="{{ $rap->idraport }}" @if ($rap->idraport == $idraport)
+                                                        selected
+                                                    @endif>{{ $rap->kelas->namakelas }} - {{ $rap->namaraport." (".$rap->semester." ".$rap->tahun."/".($rap->tahun+1).")" }}</option> 
+                                                @endforeach
+                                            <select>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Pindah</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
 
                     <div id="copydetailraport{{ $item->iddetailraport }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title-333333" aria-hidden="true">
                         <div class="modal-dialog" role="document">

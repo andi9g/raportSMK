@@ -193,6 +193,9 @@ class raportC extends Controller
         ->where('idraport', $idraport)
         ->get();
 
+        $raport = raportM::where("ket", 0)->get();
+        // dd($raport);
+
 
         return view("pages.raport.detailraport", [
             "judul" => $judul,
@@ -203,6 +206,7 @@ class raportC extends Controller
             "mapel" => $mapel,
             "keyword" => $keyword,
             "detailraport" => $detailraport,
+            "raport" => $raport,
         ]);
 
     }
@@ -278,6 +282,34 @@ class raportC extends Controller
 
     }
 
+    public function pindah(Request $request, $iddetailraport)
+    {
+        $request->validate([
+            "idraport" => "required|numeric",
+        ]);
+
+        $detailraport = detailraportM::where("iddetailraport", $iddetailraport)->first();
+
+        $idsiswa = siswaM::where("idkelas", $detailraport->idkelas)
+        ->where("idjurusan", $detailraport->idjurusan)
+        ->select("idsiswa")->get()->toArray();
+
+        $ujian = ujianM::where("idraport", $detailraport->idraport)
+        ->where("idmapel", $detailraport->idmapel)
+        ->whereIn("idsiswa", $idsiswa)->update([
+            "idraport" => $request->idraport,
+        ]);
+
+        $detailraport->update([
+            "idraport" => $request->idraport,
+        ]);
+
+        return redirect()->back()->with("success", "data berhasil dipindahkan!");
+
+
+        
+
+    }
     public function duplikat(Request $request, $iddetailraport)
     {
         $request->validate([
@@ -601,6 +633,10 @@ class raportC extends Controller
             $mapel = [];
             $ratarata = 0;
             foreach ($detailraport as $detail) {
+
+                if($detail->mapel->ket=="pilihan") {
+                    continue;
+                }
 
                 // dd($detailraport->toArray());
                 $idmapel = $detail->idmapel;
