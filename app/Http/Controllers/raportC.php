@@ -645,8 +645,6 @@ class raportC extends Controller
                 ->where("idmapel", $detail->mapel->idmapel)
                 ->select("iddetailraport")->get();
 
-               
-
                 $datanilai = nilairaportM::whereIn("iddetailraport", $iddetailraport->toArray())
                 ->where("idsiswa", $siswa->idsiswa)->get();
 

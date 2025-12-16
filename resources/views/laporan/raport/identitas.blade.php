@@ -290,7 +290,7 @@
                 <p>
                     <b>
                         <u>
-                            MUSTAFA KAMAL,S.Pd
+                            MUSTAFA KAMAL,S.Pd,. M.Pd
                         </u>
                     </b>
                 </p>
