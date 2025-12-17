@@ -702,7 +702,7 @@ class raportC extends Controller
 
             $data[] = collect([
                 "ratarata" => $ratarata,
-                "hasil" => round($ratarata / (count($detailraport) + $pilihanIteration), 2),
+                "hasil" => round($ratarata / (count($detailraport) - $pilihanIteration), 2),
                 "siswa" => $siswa->nama,
                 "nisn" => $siswa->nisn,
                 "mapel" => $mapel,
