@@ -662,10 +662,11 @@ class raportC extends Controller
                     $mapelpilihan = "Mapel Pilihan";
 
                     if($pilihanIteration > 0) {
+                        $pilihanIteration++;
                         continue;
                     }
                     
-                    $pilihanIteration++;
+                    
 
 
                 }else {
