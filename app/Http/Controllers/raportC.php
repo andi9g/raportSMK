@@ -611,9 +611,9 @@ class raportC extends Controller
         $idkelas = $walikelas->identitas->walikelas->idkelas;
 
         $detailraport = detailraportM::where('idraport', $raport->idraport)->where("idkelas", $raport->idkelas)
-        ->where("idjurusan", $idjurusan)->select("idmapel")->groupBy("idmapel")->orderBy("idmapel", "asc")->get();
+        ->where("idjurusan", $idjurusan)->select("idmapel")->orderBy("idmapel", "asc")->groupBy("idmapel")->get();
 
-        // dd($detailraport->toArray());
+        dd($detailraport->toArray());
         
         $kejuruan = detailraportM::where('idraport', $raport->idraport)->where("idkelas", $raport->idkelas)
         ->where("idjurusan", $idjurusan)->whereHas('mapel', function ($query) {
@@ -648,30 +648,30 @@ class raportC extends Controller
             foreach ($detailraport as $detail) {
                 $mapelpilihan = null;
 
-                // if($detail->mapel->ket=="pilihan") {
-                //     // $cek1 = detailraportM::where('idraport', $raport->idraport)
-                //     // ->where("idkelas", $raport->idkelas)
-                //     // ->where("idjurusan", $idjurusan)
-                //     // ->where("idmapel", $detail->mapel->idmapel)
-                //     // ->select("iddetailraport")->first();
+                if($detail->mapel->ket=="pilihan") {
+                    // $cek1 = detailraportM::where('idraport', $raport->idraport)
+                    // ->where("idkelas", $raport->idkelas)
+                    // ->where("idjurusan", $idjurusan)
+                    // ->where("idmapel", $detail->mapel->idmapel)
+                    // ->select("iddetailraport")->first();
                     
-                //     $cek_mapel[] = $detail->mapel->namamapel;
-                //     $cek2 = nilairaportM::where("iddetailraport", $detail->iddetailraport)
-                //     ->where("idsiswa", $siswa->idsiswa)->count();
+                    $cek_mapel[] = $detail->mapel->namamapel;
+                    $cek2 = nilairaportM::where("iddetailraport", $detail->iddetailraport)
+                    ->where("idsiswa", $siswa->idsiswa)->count();
                     
-                //     if($cek2 == 0) {
-                //         $pilihanIteration++;
-                //         continue;
-                //         // dd($cek2);
-                //     }else {
-                //         if($validasijurusan == $kejuruan1) {
-                //             $mapelpilihan = "Mapel Pilihan";
-                //             $kejuruan1 = $kejuruan1 + 1;
-                //             // dd($detail->mapel->toArray());
-                //         }
-                //     }
-                //     // dd($cek->toArray());
-                // }
+                    if($cek2 == 0) {
+                        $pilihanIteration++;
+                        continue;
+                        // dd($cek2);
+                    }else {
+                        if($validasijurusan == $kejuruan1) {
+                            $mapelpilihan = "Mapel Pilihan";
+                            $kejuruan1 = $kejuruan1 + 1;
+                            // dd($detail->mapel->toArray());
+                        }
+                    }
+                    // dd($cek->toArray());
+                }
 
                 // dd($detailraport->toArray());
                 $idmapel = $detail->idmapel;
