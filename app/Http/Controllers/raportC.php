@@ -633,6 +633,7 @@ class raportC extends Controller
             $mapel = [];
             $ratarata = 0;
             $pilihanIteration = 0;
+            $mapelpilihan = "null";
             foreach ($detailraport as $detail) {
 
                 if($detail->mapel->ket=="pilihan") {
@@ -652,8 +653,10 @@ class raportC extends Controller
                         // dd($cek2);
                     }else {
                         if($validasijurusan == $kejuruan) {
+                            $mapelpilihan = "Mapel Pilihan";
                             $kejuruan = $kejuruan + 1;
                         }
+                        
                     }
                     // dd($cek->toArray());
                 }
@@ -708,7 +711,7 @@ class raportC extends Controller
                 
 
                 $mapel[] = collect([
-                    "namamapel" => $detail->mapel->namamapel,
+                    "namamapel" => ($mapelpilihan=="null")??$detail->mapel->namamapel,
                     "ket" => $detail->mapel->ket,
                     "nilai" => $n3,
                 ]);
@@ -716,6 +719,14 @@ class raportC extends Controller
                 
 
                 $ratarata = $ratarata + $n3;
+            }
+
+            if($validasijurusan == $kejuruan) {
+                $mapel[] = collect([
+                    "namamapel" => "Mapel Pilihan",
+                    "ket" => $detail->mapel->ket,
+                    "nilai" => $n3,
+                ]);
             }
 
             $data[] = collect([
