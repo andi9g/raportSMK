@@ -638,6 +638,7 @@ class raportC extends Controller
             $mapel = [];
             $ratarata = 0;
             $pilihanIteration = 0;
+            $pilihanstatis = 0;
 
             // $kejuruan1 = detailraportM::where('idraport', $raport->idraport)->where("idkelas", $raport->idkelas)
             // ->where("idjurusan", $idjurusan)->whereHas('mapel', function ($query) {
@@ -664,6 +665,9 @@ class raportC extends Controller
                     if($pilihanIteration > 0) {
                         $pilihanIteration++;
                         continue;
+                    }else {
+                        $pilihanIteration++;
+                        $pilihanstatis++;
                     }
                     
                     
@@ -731,7 +735,7 @@ class raportC extends Controller
 
             $data[] = collect([
                 "ratarata" => $ratarata,
-                "hasil" => round($ratarata / (count($detailraport) - $pilihanIteration), 2),
+                "hasil" => round($ratarata / (count($detailraport) - ($pilihanIteration - $pilihanstatis)), 2),
                 "siswa" => $siswa->nama,
                 "nisn" => $siswa->nisn,
                 "mapel" => $mapel,
