@@ -721,7 +721,7 @@ class raportC extends Controller
                 $ratarata = $ratarata + $n3;
             }
 
-            if($valid==false) {
+            if($valid==false && $validasijurusan == $kejuruan) {
                 $pilihanIteration--;
                 $ratarata = $ratarata + 0;
                 $mapel[] = collect([
