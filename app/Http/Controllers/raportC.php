@@ -619,6 +619,10 @@ class raportC extends Controller
         ->where("idjurusan", $idjurusan)->whereHas('mapel', function ($query) {
             $query->where('ket', 'kejuruan');
         })->distinct()->count('idmapel');
+
+        if($raport->kelas->namakelas=="XI") {
+            $kejuruan = $kejuruan + 1;
+        }
         
         $umum = detailraportM::where('idraport', $raport->idraport)->where("idkelas", $raport->idkelas)
         ->where("idjurusan", $idjurusan)->whereHas('mapel', function ($query) {
@@ -635,10 +639,10 @@ class raportC extends Controller
             $ratarata = 0;
             $pilihanIteration = 0;
 
-            // $kejuruan = detailraportM::where('idraport', $raport->idraport)->where("idkelas", $raport->idkelas)
-            // ->where("idjurusan", $idjurusan)->whereHas('mapel', function ($query) {
-            //     $query->where('ket', 'kejuruan');
-            // })->distinct()->count('idmapel');            
+            $kejuruan1 = detailraportM::where('idraport', $raport->idraport)->where("idkelas", $raport->idkelas)
+            ->where("idjurusan", $idjurusan)->whereHas('mapel', function ($query) {
+                $query->where('ket', 'kejuruan');
+            })->distinct()->count('idmapel');            
 
             $cek_mapel = [];
             foreach ($detailraport as $detail) {
@@ -660,9 +664,9 @@ class raportC extends Controller
                         continue;
                         // dd($cek2);
                     }else {
-                        if($validasijurusan == $kejuruan) {
+                        if($validasijurusan == $kejuruan1) {
                             $mapelpilihan = "Mapel Pilihan";
-                            $kejuruan = $kejuruan + 1;
+                            $kejuruan1 = $kejuruan1 + 1;
                             // dd($detail->mapel->toArray());
                         }
                     }
