@@ -611,9 +611,9 @@ class raportC extends Controller
         $idkelas = $walikelas->identitas->walikelas->idkelas;
 
         $detailraport = detailraportM::where('idraport', $raport->idraport)->where("idkelas", $raport->idkelas)
-        ->where("idjurusan", $idjurusan)->select("idmapel")->orderBy("idmapel", "asc")->groupBy("idmapel")->get();
+        ->where("idjurusan", $idjurusan)->orderBy("idmapel", "asc")->select("idmapel")->groupBy("idmapel")->get();
 
-        dd($detailraport->toArray());
+        // dd($detailraport->toArray());
         
         $kejuruan = detailraportM::where('idraport', $raport->idraport)->where("idkelas", $raport->idkelas)
         ->where("idjurusan", $idjurusan)->whereHas('mapel', function ($query) {
@@ -685,8 +685,6 @@ class raportC extends Controller
                     
                     // dd($datanilai->toArray());
 
-                    $mapelpilihan = "Mapel Pilihan";
-                    $kejuruan1 = $kejuruan1 + 1;
 
                 }else {
                     $iddetailraport = detailraportM::where('idraport', $raport->idraport)->where("idkelas", $raport->idkelas)
