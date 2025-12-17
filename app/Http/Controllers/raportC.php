@@ -443,7 +443,7 @@ class raportC extends Controller
                     $totalnilai2 = $praktek + $nonpraktek;
                 }
 
-                $hasil = ($totalnilai1*0.8) + ($totalnilai2 * 0.2);
+                $hasil = ($totalnilai1 + $totalnilai2) / 2;
 
                 $data[] = [
                     "namasiswa" => $s->nama,
@@ -624,41 +624,18 @@ class raportC extends Controller
             $query->where('ket', 'umum');
         })->distinct()->count('idmapel');
         
+        
         $murid = siswaM::where("idkelas", $idkelas)->where("idjurusan", $idjurusan)->get();
-        $validasijurusan = $kejuruan;
             
         $data = [];
         foreach ($murid as $siswa) {
 
             $mapel = [];
             $ratarata = 0;
-            $pilihanIteration = 0;
-            
-            $valid = false;
             foreach ($detailraport as $detail) {
-                $mapelpilihan = null;
 
                 if($detail->mapel->ket=="pilihan") {
-                    $cek1 = detailraportM::where('idraport', $raport->idraport)->where("idkelas", $raport->idkelas)
-                    ->where("idjurusan", $idjurusan)
-                    ->where("idmapel", $detail->mapel->idmapel)
-                    ->select("iddetailraport")->first();
-
-                    $cek2 = nilairaportM::where("iddetailraport", $cek1->iddetailraport)
-                    ->where("idsiswa", $siswa->idsiswa)->count();
-
-                    if($cek2 == 0) {
-                        $pilihanIteration++;
-                        continue;
-                        // dd($cek2);
-                    }else {
-                        if($validasijurusan == $kejuruan) {
-                            $valid = true;
-                            $mapelpilihan = "Mapel Pilihan";
-                            $kejuruan = $kejuruan + 1;
-                        }
-                    }
-                    // dd($cek->toArray());
+                    continue;
                 }
 
                 // dd($detailraport->toArray());
@@ -711,7 +688,7 @@ class raportC extends Controller
                 
 
                 $mapel[] = collect([
-                    "namamapel" => empty($mapelpilihan) ? $detail->mapel->namamapel : $mapelpilihan,
+                    "namamapel" => $detail->mapel->namamapel,
                     "ket" => $detail->mapel->ket,
                     "nilai" => $n3,
                 ]);
@@ -721,19 +698,9 @@ class raportC extends Controller
                 $ratarata = $ratarata + $n3;
             }
 
-            if($valid==false && $validasijurusan == $kejuruan) {
-                $pilihanIteration--;
-                $ratarata = $ratarata + 0;
-                $mapel[] = collect([
-                    "namamapel" => "Mapel Pilihan",
-                    "ket" => "pilihan",
-                    "nilai" => 0,
-                ]);
-            }
-
             $data[] = collect([
                 "ratarata" => $ratarata,
-                "hasil" => round($ratarata / (count($detailraport) - $pilihanIteration), 2),
+                "hasil" => round($ratarata / count($detailraport), 2),
                 "siswa" => $siswa->nama,
                 "nisn" => $siswa->nisn,
                 "mapel" => $mapel,
