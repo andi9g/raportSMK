@@ -622,7 +622,7 @@ class raportC extends Controller
 
         if($raport->kelas->namakelas=="XI") {
             // dd($kejuruan);
-            $kejuruan = $kejuruan + 1;
+            $kejuruan = $kejuruan + 2;
         }
         
         $umum = detailraportM::where('idraport', $raport->idraport)->where("idkelas", $raport->idkelas)
