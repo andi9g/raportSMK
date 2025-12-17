@@ -443,7 +443,7 @@ class raportC extends Controller
                     $totalnilai2 = $praktek + $nonpraktek;
                 }
 
-                $hasil = ($totalnilai1 + $totalnilai2) / 2;
+                $hasil = ($totalnilai1*0.8) + ($totalnilai2 * 0.2);
 
                 $data[] = [
                     "namasiswa" => $s->nama,
@@ -612,30 +612,65 @@ class raportC extends Controller
 
         $detailraport = detailraportM::where('idraport', $raport->idraport)->where("idkelas", $raport->idkelas)
         ->where("idjurusan", $idjurusan)->select("idmapel")->groupBy("idmapel")->get();
+
         // dd($detailraport->toArray());
         
         $kejuruan = detailraportM::where('idraport', $raport->idraport)->where("idkelas", $raport->idkelas)
         ->where("idjurusan", $idjurusan)->whereHas('mapel', function ($query) {
             $query->where('ket', 'kejuruan');
         })->distinct()->count('idmapel');
+
+        if($raport->kelas->namakelas=="XI") {
+            $kejuruan = $kejuruan + 1;
+        }
         
         $umum = detailraportM::where('idraport', $raport->idraport)->where("idkelas", $raport->idkelas)
         ->where("idjurusan", $idjurusan)->whereHas('mapel', function ($query) {
             $query->where('ket', 'umum');
         })->distinct()->count('idmapel');
         
-        
         $murid = siswaM::where("idkelas", $idkelas)->where("idjurusan", $idjurusan)->get();
+        $validasijurusan = $kejuruan;
             
         $data = [];
         foreach ($murid as $siswa) {
 
             $mapel = [];
             $ratarata = 0;
+            $pilihanIteration = 0;
+
+            $kejuruan1 = detailraportM::where('idraport', $raport->idraport)->where("idkelas", $raport->idkelas)
+            ->where("idjurusan", $idjurusan)->whereHas('mapel', function ($query) {
+                $query->where('ket', 'kejuruan');
+            })->distinct()->count('idmapel');            
+
+            $cek_mapel = [];
             foreach ($detailraport as $detail) {
+                $mapelpilihan = null;
 
                 if($detail->mapel->ket=="pilihan") {
-                    continue;
+                    // $cek1 = detailraportM::where('idraport', $raport->idraport)
+                    // ->where("idkelas", $raport->idkelas)
+                    // ->where("idjurusan", $idjurusan)
+                    // ->where("idmapel", $detail->mapel->idmapel)
+                    // ->select("iddetailraport")->first();
+                    
+                    $cek_mapel[] = $detail->mapel->namamapel;
+                    $cek2 = nilairaportM::where("iddetailraport", $detail->iddetailraport)
+                    ->where("idsiswa", $siswa->idsiswa)->count();
+                    
+                    if($cek2 == 0) {
+                        $pilihanIteration++;
+                        continue;
+                        // dd($cek2);
+                    }else {
+                        if($validasijurusan == $kejuruan1) {
+                            $mapelpilihan = "Mapel Pilihan";
+                            $kejuruan1 = $kejuruan1 + 1;
+                            // dd($detail->mapel->toArray());
+                        }
+                    }
+                    // dd($cek->toArray());
                 }
 
                 // dd($detailraport->toArray());
@@ -688,7 +723,7 @@ class raportC extends Controller
                 
 
                 $mapel[] = collect([
-                    "namamapel" => $detail->mapel->namamapel,
+                    "namamapel" => empty($mapelpilihan) ? $detail->mapel->namamapel : $mapelpilihan,
                     "ket" => $detail->mapel->ket,
                     "nilai" => $n3,
                 ]);
@@ -698,9 +733,22 @@ class raportC extends Controller
                 $ratarata = $ratarata + $n3;
             }
 
+            if($validasijurusan == $kejuruan) {
+                $pilihanIteration--;
+                
+                $ratarata = $ratarata + 0;
+                $mapel[] = collect([
+                    "namamapel" => "Mapel Pilihan",
+                    "ket" => "pilihan",
+                    "nilai" => 0,
+                ]);
+
+                
+            }
+
             $data[] = collect([
                 "ratarata" => $ratarata,
-                "hasil" => round($ratarata / count($detailraport), 2),
+                "hasil" => round($ratarata / (count($detailraport) - $pilihanIteration), 2),
                 "siswa" => $siswa->nama,
                 "nisn" => $siswa->nisn,
                 "mapel" => $mapel,
@@ -709,10 +757,12 @@ class raportC extends Controller
             
             
         }
+        
 
         $collect = collect($data);
         $sort = $collect->sortByDesc("ratarata");
 
+        // dd($sort->toArray());
         // dd($sort);
 
         // foreach ($sort->first()["mapel"] as $mapel) {
@@ -720,17 +770,18 @@ class raportC extends Controller
         // }
 
         // dd(count($sort->first()["mapel"]));
+        // dd($kejuruan." ".$umum);
         
         $pdf = PDF::loadView("laporan.raport.leger", [
-                "data" => $sort,
-                "raport" => $raport,
-                "kejuruan" => $kejuruan,
-                "umum" => $umum,
-                // "elemen" => $elemen,
-            ]);
-            $pdf->setPaper('a4', 'landscape');
+            "data" => $sort,
+            "raport" => $raport,
+            "kejuruan" => $kejuruan,
+            "umum" => $umum,
+            // "elemen" => $elemen,
+        ]);
+        $pdf->setPaper('a4', 'landscape');
 
-            return $pdf->stream("Leger.pdf");
+        return $pdf->download("Leger.pdf");
 
 
         
