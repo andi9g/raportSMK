@@ -633,7 +633,7 @@ class raportC extends Controller
             $mapel = [];
             $ratarata = 0;
             $pilihanIteration = 0;
-            $mapelpilihan = "null";
+            $mapelpilihan = false;
             foreach ($detailraport as $detail) {
 
                 if($detail->mapel->ket=="pilihan") {
@@ -711,7 +711,7 @@ class raportC extends Controller
                 
 
                 $mapel[] = collect([
-                    "namamapel" => ($mapelpilihan=="null")??$detail->mapel->namamapel,
+                    "namamapel" => $mapelpilihan??$detail->mapel->namamapel,
                     "ket" => $detail->mapel->ket,
                     "nilai" => $n3,
                 ]);
