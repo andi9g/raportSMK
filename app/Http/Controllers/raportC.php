@@ -635,10 +635,10 @@ class raportC extends Controller
             $ratarata = 0;
             $pilihanIteration = 0;
 
-            $kejuruan = detailraportM::where('idraport', $raport->idraport)->where("idkelas", $raport->idkelas)
-            ->where("idjurusan", $idjurusan)->whereHas('mapel', function ($query) {
-                $query->where('ket', 'kejuruan');
-            })->distinct()->count('idmapel');            
+            // $kejuruan = detailraportM::where('idraport', $raport->idraport)->where("idkelas", $raport->idkelas)
+            // ->where("idjurusan", $idjurusan)->whereHas('mapel', function ($query) {
+            //     $query->where('ket', 'kejuruan');
+            // })->distinct()->count('idmapel');            
 
             $cek_mapel = [];
             foreach ($detailraport as $detail) {
