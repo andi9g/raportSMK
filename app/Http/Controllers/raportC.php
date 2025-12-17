@@ -624,8 +624,8 @@ class raportC extends Controller
             $query->where('ket', 'umum');
         })->distinct()->count('idmapel');
         
-        
         $murid = siswaM::where("idkelas", $idkelas)->where("idjurusan", $idjurusan)->get();
+        $validasijurusan = $kejuruan;
             
         $data = [];
         foreach ($murid as $siswa) {
@@ -636,7 +636,7 @@ class raportC extends Controller
             foreach ($detailraport as $detail) {
 
                 if($detail->mapel->ket=="pilihan") {
-                    $pilihanIteration++;
+                    
                     
                     $cek1 = detailraportM::where('idraport', $raport->idraport)->where("idkelas", $raport->idkelas)
                     ->where("idjurusan", $idjurusan)
@@ -647,8 +647,13 @@ class raportC extends Controller
                     ->where("idsiswa", $siswa->idsiswa)->count();
 
                     if($cek2 == 0) {
+                        $pilihanIteration++;
                         continue;
                         // dd($cek2);
+                    }else {
+                        if($validasijurusan == $kejuruan) {
+                            $kejuruan = $kejuruan + 1;
+                        }
                     }
                     // dd($cek->toArray());
                 }
