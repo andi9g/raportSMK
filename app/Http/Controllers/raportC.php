@@ -651,7 +651,7 @@ class raportC extends Controller
 
                 $idmapel = $detail->idmapel;
                 if($detail->mapel->ket=="pilihan") {
-                    $mp = mapelM::where("ket", "pilihan")->get()->toArray();
+                    $mp = mapelM::where("ket", "pilihan")->select("idmapel")->get()->toArray();
                     $iddetailraport = detailraportM::where('idraport', $raport->idraport)->where("idkelas", $raport->idkelas)
                     ->whereIn("idmapel", $mp)
                     ->select("iddetailraport")->get();
