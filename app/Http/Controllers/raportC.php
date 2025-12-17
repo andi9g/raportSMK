@@ -611,7 +611,7 @@ class raportC extends Controller
         $idkelas = $walikelas->identitas->walikelas->idkelas;
 
         $detailraport = detailraportM::where('idraport', $raport->idraport)->where("idkelas", $raport->idkelas)
-        ->where("idjurusan", $idjurusan)->select("idmapel")->groupBy("idmapel")->get();
+        ->where("idjurusan", $idjurusan)->select("idmapel")->groupBy("idmapel")->distinct()->get();
 
         // dd($detailraport->toArray());
         
