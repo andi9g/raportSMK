@@ -648,30 +648,30 @@ class raportC extends Controller
             foreach ($detailraport as $detail) {
                 $mapelpilihan = null;
 
-                if($detail->mapel->ket=="pilihan") {
-                    // $cek1 = detailraportM::where('idraport', $raport->idraport)
-                    // ->where("idkelas", $raport->idkelas)
-                    // ->where("idjurusan", $idjurusan)
-                    // ->where("idmapel", $detail->mapel->idmapel)
-                    // ->select("iddetailraport")->first();
+                // if($detail->mapel->ket=="pilihan") {
+                //     // $cek1 = detailraportM::where('idraport', $raport->idraport)
+                //     // ->where("idkelas", $raport->idkelas)
+                //     // ->where("idjurusan", $idjurusan)
+                //     // ->where("idmapel", $detail->mapel->idmapel)
+                //     // ->select("iddetailraport")->first();
                     
-                    $cek_mapel[] = $detail->mapel->namamapel;
-                    $cek2 = nilairaportM::where("iddetailraport", $detail->iddetailraport)
-                    ->where("idsiswa", $siswa->idsiswa)->count();
+                //     $cek_mapel[] = $detail->mapel->namamapel;
+                //     $cek2 = nilairaportM::where("iddetailraport", $detail->iddetailraport)
+                //     ->where("idsiswa", $siswa->idsiswa)->count();
                     
-                    if($cek2 == 0) {
-                        $pilihanIteration++;
-                        continue;
-                        // dd($cek2);
-                    }else {
-                        if($validasijurusan == $kejuruan1) {
-                            $mapelpilihan = "Mapel Pilihan";
-                            $kejuruan1 = $kejuruan1 + 1;
-                            // dd($detail->mapel->toArray());
-                        }
-                    }
-                    // dd($cek->toArray());
-                }
+                //     if($cek2 == 0) {
+                //         $pilihanIteration++;
+                //         continue;
+                //         // dd($cek2);
+                //     }else {
+                //         if($validasijurusan == $kejuruan1) {
+                //             $mapelpilihan = "Mapel Pilihan";
+                //             $kejuruan1 = $kejuruan1 + 1;
+                //             // dd($detail->mapel->toArray());
+                //         }
+                //     }
+                //     // dd($cek->toArray());
+                // }
 
                 // dd($detailraport->toArray());
                 $idmapel = $detail->idmapel;
@@ -684,6 +684,13 @@ class raportC extends Controller
                     ->where("idsiswa", $siswa->idsiswa)->get();
                     
                     // dd($datanilai->toArray());
+                    if(count($datanilai) == 0) {
+                        $pilihanIteration++;
+                        continue;
+                    }else {
+                        $mapelpilihan = "Mapel Pilihan";
+                        $kejuruan1 = $kejuruan1 + 1;
+                    }
 
 
                 }else {
