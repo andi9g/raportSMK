@@ -651,7 +651,6 @@ class raportC extends Controller
                         continue;
                         // dd($cek2);
                     }else {
-                        continue;
                         if($validasijurusan == $kejuruan) {
                             $kejuruan = $kejuruan + 1;
                         }
