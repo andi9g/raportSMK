@@ -260,7 +260,7 @@
                     @endforeach
                     @foreach ($siswa["mapel"] as $mapel)
                         @if ($mapel["ket"] == "pilihan")
-                            @if ($mapel['nilai'] < 65)
+                            @if ($mapel['nilai'] < 60)
                             <td align="center" style="color:red">{{ $mapel["nilai"]}}</td>
                             @php
                                 $ket2++;
