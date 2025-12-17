@@ -637,7 +637,20 @@ class raportC extends Controller
 
                 if($detail->mapel->ket=="pilihan") {
                     $pilihanIteration++;
-                    continue;
+                    
+                    $cek1 = detailraportM::where('idraport', $raport->idraport)->where("idkelas", $raport->idkelas)
+                    ->where("idjurusan", $idjurusan)
+                    ->where("idmapel", $detail->mapel->idmapel)
+                    ->select("iddetailraport")->first();
+
+                    $cek2 = nilairaportM::where("iddetailraport", $cek1->iddetailraport)
+                    ->where("idsiswa", $siswa->idsiswa)->count();
+
+                    if($cek2 == 0) {
+                        continue;
+                        // dd($cek2);
+                    }
+                    // dd($cek->toArray());
                 }
 
                 // dd($detailraport->toArray());
