@@ -611,7 +611,7 @@ class raportC extends Controller
         $idkelas = $walikelas->identitas->walikelas->idkelas;
 
         $detailraport = detailraportM::where('idraport', $raport->idraport)->where("idkelas", $raport->idkelas)
-        ->where("idjurusan", $idjurusan)->orderBy("idmapel", "asc")->get();
+        ->where("idjurusan", $idjurusan)->select("idmapel")->groupBy("idmapel")->get();
 
         // dd($detailraport->toArray());
         
@@ -621,8 +621,7 @@ class raportC extends Controller
         })->distinct()->count('idmapel');
 
         if($raport->kelas->namakelas=="XI") {
-            // dd($kejuruan);
-            $kejuruan = $kejuruan + 2;
+            $kejuruan = $kejuruan + 1;
         }
         
         $umum = detailraportM::where('idraport', $raport->idraport)->where("idkelas", $raport->idkelas)
