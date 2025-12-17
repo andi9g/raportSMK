@@ -639,10 +639,10 @@ class raportC extends Controller
             $ratarata = 0;
             $pilihanIteration = 0;
 
-            $kejuruan1 = detailraportM::where('idraport', $raport->idraport)->where("idkelas", $raport->idkelas)
-            ->where("idjurusan", $idjurusan)->whereHas('mapel', function ($query) {
-                $query->where('ket', 'kejuruan');
-            })->distinct()->count('idmapel');            
+            // $kejuruan1 = detailraportM::where('idraport', $raport->idraport)->where("idkelas", $raport->idkelas)
+            // ->where("idjurusan", $idjurusan)->whereHas('mapel', function ($query) {
+            //     $query->where('ket', 'kejuruan');
+            // })->distinct()->count('idmapel');            
 
             $cek_mapel = [];
             foreach ($detailraport as $detail) {
@@ -684,19 +684,12 @@ class raportC extends Controller
                     ->where("idsiswa", $siswa->idsiswa)->get();
                     
                     $mapelpilihan = "Mapel Pilihan";
-                    // // dd($datanilai->toArray());
-                    // if(count($datanilai) == 0) {
-                    //     $pilihanIteration++;
-                    //     $mapel[] = collect([
-                    //         "namamapel" => "Mapel Pilihan",
-                    //         "ket" => "pilihan",
-                    //         "nilai" => 0,
-                    //     ]);
-                    //     continue;
-                    // }else {
-                    //     $mapelpilihan = "Mapel Pilihan";
-                    //     $kejuruan1 = $kejuruan1 + 1;
-                    // }
+
+                    if($pilihanIteration > 0) {
+                        continue;
+                    }
+                    
+                    $pilihanIteration++;
 
 
                 }else {
