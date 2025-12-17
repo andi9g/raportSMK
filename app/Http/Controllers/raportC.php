@@ -621,6 +621,7 @@ class raportC extends Controller
         })->distinct()->count('idmapel');
 
         if($raport->kelas->namakelas=="XI") {
+            // dd($kejuruan);
             $kejuruan = $kejuruan + 1;
         }
         
@@ -770,6 +771,7 @@ class raportC extends Controller
         // }
 
         // dd(count($sort->first()["mapel"]));
+        // dd($kejuruan." ".$umum);
         
         $pdf = PDF::loadView("laporan.raport.leger", [
             "data" => $sort,
