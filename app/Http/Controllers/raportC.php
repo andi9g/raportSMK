@@ -443,7 +443,7 @@ class raportC extends Controller
                     $totalnilai2 = $praktek + $nonpraktek;
                 }
 
-                $hasil = ($totalnilai1 + $totalnilai2) / 2;
+                $hasil = ($totalnilai1*0.8) + ($totalnilai2 * 0.2);
 
                 $data[] = [
                     "namasiswa" => $s->nama,
