@@ -722,6 +722,8 @@ class raportC extends Controller
             }
 
             if($validasijurusan == $kejuruan) {
+                $pilihanIteration--;
+                $ratarata = $ratarata + 0;
                 $mapel[] = collect([
                     "namamapel" => "Mapel Pilihan",
                     "ket" => "pilihan",
