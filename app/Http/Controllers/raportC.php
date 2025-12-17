@@ -633,12 +633,11 @@ class raportC extends Controller
             $mapel = [];
             $ratarata = 0;
             $pilihanIteration = 0;
-            $mapelpilihan = false;
+            
             foreach ($detailraport as $detail) {
+                $mapelpilihan = null;
 
                 if($detail->mapel->ket=="pilihan") {
-                    
-                    
                     $cek1 = detailraportM::where('idraport', $raport->idraport)->where("idkelas", $raport->idkelas)
                     ->where("idjurusan", $idjurusan)
                     ->where("idmapel", $detail->mapel->idmapel)
@@ -656,7 +655,6 @@ class raportC extends Controller
                             $mapelpilihan = "Mapel Pilihan";
                             $kejuruan = $kejuruan + 1;
                         }
-                        
                     }
                     // dd($cek->toArray());
                 }
@@ -711,7 +709,7 @@ class raportC extends Controller
                 
 
                 $mapel[] = collect([
-                    "namamapel" => $mapelpilihan??$detail->mapel->namamapel,
+                    "namamapel" => empty($mapelpilihan) ? $detail->mapel->namamapel : $mapelpilihan,
                     "ket" => $detail->mapel->ket,
                     "nilai" => $n3,
                 ]);
