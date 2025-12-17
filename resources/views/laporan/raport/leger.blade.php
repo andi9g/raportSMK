@@ -204,7 +204,12 @@
                     @endif
                 @endforeach
                 @foreach ($data->first()["mapel"] as $mapel)
-                    @if ($mapel["ket"] == "kejuruan" || $mapel["ket"] == "pilihan")
+                    @if ($mapel["ket"] == "kejuruan")
+                        <th><p class="vertical-th">{{ $mapel["namamapel"] }}</p></th>
+                    @endif
+                @endforeach
+                @foreach ($data->first()["mapel"] as $mapel)
+                    @if ($mapel["ket"] == "pilihan")
                         <th><p class="vertical-th">{{ $mapel["namamapel"] }}</p></th>
                     @endif
                 @endforeach
@@ -241,6 +246,20 @@
                     @endforeach
                     @foreach ($siswa["mapel"] as $mapel)
                         @if ($mapel["ket"] == "kejuruan")
+                            @if ($mapel['nilai'] < 65)
+                            <td align="center" style="color:red">{{ $mapel["nilai"]}}</td>
+                            @php
+                                $ket2++;
+                            @endphp
+                            @else
+                            <td align="center">{{ $mapel["nilai"]}}</td>
+                            @endif
+                        @endif
+
+
+                    @endforeach
+                    @foreach ($siswa["mapel"] as $mapel)
+                        @if ($mapel["ket"] == "pilihan")
                             @if ($mapel['nilai'] < 65)
                             <td align="center" style="color:red">{{ $mapel["nilai"]}}</td>
                             @php
