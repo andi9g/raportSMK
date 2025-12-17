@@ -645,39 +645,15 @@ class raportC extends Controller
             // })->distinct()->count('idmapel');            
 
             $cek_mapel = [];
+            $mapelpilihan = null;
             foreach ($detailraport as $detail) {
-                $mapelpilihan = null;
+                
 
-                // if($detail->mapel->ket=="pilihan") {
-                //     // $cek1 = detailraportM::where('idraport', $raport->idraport)
-                //     // ->where("idkelas", $raport->idkelas)
-                //     // ->where("idjurusan", $idjurusan)
-                //     // ->where("idmapel", $detail->mapel->idmapel)
-                //     // ->select("iddetailraport")->first();
-                    
-                //     $cek_mapel[] = $detail->mapel->namamapel;
-                //     $cek2 = nilairaportM::where("iddetailraport", $detail->iddetailraport)
-                //     ->where("idsiswa", $siswa->idsiswa)->count();
-                    
-                //     if($cek2 == 0) {
-                //         $pilihanIteration++;
-                //         continue;
-                //         // dd($cek2);
-                //     }else {
-                //         if($validasijurusan == $kejuruan1) {
-                //             $mapelpilihan = "Mapel Pilihan";
-                //             $kejuruan1 = $kejuruan1 + 1;
-                //             // dd($detail->mapel->toArray());
-                //         }
-                //     }
-                //     // dd($cek->toArray());
-                // }
-
-                // dd($detailraport->toArray());
                 $idmapel = $detail->idmapel;
                 if($detail->mapel->ket=="pilihan") {
+                    $mp = mapelM::where("ket", "pilihan")->get()->toArray();
                     $iddetailraport = detailraportM::where('idraport', $raport->idraport)->where("idkelas", $raport->idkelas)
-                    ->where("idmapel", $detail->mapel->idmapel)
+                    ->whereIn("idmapel", $mp)
                     ->select("iddetailraport")->get();
                     
                     $datanilai = nilairaportM::whereIn("iddetailraport", $iddetailraport->toArray())
