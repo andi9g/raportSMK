@@ -683,14 +683,20 @@ class raportC extends Controller
                     $datanilai = nilairaportM::whereIn("iddetailraport", $iddetailraport->toArray())
                     ->where("idsiswa", $siswa->idsiswa)->get();
                     
-                    // dd($datanilai->toArray());
-                    if(count($datanilai) == 0) {
-                        $pilihanIteration++;
-                        continue;
-                    }else {
-                        $mapelpilihan = "Mapel Pilihan";
-                        $kejuruan1 = $kejuruan1 + 1;
-                    }
+                    $mapelpilihan = "Mapel Pilihan";
+                    // // dd($datanilai->toArray());
+                    // if(count($datanilai) == 0) {
+                    //     $pilihanIteration++;
+                    //     $mapel[] = collect([
+                    //         "namamapel" => "Mapel Pilihan",
+                    //         "ket" => "pilihan",
+                    //         "nilai" => 0,
+                    //     ]);
+                    //     continue;
+                    // }else {
+                    //     $mapelpilihan = "Mapel Pilihan";
+                    //     $kejuruan1 = $kejuruan1 + 1;
+                    // }
 
 
                 }else {
@@ -751,19 +757,6 @@ class raportC extends Controller
                 
 
                 $ratarata = $ratarata + $n3;
-            }
-
-            if($validasijurusan == $kejuruan) {
-                $pilihanIteration--;
-                
-                $ratarata = $ratarata + 0;
-                $mapel[] = collect([
-                    "namamapel" => "Mapel Pilihan",
-                    "ket" => "pilihan",
-                    "nilai" => 0,
-                ]);
-
-                
             }
 
             $data[] = collect([
