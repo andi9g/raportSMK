@@ -724,8 +724,8 @@ class raportC extends Controller
             if($validasijurusan == $kejuruan) {
                 $mapel[] = collect([
                     "namamapel" => "Mapel Pilihan",
-                    "ket" => $detail->mapel->ket,
-                    "nilai" => $n3,
+                    "ket" => "pilihan",
+                    "nilai" => 0,
                 ]);
             }
 
