@@ -71,6 +71,7 @@
                     <thead>
                         <tr>
                             <th width="5px">No</th>
+                            <th>NIP</th>
                             <th>Nama Walikelas</th>
                             <th>Rombel</th>
                             <th>Aksi</th>
@@ -80,6 +81,7 @@
                         @foreach ($walikelas as $item)
                         <tr>
                             <td>{{ $loop->iteration + $walikelas->firstItem() - 1 }}</td>
+                            <td>{{ $item->identitas->inip.". ".$item->identitas->nip }}</td>
                             <td>{{ $item->identitas->user->name }}</td>
                             <td>{{ $item->kelas->namakelas." ".$item->jurusan->jurusan }}</td>
                             <td nowrap>
