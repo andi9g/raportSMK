@@ -694,10 +694,17 @@ class raportC extends Controller
                     $n1 = $n1 + $n->nilai;
                 }
 
-                $ujian = ujianM::where("idraport", $idraport)
-                ->where("idsiswa", $siswa->idsiswa)
-                ->where("idmapel", $idmapel)
-                ->first();
+                if($detail->mapel->ket=="pilihan") {
+                    $ujian = ujianM::where("idraport", $idraport)
+                    ->where("idsiswa", $siswa->idsiswa)
+                    ->where("idmapel", $datanilai->first()->detailraport->idmapel??"none")
+                    ->first();
+                }else {
+                    $ujian = ujianM::where("idraport", $idraport)
+                    ->where("idsiswa", $siswa->idsiswa)
+                    ->where("idmapel", $idmapel)
+                    ->first();
+                }
                 $ujian1 = $ujian ? $ujian->lisan : 0;
                 $ujian2 = $ujian ? $ujian->nonlisan : 0;
                 
@@ -709,13 +716,24 @@ class raportC extends Controller
                 
                 $n1 = $n1;
                 
+                
+                
                 if(count($datanilai) > 0) {
                     $n1 = $n1 / count($datanilai);
                 }
+
+                
+
+                
+
+                 
                 
                 
                 if($raport->kategori == "new") {
                     $n3 = round(($n1*0.8) + ($n2*0.2));
+                    if($detail->mapel->ket=="pilihan") {
+                        // dd($siswa->nama. " ".$n3);
+                    }
                 }else {
                     $n3 = round((($n1) + ($n2)) / 2);
                 }
@@ -749,6 +767,7 @@ class raportC extends Controller
         $collect = collect($data);
         $sort = $collect->sortByDesc("ratarata");
 
+        // dd($sort->toArray());
         // dd($sort->toArray());
         // dd($sort);
 
