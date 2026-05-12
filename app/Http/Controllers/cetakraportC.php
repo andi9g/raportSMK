@@ -8,6 +8,7 @@ use App\Models\nilairaportM;
 use App\Models\siswaM;
 use App\Models\sekolahM;
 use App\Models\identitasM;
+use App\Models\kepalasekolahM;
 use App\Models\jurusanM;
 use App\Models\penilaianexM;
 use App\Models\mapelM;
@@ -258,7 +259,7 @@ class cetakraportC extends Controller
 
         }
 
-
+        $kepalasekolah = kepalasekolahM::first();
 
         $raport = raportM::where("idraport", $idraport)->first();
 
@@ -268,6 +269,7 @@ class cetakraportC extends Controller
             "raport" => $raport,
             "sekolah" => $sekolah,
             "detail" => $detail,
+            "kepalasekolah" => $kepalasekolah,
             "identitas" => $identitas,
             "mapel" => $mapel,
             "extrakulikuler" => $extrakulikuler,

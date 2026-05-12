@@ -55,4 +55,8 @@ class User extends Authenticatable
     {
         return $this->hasOne(identitasp5M::class, "iduser", "iduser");
     }
+    public function kepalasekolah()
+    {
+        return $this->hasOne(kepalasekolahM::class, "iduser", "iduser");
+    }
 }

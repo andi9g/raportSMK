@@ -449,7 +449,12 @@
 
             <div class="fontku">
                 <b>
-                    D. Kenaikan Kelas
+                    @if($siswa->idkelas == 3)
+                        D. Kelulusan
+                    @else
+                        D. Kenaikan Kelas
+                    @endif
+                    
                 </b>
 
                 <table width="100%" class="tableku" border="1">
@@ -463,6 +468,10 @@
                                         @if ($tidaklolos >= 3 || $tidaklolos2 > 0)
                                         <font style="color:red">
                                             TINGGAL KELAS
+                                        </font>
+                                        @elseif($siswa->idkelas == 3)
+                                        <font style="color:green">
+                                            LULUS
                                         </font>
                                         @else
                                         <font style="color:green">
@@ -518,8 +527,10 @@
                                         <br>
                                         <br>
                                         <br>
-                                        <p><b><u>MUSTAFA KAMAL, S.Pd., M.Pd</u></b></p>
-                                        <p>NIP.19800909 201001 1 018</p>
+                                        <br>
+                                        <p><b><u>{{ $kepalasekolah?->user->name }}</u></b></p>
+                                        <p>{{ $kepalasekolah?->golongan }}</p>
+                                        <p>NIP.{{ $kepalasekolah?->user->identitas->nip }}</p>
                                     </center>
 
                                 </td>
