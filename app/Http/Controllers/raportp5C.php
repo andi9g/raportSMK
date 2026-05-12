@@ -79,7 +79,7 @@ class raportp5C extends Controller
 
                 if(empty(Auth::user()->identitasp5) ) {
                     return redirect('raportp5')->with('warning', 'Maaf, bukan rana anda');
-                }else if((identitasp5M::where("iduser", Auth::user()->iduser)->where("idkelas", $raportp5->idkelas)->first()->idkelas != $raportp5->idkelas)) {
+                }else if((identitasp5M::where("iduser", Auth::user()->iduser)->where("idkelas", $raportp5->idkelas)->first()?->idkelas != $raportp5->idkelas)) {
                     return redirect('raportp5')->with('warning', 'Maaf, bukan rana anda');
                 }
 
